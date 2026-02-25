@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:flutter/services.dart';
 import 'package:njirayamtanda/constants/strings.dart';
+import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
+import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
+import 'package:njirayamtanda/common/database_helper.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const Application());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final dbHelper = DatabaseHelper.instance;
+  final count = await dbHelper.getMassCount();
+
+  if (count == 0) {
+    final jsonString = await rootBundle.loadString(
+      'lib/common/models/readings_2026.json',
+    );
+    await dbHelper.loadFromReadings2026Json(jsonString);
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DateOnCalenderProvider()),
+      ],
+      child: Application(),
+    ),
+  );
 }
 
 class Application extends StatelessWidget {
@@ -47,7 +71,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   final _headers = [
     FHeader(title: Text(Strings.home)),
-    FHeader(title: Text(Strings.home)),
+    FHeader(title: Text(Strings.search)),
     FHeader(title: Text(Strings.wayofthecross)),
     FHeader(
       title: Text(Strings.more),
@@ -57,10 +81,7 @@ class _RootScreenState extends State<RootScreen> {
     ),
   ];
   final _content = [
-    const Column(
-      mainAxisAlignment: .center,
-      children: [Text('Home Placeholder')],
-    ),
+    const Column(mainAxisAlignment: .center, children: [HomeScreen()]),
     const Column(
       mainAxisAlignment: .center,
       children: [Text('Categories Placeholder')],
