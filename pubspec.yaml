@@ -58,6 +58,7 @@ flutter:
   assets:
     - lib/common/models/catholic_readings_2026_full.json
     - lib/common/models/way_of_the_cross.json
+    - lib/common/models/readings_2026.json
     - assets/images/
 
   # To add assets to your application, add an assets section, like this:
