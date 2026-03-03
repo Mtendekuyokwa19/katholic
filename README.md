@@ -1,4 +1,4 @@
-# Njira ya Mtanda
+# Katholic app
 
 A Flutter application providing Catholic daily readings and the Way of the Cross, designed to help users engage with their faith through accessible digital tools.
 
