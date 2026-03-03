@@ -167,7 +167,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
                 ),
               ),
               Text(
-                'Lenten Meditation',
+                Strings.lentenMeditation,
                 style: TextStyle(fontSize: 11, color: colors.mutedForeground),
               ),
             ],
@@ -319,7 +319,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'CALL & RESPONSE',
+            Strings.callAndResponse,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -329,14 +329,14 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
           ),
           const SizedBox(height: 12),
           _buildCallResponseLine(
-            'Pr.:',
+            Strings.priestAbbrev,
             '${station.adoration.split('.').first}.',
             colors,
           ),
           const SizedBox(height: 8),
           _buildCallResponseLine(
-            'All:',
-            'Because, by Your holy cross, You have redeemed the world.',
+            Strings.allAbbrev,
+            Strings.becauseByYourHolyCross,
             colors,
             isResponse: true,
           ),
@@ -397,7 +397,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
                 Icon(FIcons.book, color: colors.primary, size: 18),
                 const SizedBox(width: 8),
                 Text(
-                  'SCRIPTURE READING',
+                  Strings.scriptureReading,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -441,7 +441,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
                 Icon(FIcons.sparkles, color: colors.primary, size: 18),
                 const SizedBox(width: 8),
                 Text(
-                  'MEDITATIVE PRAYER',
+                  Strings.meditativePrayer,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -574,7 +574,7 @@ class _LoadingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Loading Stations...',
+              Strings.loadingStations,
               style: TextStyle(color: colors.mutedForeground, fontSize: 14),
             ),
           ],

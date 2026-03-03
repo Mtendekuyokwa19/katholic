@@ -9,6 +9,7 @@ import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
 import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
 import 'package:njirayamtanda/feature_home/widgets/empty_state_widget.dart';
 import 'package:njirayamtanda/feature_home/widgets/reading_detail_sheet.dart';
+import 'package:njirayamtanda/feature_home/widgets/vestment_info_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -145,43 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 14, color: colors.mutedForeground),
             ),
             const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: colors.primary.withAlpha(25),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: colors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Solemnity',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: colors.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Purple Vestments',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: colors.mutedForeground,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            VestmentInfoWidget(colors: colors),
           ],
         ),
       ),
@@ -246,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Icon(FIcons.book, color: colors.primary, size: 20),
             const SizedBox(width: 8),
             Text(
-              'Liturgy of the Word',
+              Strings.liturgyOfTheWord,
               style: TextStyle(
                 fontSize: AppSizes.heading4,
                 fontWeight: FontWeight.bold,
@@ -304,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        reading.type ?? 'Reading',
+                        reading.type ?? Strings.reading,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -384,13 +349,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final type = reading.type?.toUpperCase();
 
     if (type == 'READING') {
-      displayType = index == 0 ? 'First Reading' : 'Second Reading';
+      displayType = index == 0 ? Strings.firstReading : Strings.secondReading;
     } else if (type == 'PSALM') {
-      displayType = 'Responsorial Psalm';
+      displayType = Strings.responsorialPsalm;
     } else if (type == 'ALLELUIA') {
-      displayType = 'Alleluia';
+      displayType = Strings.alleluia;
     } else if (type == 'GOSPEL') {
-      displayType = 'Gospel';
+      displayType = Strings.gospel;
     }
 
     return Reading(

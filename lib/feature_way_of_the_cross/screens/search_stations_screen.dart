@@ -82,21 +82,21 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
   }
 
   String _getStationType(int number) {
-    const stationTypes = [
-      'First Station',
-      'Second Station',
-      'Third Station',
-      'Fourth Station',
-      'Fifth Station',
-      'Sixth Station',
-      'Seventh Station',
-      'Eighth Station',
-      'Ninth Station',
-      'Tenth Station',
-      'Eleventh Station',
-      'Twelfth Station',
-      'Thirteenth Station',
-      'Fourteenth Station',
+    final stationTypes = [
+      Strings.firstStation,
+      Strings.secondStation,
+      Strings.thirdStation,
+      Strings.fourthStation,
+      Strings.fifthStation,
+      Strings.sixthStation,
+      Strings.seventhStation,
+      Strings.eighthStation,
+      Strings.ninthStation,
+      Strings.tenthStation,
+      Strings.eleventhStation,
+      Strings.twelfthStation,
+      Strings.thirteenthStation,
+      Strings.fourteenthStation,
     ];
     if (number >= 1 && number <= 14) {
       return stationTypes[number - 1];
