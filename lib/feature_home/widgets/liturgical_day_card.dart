@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_colors.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
@@ -21,21 +20,41 @@ class LiturgicalDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.softGold.withAlpha(60),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.gold.withAlpha(80), width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildLabelRow(),
-          const SizedBox(height: 8),
-          _buildLiturgicalDayText(),
-          const SizedBox(height: 6),
-          _buildDateRow(context),
+        borderRadius: BorderRadius.circular(16),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/church_of_easr.jpg'),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(25),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
         ],
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            colors: [Colors.transparent, Colors.black.withAlpha(120)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildLabelRow(),
+            const SizedBox(height: 12),
+            _buildLiturgicalDayText(),
+            const SizedBox(height: 8),
+            _buildDateRow(context),
+          ],
+        ),
       ),
     );
   }
@@ -43,14 +62,14 @@ class LiturgicalDayCard extends StatelessWidget {
   Widget _buildLabelRow() {
     return Row(
       children: [
-        Icon(FIcons.sparkles, color: AppColors.gold, size: 18),
-        const SizedBox(width: 8),
+        Icon(FIcons.sparkles, color: Colors.white, size: 20),
+        const SizedBox(width: 10),
         Text(
           Strings.liturgicalDay,
           style: TextStyle(
             fontSize: AppSizes.bodyText,
             fontWeight: FontWeight.w600,
-            color: colors.mutedForeground,
+            color: Colors.white.withAlpha(200),
           ),
         ),
       ],
@@ -63,7 +82,7 @@ class LiturgicalDayCard extends StatelessWidget {
       style: TextStyle(
         fontSize: AppSizes.heading3,
         fontWeight: FontWeight.bold,
-        color: colors.primary,
+        color: Colors.white,
       ),
     );
   }
@@ -71,7 +90,7 @@ class LiturgicalDayCard extends StatelessWidget {
   Widget _buildDateRow(BuildContext context) {
     return Row(
       children: [
-        Icon(FIcons.calendar, color: colors.mutedForeground, size: 14),
+        Icon(FIcons.calendar, color: Colors.white.withAlpha(200), size: 14),
         const SizedBox(width: 6),
         Text(
           DateFns.formatDateInSundayDec72026(
@@ -79,7 +98,7 @@ class LiturgicalDayCard extends StatelessWidget {
           ),
           style: TextStyle(
             fontSize: AppSizes.bodyText,
-            color: colors.mutedForeground,
+            color: Colors.white.withAlpha(200),
           ),
         ),
       ],

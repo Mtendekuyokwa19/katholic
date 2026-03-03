@@ -22,7 +22,7 @@ class ReadingCard extends StatelessWidget {
     final iconColor = _getReadingColor(reading.type);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -35,19 +35,22 @@ class ReadingCard extends StatelessWidget {
           ],
         ),
         child: FCard(
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(16),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildIconContainer(iconColor),
-                  const SizedBox(width: 16),
-                  Expanded(child: _buildContent(iconColor)),
-                  _buildChevron(),
-                ],
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildIconContainer(iconColor),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildContent(iconColor)),
+                    _buildChevron(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -72,7 +75,7 @@ class ReadingCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTypeBadge(iconColor),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           reading.reference ?? '',
           style: TextStyle(
@@ -81,14 +84,14 @@ class ReadingCard extends StatelessWidget {
             color: colors.primary,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         Text(
           reading.text ?? '',
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: AppSizes.bodyText,
-            height: 1.5,
+            height: 1.6,
             color: colors.mutedForeground,
           ),
         ),
@@ -123,7 +126,8 @@ class ReadingCard extends StatelessWidget {
 
   IconData _getReadingIcon(String? type) {
     switch (type?.toUpperCase()) {
-      case 'READING':
+      case 'FIRST READING':
+      case 'SECOND READING':
         return FIcons.bookOpen;
       case 'PSALM':
         return FIcons.music;
@@ -138,7 +142,8 @@ class ReadingCard extends StatelessWidget {
 
   Color _getReadingColor(String? type) {
     switch (type?.toUpperCase()) {
-      case 'READING':
+      case 'FIRST READING':
+      case 'SECOND READING':
         return AppColors.readingColor;
       case 'PSALM':
         return AppColors.psalmColor;

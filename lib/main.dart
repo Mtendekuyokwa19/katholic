@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
 import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
+import 'package:njirayamtanda/feature_more/screens/more_screen.dart';
 import 'package:njirayamtanda/common/database_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -81,7 +83,13 @@ class _RootScreenState extends State<RootScreen> {
     ),
   ];
   final _content = [
-    const Column(mainAxisAlignment: .center, children: [HomeScreen()]),
+    SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: const [HomeScreen()],
+      ),
+    ),
     const Column(
       mainAxisAlignment: .center,
       children: [Text('Categories Placeholder')],
@@ -92,15 +100,22 @@ class _RootScreenState extends State<RootScreen> {
     ),
 
     const Column(
-      mainAxisAlignment: .center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [Text('Search Placeholder')],
     ),
+
+    const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [WayOfTheCrossScreen()],
+    ),
+
+    const MoreScreen(),
   ];
   int _index = 0;
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: _headers[_index],
+      header: _index == 2 || _index == 3 ? null : _headers[_index],
       child: _content[_index],
       footer: FBottomNavigationBar(
         onChange: (index) => setState(() => _index = index),

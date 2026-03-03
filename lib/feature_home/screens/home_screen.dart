@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_colors.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/functions/readings_fns.dart';
 import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
 import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
-import 'package:njirayamtanda/feature_home/widgets/header_section.dart';
-import 'package:njirayamtanda/feature_home/widgets/liturgical_day_card.dart';
-import 'package:njirayamtanda/feature_home/widgets/reading_card.dart';
 import 'package:njirayamtanda/feature_home/widgets/empty_state_widget.dart';
 import 'package:njirayamtanda/feature_home/widgets/reading_detail_sheet.dart';
 import 'package:provider/provider.dart';
@@ -49,18 +47,157 @@ class _HomeScreenState extends State<HomeScreen> {
       dateProvider.selectedDate,
     );
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+    return Scaffold(
+      backgroundColor: colors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(colors),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildLiturgicalDayCard(colors),
+                    const SizedBox(height: 24),
+                    _buildCalendarSection(context, dateProvider),
+                    const SizedBox(height: 24),
+                    _buildReadingsSection(colors),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(FColors colors) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: colors.secondary.withAlpha(30),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(FIcons.menu, color: colors.foreground, size: 22),
+            ),
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              Text(
+                'Year C • Advent',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: colors.foreground,
+                ),
+              ),
+              Text(
+                'December 2025',
+                style: TextStyle(fontSize: 12, color: colors.mutedForeground),
+              ),
+            ],
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: colors.primary.withAlpha(25),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(FIcons.calendar, color: colors.primary, size: 16),
+                  const SizedBox(width: 6),
+                  Text(
+                    'today',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: colors.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLiturgicalDayCard(FColors colors) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colors.secondary.withAlpha(25),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colors.border),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderSection(colors: colors),
-          const SizedBox(height: 24),
-          _buildCalendarSection(context, dateProvider),
-          const SizedBox(height: 24),
-          LiturgicalDayCard(readings: _currentReadings, colors: colors),
-          const SizedBox(height: 24),
-          _buildReadingsSection(colors),
+          Text(
+            _currentReadings.liturgicalDay ?? Strings.noLiturgicalDay,
+            style: TextStyle(
+              fontSize: AppSizes.heading3,
+              fontWeight: FontWeight.bold,
+              color: colors.foreground,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Sunday, Dec 7, 2025',
+            style: TextStyle(fontSize: 14, color: colors.mutedForeground),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: colors.primary.withAlpha(25),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: colors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Solemnity',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: colors.primary,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Purple Vestments',
+                  style: TextStyle(fontSize: 12, color: colors.mutedForeground),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -70,12 +207,14 @@ class _HomeScreenState extends State<HomeScreen> {
     BuildContext context,
     DateOnCalenderProvider dateProvider,
   ) {
+    final colors = context.theme.colors;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(13),
+            color: colors.foreground.withAlpha(13),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -111,51 +250,200 @@ class _HomeScreenState extends State<HomeScreen> {
       return EmptyStateWidget(colors: colors);
     }
 
+    final orderedReadings = _orderReadings(_currentReadings.readings);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildReadingsHeader(colors),
-        const SizedBox(height: 12),
-        ..._currentReadings.readings.map(
-          (reading) => ReadingCard(
-            reading: reading,
-            colors: colors,
-            onTap: () => _showReadingDetail(context, reading),
+        Row(
+          children: [
+            Icon(FIcons.book, color: colors.primary, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Liturgy of the Word',
+              style: TextStyle(
+                fontSize: AppSizes.heading4,
+                fontWeight: FontWeight.bold,
+                color: colors.foreground,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        ...orderedReadings.asMap().entries.map(
+          (entry) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: _buildReadingItem(
+              colors,
+              _createDisplayReading(entry.value, entry.key),
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildReadingsHeader(FColors colors) {
-    return Row(
-      children: [
-        Text(
-          Strings.readings,
-          style: TextStyle(
-            fontSize: AppSizes.heading4,
-            fontWeight: FontWeight.bold,
-            color: colors.primary,
-          ),
+  Widget _buildReadingItem(FColors colors, Reading reading) {
+    final iconColor = _getReadingColor(reading.type);
+
+    return GestureDetector(
+      onTap: () => _showReadingDetail(context, reading),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: colors.background,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colors.border),
         ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          decoration: BoxDecoration(
-            color: colors.primary.withAlpha(25),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Text(
-            '${_currentReadings.readings.length}',
-            style: TextStyle(
-              fontSize: AppSizes.bodyText,
-              fontWeight: FontWeight.w600,
-              color: colors.primary,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: iconColor.withAlpha(25),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    _getReadingIcon(reading.type),
+                    color: iconColor,
+                    size: 18,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        reading.type ?? 'Reading',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: iconColor,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        reading.reference ?? '',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: colors.foreground,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  FIcons.chevronRight,
+                  color: colors.mutedForeground,
+                  size: 18,
+                ),
+              ],
             ),
-          ),
+            const SizedBox(height: 12),
+            Text(
+              reading.text ?? '',
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.5,
+                color: colors.mutedForeground,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
+  }
+
+  List<Reading> _orderReadings(List<Reading> readings) {
+    final ordered = <Reading>[];
+    Reading? firstReading;
+    Reading? psalm;
+    Reading? secondReading;
+    Reading? alleluia;
+    Reading? gospel;
+
+    for (final r in readings) {
+      final type = r.type?.toUpperCase();
+      if (type == 'READING' && firstReading == null) {
+        firstReading = r;
+      } else if (type == 'PSALM') {
+        psalm = r;
+      } else if (type == 'READING' && firstReading != null) {
+        secondReading = r;
+      } else if (type == 'ALLELUIA') {
+        alleluia = r;
+      } else if (type == 'GOSPEL') {
+        gospel = r;
+      }
+    }
+
+    if (firstReading != null) ordered.add(firstReading);
+    if (psalm != null) ordered.add(psalm);
+    if (secondReading != null) ordered.add(secondReading);
+    if (alleluia != null) ordered.add(alleluia);
+    if (gospel != null) ordered.add(gospel);
+
+    return ordered;
+  }
+
+  Reading _createDisplayReading(Reading reading, int index) {
+    String? displayType;
+    final type = reading.type?.toUpperCase();
+
+    if (type == 'READING') {
+      displayType = index == 0 ? 'First Reading' : 'Second Reading';
+    } else if (type == 'PSALM') {
+      displayType = 'Responsorial Psalm';
+    } else if (type == 'ALLELUIA') {
+      displayType = 'Alleluia';
+    } else if (type == 'GOSPEL') {
+      displayType = 'Gospel';
+    }
+
+    return Reading(
+      type: displayType,
+      reference: reading.reference,
+      text: reading.text,
+    );
+  }
+
+  IconData _getReadingIcon(String? type) {
+    switch (type?.toUpperCase()) {
+      case 'FIRST READING':
+      case 'SECOND READING':
+        return FIcons.book;
+      case 'RESPONSORIAL PSALM':
+        return FIcons.music;
+      case 'ALLELUIA':
+        return FIcons.star;
+      case 'GOSPEL':
+        return FIcons.bookOpen;
+      default:
+        return FIcons.fileText;
+    }
+  }
+
+  Color _getReadingColor(String? type) {
+    switch (type?.toUpperCase()) {
+      case 'FIRST READING':
+      case 'SECOND READING':
+        return AppColors.readingColor;
+      case 'RESPONSORIAL PSALM':
+        return AppColors.psalmColor;
+      case 'ALLELUIA':
+        return AppColors.alleluiaColor;
+      case 'GOSPEL':
+        return AppColors.gospelColor;
+      default:
+        return AppColors.readingColor;
+    }
   }
 
   void _showReadingDetail(BuildContext context, Reading reading) {

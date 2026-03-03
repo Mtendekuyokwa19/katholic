@@ -13,35 +13,53 @@ class EmptyStateWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: colors.secondary.withAlpha(30),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.border, width: 1),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/animation_person_catholic.jpg'),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(20),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [_buildIcon(), const SizedBox(height: 16), _buildMessage()],
-      ),
-    );
-  }
-
-  Widget _buildIcon() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colors.mutedForeground.withAlpha(20),
-        shape: BoxShape.circle,
-      ),
-      child: Icon(FIcons.bookOpen, color: colors.mutedForeground, size: 32),
-    );
-  }
-
-  Widget _buildMessage() {
-    return Text(
-      Strings.noReadingsAvailable,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: AppSizes.bodyText,
-        color: colors.mutedForeground,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            colors: [Colors.transparent, Colors.black.withAlpha(150)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(30),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(FIcons.bookOpen, color: Colors.white, size: 32),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              Strings.noReadingsAvailable,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: AppSizes.bodyText,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

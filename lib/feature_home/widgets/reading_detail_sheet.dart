@@ -31,20 +31,42 @@ class ReadingDetailSheet extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildDragHandle(),
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(context, iconColor),
-                    const SizedBox(height: 24),
-                    Divider(color: colors.border, height: 1),
-                    const SizedBox(height: 24),
-                    _buildContent(scrollController),
-                  ],
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: const AssetImage(
+                              'assets/images/jesus_on_cross.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withAlpha(102),
+                              BlendMode.darken,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [_buildHeader(context, iconColor)],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Divider(color: colors.border, height: 1),
+                      const SizedBox(height: 24),
+                      _buildContent(),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -133,18 +155,13 @@ class ReadingDetailSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ScrollController scrollController) {
-    return Expanded(
-      child: SingleChildScrollView(
-        controller: scrollController,
-        child: Text(
-          reading.text ?? '',
-          style: TextStyle(
-            fontSize: AppSizes.bodyText + 2,
-            height: 1.8,
-            color: colors.primary,
-          ),
-        ),
+  Widget _buildContent() {
+    return Text(
+      reading.text ?? '',
+      style: TextStyle(
+        fontSize: AppSizes.bodyText + 2,
+        height: 1.8,
+        color: colors.primary,
       ),
     );
   }

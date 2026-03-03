@@ -27,4 +27,55 @@ class Strings {
   static String close = "tsegula";
 
   static String reading = "Reading";
+
+  static String wayOfTheCross = "Way of the Cross";
+
+  static String stations = "Stations";
+
+  static String divinePraises = "Divine Praises";
+
+  static String holyGod = "Holy God";
+
+  static String benediction = "Benediction";
+
+  static String preparatoryPrayer = "Preparatory Prayer";
+
+  static String plenaryIndulgence = "Plenary Indulgence";
+
+  static String station = "Station";
+
+  static String adore = "We adore You, O Christ";
+
+  static String becauseByYourHolyCross =
+      "Because, by Your holy cross, You have redeemed the world";
+
+  static String ourFather = "Our Father";
+
+  static String hailMary = "Hail Mary";
+
+  static String gloryBe = "Glory Be";
+
+  static String adoration = "Adoration";
+
+  static String reflection = "Reflection";
+
+  static String prayer = "Prayer";
+
+  static String response = "Response";
+
+  static String previous = "Previous";
+
+  static String nextStation = "Next";
+
+  static String searchStations = "Search Stations";
+
+  static String searchResults = "Search Results";
+
+  static String found = "found";
+
+  static String recentSearches = "Recent Searches";
+
+  static String clearAll = "Clear All";
+
+  static String noResults = "No results found";
 }

@@ -16,4 +16,12 @@ class AppColors {
   static const Color psalmColor = Color(0xFF059669);
   static const Color alleluiaColor = Color(0xFFEA580C);
   static const Color gospelColor = Color(0xFFDC2626);
+
+  // Way of the Cross Dark Theme
+  static const Color darkNavy = Color(0xFF0A1628);
+  static const Color darkNavyLight = Color(0xFF162236);
+  static const Color navyBlue = Color(0xFF1E3A5F);
+  static const Color brightBlue = Color(0xFF3B82F6);
+  static const Color lentenPurpleAccent = Color(0xFF7C3AED);
+  static const Color goldAccent = Color(0xFFD4AF37);
 }

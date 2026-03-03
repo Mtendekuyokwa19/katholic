@@ -11,70 +11,55 @@ class HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      height: 160,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [colors.primary.withAlpha(40), colors.primary.withAlpha(15)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        borderRadius: BorderRadius.circular(20),
+        image: const DecorationImage(
+          image: AssetImage('assets/images/cross_crusader.jpg'),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
         ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.primary.withAlpha(50), width: 1),
-      ),
-      child: Row(
-        children: [
-          _buildIconContainer(colors),
-          const SizedBox(width: 14),
-          Expanded(child: _buildTextContent(colors)),
-          _buildArrowIcon(colors),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(30),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildIconContainer(FColors colors) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: colors.primary.withAlpha(30),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Icon(FIcons.book, color: colors.primary, size: 24),
-    );
-  }
-
-  Widget _buildTextContent(FColors colors) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          Strings.wordOfTheDay,
-          style: TextStyle(
-            fontSize: AppSizes.heading4,
-            fontWeight: FontWeight.bold,
-            color: colors.primary,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            colors: [Colors.transparent, Colors.black.withAlpha(150)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
-        const SizedBox(height: 2),
-        Text(
-          Strings.tapToRead,
-          style: TextStyle(
-            fontSize: AppSizes.bodyText,
-            color: colors.mutedForeground,
-          ),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              Strings.wordOfTheDay,
+              style: TextStyle(
+                fontSize: AppSizes.heading2,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              Strings.tapToRead,
+              style: TextStyle(
+                fontSize: AppSizes.bodyText,
+                color: Colors.white.withAlpha(200),
+              ),
+            ),
+          ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildArrowIcon(FColors colors) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: colors.primary.withAlpha(20),
-        borderRadius: BorderRadius.circular(8),
       ),
-      child: Icon(FIcons.chevronRight, color: colors.primary, size: 20),
     );
   }
 }
