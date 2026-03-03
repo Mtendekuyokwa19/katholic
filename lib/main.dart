@@ -63,8 +63,12 @@ class Application extends StatelessWidget {
     final ThemeData materialTheme = baseTheme
         .toApproximateMaterialTheme()
         .copyWith(
-          textTheme: GoogleFonts.crimsonTextTextTheme(
-            baseTheme.toApproximateMaterialTheme().textTheme,
+          textTheme: GoogleFonts.robotoTextTheme(
+            baseTheme.toApproximateMaterialTheme().textTheme.apply(
+              fontSizeFactor: 1.0,
+              fontSizeDelta:
+                  2.0, // Increase all font sizes by 2 to ensure minimum 14
+            ),
           ),
         );
 
