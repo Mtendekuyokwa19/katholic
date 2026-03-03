@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../constants/strings.dart';
 
@@ -27,6 +28,8 @@ class MoreScreen extends StatelessWidget {
               _buildDonationsSection(colors),
               const SizedBox(height: 32),
               _buildContributorsSection(colors, contributors),
+              const SizedBox(height: 32),
+              _buildShareSection(colors),
               const SizedBox(height: 32),
               _buildFooter(colors),
             ],
@@ -237,6 +240,85 @@ class MoreScreen extends StatelessWidget {
                 ],
               );
             }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildShareSection(FColors colors) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Share',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: colors.mutedForeground,
+            letterSpacing: 1,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: colors.secondary.withAlpha(20),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: colors.border),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => Share.share(
+                'Check out this amazing Catholic app for daily readings and Way of the Cross: ${Strings.appName} - ${Strings.appSubtitle}',
+              ),
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: colors.primary.withAlpha(30),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Icon(
+                        FIcons.share,
+                        color: colors.primary,
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Share with Friends',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: colors.foreground,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Spread the word about this app',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: colors.mutedForeground,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(FIcons.chevronRight, color: colors.primary, size: 22),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ],
