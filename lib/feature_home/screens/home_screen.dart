@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_colors.dart';
-import 'package:njirayamtanda/constants/app_images.dart';
-import 'package:njirayamtanda/constants/app_sizes.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_home/functions/readings_fns.dart';
-import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
-import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
-import 'package:njirayamtanda/feature_home/widgets/empty_state_widget.dart';
-import 'package:njirayamtanda/feature_home/widgets/reading_detail_sheet.dart';
-import 'package:njirayamtanda/feature_home/widgets/vestment_info_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../constants/app_colors.dart';
+import '../../constants/app_images.dart';
+import '../../constants/app_sizes.dart';
+import '../../constants/strings.dart';
+import '../functions/readings_fns.dart';
+import '../models/catholic_readings_model.dart';
+import '../providers/date_on_calender_provider.dart';
+import '../widgets/empty_state_widget.dart';
+import '../widgets/reading_detail_sheet.dart';
+import '../widgets/vestment_info_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

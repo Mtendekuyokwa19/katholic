@@ -2,122 +2,162 @@ class Strings {
   static const String somethingWentWrong =
       "Something Went Wrong. Please try again later.";
 
-  static String home = "Home";
+  static const String home = "Home";
 
-  static String search = "search";
+  static const String search = "search";
 
-  static String wayofthecross = "Njira ya mtanda";
+  static const String wayofthecross = "Njira ya mtanda";
 
-  static String more = "zambiri";
+  static const String more = "zambiri";
 
-  static String wordOfTheDay = "Mawu pa tsiku la lero";
+  static const String wordOfTheDay = "Mawu pa tsiku la lero";
 
-  static String readings = "Mawu";
+  static const String readings = "Mawu";
 
-  static String noReadingsAvailable = "Palibe mawu pa tsiku ili";
+  static const String noReadingsAvailable = "Palibe mawu pa tsiku ili";
 
-  static String liturgicalDay = "Tsiku la liturujiya";
+  static const String liturgicalDay = "Tsiku la liturujiya";
 
-  static String noLiturgicalDay = "Palibe tsiku la liturujiya";
+  static const String noLiturgicalDay = "Palibe tsiku la liturujiya";
 
-  static String tapToRead = "kuina kuti muwane";
+  static const String tapToRead = "kuina kuti muwane";
 
-  static String close = "tsegula";
+  static const String close = "tsegula";
 
-  static String reading = "Reading";
+  static const String reading = "Reading";
 
-  static String wayOfTheCross = "Way of the Cross";
+  static const String wayOfTheCross = "Way of the Cross";
 
-  static String stations = "Stations";
+  static const String stations = "Stations";
 
-  static String divinePraises = "Divine Praises";
+  static const String divinePraises = "Divine Praises";
 
-  static String holyGod = "Holy God";
+  static const String holyGod = "Holy God";
 
-  static String benediction = "Benediction";
+  static const String benediction = "Benediction";
 
-  static String preparatoryPrayer = "Preparatory Prayer";
+  static const String preparatoryPrayer = "Preparatory Prayer";
 
-  static String plenaryIndulgence = "Plenary Indulgence";
+  static const String plenaryIndulgence = "Plenary Indulgence";
 
-  static String station = "Station";
+  static const String station = "Station";
 
-  static String adore = "We adore You, O Christ";
+  static const String adore = "We adore You, O Christ";
 
-  static String becauseByYourHolyCross =
+  static const String becauseByYourHolyCross =
       "Because, by Your holy cross, You have redeemed the world";
 
-  static String ourFather = "Our Father";
+  static const String ourFather = "Our Father";
 
-  static String hailMary = "Hail Mary";
+  static const String hailMary = "Hail Mary";
 
-  static String gloryBe = "Glory Be";
+  static const String gloryBe = "Glory Be";
 
-  static String adoration = "Adoration";
+  static const String adoration = "Adoration";
 
-  static String reflection = "Reflection";
+  static const String reflection = "Reflection";
 
-  static String prayer = "Prayer";
+  static const String prayer = "Prayer";
 
-  static String response = "Response";
+  static const String response = "Response";
 
-  static String previous = "Previous";
+  static const String previous = "Previous";
 
-  static String nextStation = "Next";
+  static const String nextStation = "Next";
 
-  static String searchStations = "Search Stations";
+  static const String searchStations = "Search Stations";
 
-  static String searchResults = "Search Results";
-  static String found = "found";
-  static String recentSearches = "Recent Searches";
-  static String clearAll = "Clear All";
-  static String noResults = "No results found";
-  static String appName = "Njira ya Mtanda";
-  static String appSubtitle = "Catholic Daily Readings";
-  static String supportUs = "SUPPORT US";
-  static String makeDonation = "Make a Donation";
-  static String donationDescription = "Support the development of this app";
-  static String contributors = "CONTRIBUTORS";
-  static String madeWithLove = "Made with love for the Church";
-  static String catholicApp = "Catholic App";
-  static String stationProgress = "Station Progress";
-  static String searchReadings = "Search Readings";
-  static String trySearching =
+  static const String searchResults = "Search Results";
+
+  static const String found = "found";
+
+  static const String recentSearches = "Recent Searches";
+
+  static const String clearAll = "Clear All";
+
+  static const String noResults = "No results found";
+
+  static const String appName = "Njira ya Mtanda";
+
+  static const String appSubtitle = "Catholic Daily Readings";
+
+  static const String supportUs = "SUPPORT US";
+
+  static const String makeDonation = "Make a Donation";
+
+  static const String donationDescription =
+      "Support the development of this app";
+
+  static const String contributors = "CONTRIBUTORS";
+
+  static const String madeWithLove = "Made with love for the Church";
+
+  static const String catholicApp = "Catholic App";
+
+  static const String stationProgress = "Station Progress";
+
+  static const String searchReadings = "Search Readings";
+
+  static const String trySearching =
       "Try searching for a reading, prayer or reflection";
-  static String suggestions = "Suggestions";
 
-  // Additional strings for home screen
-  static String solemnity = "Solemnity";
-  static String purpleVestments = "Purple Vestments";
-  static String liturgyOfTheWord = "Liturgy of the Word";
-  static String firstReading = "First Reading";
-  static String secondReading = "Second Reading";
-  static String responsorialPsalm = "Responsorial Psalm";
-  static String alleluia = "Alleluia";
-  static String gospel = "Gospel";
+  static const String suggestions = "Suggestions";
 
-  // Additional strings for way of the cross screen
-  static String lentenMeditation = "Lenten Meditation";
-  static String callAndResponse = "CALL & RESPONSE";
-  static String priestAbbrev = "Pr.:";
-  static String allAbbrev = "All:";
-  static String scriptureReading = "SCRIPTURE READING";
-  static String meditativePrayer = "MEDITATIVE PRAYER";
-  static String loadingStations = "Loading Stations...";
+  static const String solemnity = "Solemnity";
 
-  // Station types
-  static String firstStation = "First Station";
-  static String secondStation = "Second Station";
-  static String thirdStation = "Third Station";
-  static String fourthStation = "Fourth Station";
-  static String fifthStation = "Fifth Station";
-  static String sixthStation = "Sixth Station";
-  static String seventhStation = "Seventh Station";
-  static String eighthStation = "Eighth Station";
-  static String ninthStation = "Ninth Station";
-  static String tenthStation = "Tenth Station";
-  static String eleventhStation = "Eleventh Station";
-  static String twelfthStation = "Twelfth Station";
-  static String thirteenthStation = "Thirteenth Station";
-  static String fourteenthStation = "Fourteenth Station";
+  static const String purpleVestments = "Purple Vestments";
+
+  static const String liturgyOfTheWord = "Liturgy of the Word";
+
+  static const String firstReading = "First Reading";
+
+  static const String secondReading = "Second Reading";
+
+  static const String responsorialPsalm = "Responsorial Psalm";
+
+  static const String alleluia = "Alleluia";
+
+  static const String gospel = "Gospel";
+
+  static const String lentenMeditation = "Lenten Meditation";
+
+  static const String callAndResponse = "CALL & RESPONSE";
+
+  static const String priestAbbrev = "Pr.:";
+
+  static const String allAbbrev = "All:";
+
+  static const String scriptureReading = "SCRIPTURE READING";
+
+  static const String meditativePrayer = "MEDITATIVE PRAYER";
+
+  static const String loadingStations = "Loading Stations...";
+
+  static const String firstStation = "First Station";
+
+  static const String secondStation = "Second Station";
+
+  static const String thirdStation = "Third Station";
+
+  static const String fourthStation = "Fourth Station";
+
+  static const String fifthStation = "Fifth Station";
+
+  static const String sixthStation = "Sixth Station";
+
+  static const String seventhStation = "Seventh Station";
+
+  static const String eighthStation = "Eighth Station";
+
+  static const String ninthStation = "Ninth Station";
+
+  static const String tenthStation = "Tenth Station";
+
+  static const String eleventhStation = "Eleventh Station";
+
+  static const String twelfthStation = "Twelfth Station";
+
+  static const String thirteenthStation = "Thirteenth Station";
+
+  static const String fourteenthStation = "Fourteenth Station";
 }

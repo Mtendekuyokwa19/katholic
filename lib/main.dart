@@ -1,38 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
 import 'package:flutter/services.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
-import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
-import 'package:njirayamtanda/feature_more/screens/more_screen.dart';
-import 'package:njirayamtanda/common/database_helper.dart';
+import 'package:forui/forui.dart';
 import 'package:provider/provider.dart';
+
+import 'common/database_helper.dart';
+import 'constants/strings.dart';
+import 'feature_home/providers/date_on_calender_provider.dart';
+import 'feature_home/screens/home_screen.dart';
+import 'feature_more/screens/more_screen.dart';
+import 'feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
+import 'feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dbHelper = DatabaseHelper.instance;
-  final count = await dbHelper.getMassCount();
+  try {
+    final DatabaseHelper dbHelper = DatabaseHelper.instance;
+    final int count = await dbHelper.getMassCount();
 
-  if (count == 0) {
-    final jsonString = await rootBundle.loadString(
-      'lib/common/models/readings_2026.json',
+    if (count == 0) {
+      final String jsonString = await rootBundle.loadString(
+        'lib/common/models/readings_2026.json',
+      );
+      await dbHelper.loadFromReadings2026Json(jsonString);
+    }
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<DateOnCalenderProvider>(
+            create: (_) => DateOnCalenderProvider(),
+          ),
+          ChangeNotifierProvider<WayOfTheCrossProvider>(
+            create: (_) => WayOfTheCrossProvider(),
+          ),
+        ],
+        child: const Application(),
+      ),
     );
-    await dbHelper.loadFromReadings2026Json(jsonString);
+  } catch (e) {
+    debugPrint('Error initializing app: $e');
+    runApp(
+      const MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text('Error loading app. Please restart.')),
+        ),
+      ),
+    );
   }
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => DateOnCalenderProvider()),
-        ChangeNotifierProvider(create: (_) => WayOfTheCrossProvider()),
-      ],
-      child: Application(),
-    ),
-  );
 }
 
 class Application extends StatelessWidget {
@@ -40,28 +55,14 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Try changing this and hot reloading the application.
-    ///
-    /// To create a custom theme:
-    /// ```shell
-    /// dart forui theme create [theme template].
-    /// ```
-    final theme = FThemes.green.dark;
+    final FThemeData theme = FThemes.green.dark;
 
     return MaterialApp(
-      // TODO: replace with your application's supported locales.
       supportedLocales: FLocalizations.supportedLocales,
-      // TODO: add your application's localizations delegates.
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
-      // MaterialApp's theme is also animated by default with the same duration and curve.
-      // See https://api.flutter.dev/flutter/material/MaterialApp/themeAnimationStyle.html for how to configure this.
-      //
-      // There is a known issue with implicitly animated widgets where their transition occurs AFTER the theme's.
-      // See https://github.com/duobaseio/forui/issues/670.
       theme: theme.toApproximateMaterialTheme(),
-      builder: (_, child) => FAnimatedTheme(data: theme, child: child!),
-      // You can also replace FScaffold with Material Scaffold.
-      home: RootScreen(),
+      builder: (_, Widget? child) => FAnimatedTheme(data: theme, child: child!),
+      home: const RootScreen(),
     );
   }
 }
@@ -74,43 +75,40 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
-  final _headers = [
+  static final List<FHeader?> _headers = <FHeader?>[
     null,
     null,
     FHeader(title: Text(Strings.wayofthecross)),
     FHeader(
       title: Text(Strings.more),
-      suffixes: [
-        FHeaderAction(icon: const Icon(FIcons.ellipsis), onPress: () {}),
-      ],
+      suffixes: [FHeaderAction(icon: Icon(FIcons.ellipsis), onPress: () {})],
     ),
   ];
 
-  List<Widget> get _content => [
-    const HomeScreen(),
-    const WayOfTheCrossScreen(),
-
-    const MoreScreen(),
+  static const List<Widget> _content = <Widget>[
+    HomeScreen(),
+    WayOfTheCrossScreen(),
+    MoreScreen(),
   ];
+
   int _index = 0;
+
   @override
   Widget build(BuildContext context) {
     return FScaffold(
       header: _headers[_index],
       child: _content[_index],
       footer: FBottomNavigationBar(
-        onChange: (index) => setState(() => _index = index),
+        onChange: (int index) => setState(() => _index = index),
         children: [
           FBottomNavigationBarItem(
             icon: Icon(FIcons.house),
             label: Text(Strings.home),
           ),
-
           FBottomNavigationBarItem(
             icon: Icon(FIcons.cross),
             label: Text(Strings.wayofthecross),
           ),
-
           FBottomNavigationBarItem(
             icon: Icon(FIcons.personStanding),
             label: Text(Strings.more),

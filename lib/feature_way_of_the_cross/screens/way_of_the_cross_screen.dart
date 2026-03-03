@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_images.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/screens/search_stations_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../../constants/app_images.dart';
+import '../../constants/strings.dart';
+import '../models/way_of_the_cross_model.dart';
+import '../providers/way_of_the_cross_provider.dart';
+import 'search_stations_screen.dart';
 
 class WayOfTheCrossScreen extends StatefulWidget {
   const WayOfTheCrossScreen({super.key});
