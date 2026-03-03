@@ -5,8 +5,8 @@ import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
 import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/screens/search_stations_screen.dart';
 import 'package:njirayamtanda/feature_more/screens/more_screen.dart';
 import 'package:njirayamtanda/common/database_helper.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +28,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DateOnCalenderProvider()),
+        ChangeNotifierProvider(create: (_) => WayOfTheCrossProvider()),
       ],
       child: Application(),
     ),
@@ -74,8 +75,8 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   final _headers = [
-    FHeader(title: Text(Strings.home)),
-    FHeader(title: Text(Strings.search)),
+    null,
+    null,
     FHeader(title: Text(Strings.wayofthecross)),
     FHeader(
       title: Text(Strings.more),
@@ -86,18 +87,8 @@ class _RootScreenState extends State<RootScreen> {
   ];
 
   List<Widget> get _content => [
-    SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: const [HomeScreen()],
-      ),
-    ),
-    _buildSearchStationsTab(),
-    const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [WayOfTheCrossScreen()],
-    ),
+    const HomeScreen(),
+    const WayOfTheCrossScreen(),
 
     const MoreScreen(),
   ];
@@ -105,9 +96,7 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: _index == 1 || _index == 2 || _index == 3
-          ? null
-          : _headers[_index],
+      header: _headers[_index],
       child: _content[_index],
       footer: FBottomNavigationBar(
         onChange: (index) => setState(() => _index = index),
@@ -115,10 +104,6 @@ class _RootScreenState extends State<RootScreen> {
           FBottomNavigationBarItem(
             icon: Icon(FIcons.house),
             label: Text(Strings.home),
-          ),
-          FBottomNavigationBarItem(
-            icon: Icon(FIcons.search),
-            label: Text(Strings.search),
           ),
 
           FBottomNavigationBarItem(
@@ -132,31 +117,6 @@ class _RootScreenState extends State<RootScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSearchStationsTab() {
-    return FutureBuilder<WayOfTheCrossData>(
-      future: WayOfTheCrossData.load(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text(Strings.somethingWentWrong));
-        }
-        if (!snapshot.hasData) {
-          return Center(child: Text(Strings.noResults));
-        }
-        return SearchStationsScreen(
-          data: snapshot.data!,
-          onStationSelected: (index) {
-            setState(() {
-              _index = 2;
-            });
-          },
-        );
-      },
     );
   }
 }

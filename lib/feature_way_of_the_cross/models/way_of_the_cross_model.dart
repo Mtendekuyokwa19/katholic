@@ -116,11 +116,11 @@ class SalutarisHostia {
 
   factory SalutarisHostia.fromJson(Map<String, dynamic> json) {
     return SalutarisHostia(
-      latin: json['latin'],
-      english: json['english'],
-      verse: json['verse'],
-      refrain: json['refrain'],
-      verseEnd: json['verseEnd'],
+      latin: json['latin'] ?? '',
+      english: json['english'] ?? '',
+      verse: json['verse'] ?? '',
+      refrain: json['refrain'] ?? '',
+      verseEnd: json['verseEnd'] ?? '',
     );
   }
 }
@@ -142,11 +142,11 @@ class TantumErgo {
 
   factory TantumErgo.fromJson(Map<String, dynamic> json) {
     return TantumErgo(
-      latin: json['latin'],
-      english: json['english'],
-      verse: json['verse'],
-      refrain: json['refrain'],
-      verseEnd: json['verseEnd'],
+      latin: json['latin'] ?? '',
+      english: json['english'] ?? '',
+      verse: json['verse'] ?? '',
+      refrain: json['refrain'] ?? '',
+      verseEnd: json['verseEnd'] ?? '',
     );
   }
 }

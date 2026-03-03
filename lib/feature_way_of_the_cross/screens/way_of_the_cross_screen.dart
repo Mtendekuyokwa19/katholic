@@ -147,17 +147,6 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: colors.primary.withAlpha(25),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(FIcons.chevronLeft, color: colors.primary, size: 20),
-            ),
-          ),
           const Spacer(),
           Column(
             children: [
@@ -484,8 +473,6 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
               onPressed: _currentStationIndex > 0 ? _previousStation : null,
             ),
           ),
-          const SizedBox(width: 16),
-          _buildPlayPauseButton(colors),
           const SizedBox(width: 16),
           Expanded(
             child: _buildNavButton(
