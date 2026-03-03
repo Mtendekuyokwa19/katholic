@@ -196,7 +196,6 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
     int currentIndex,
   ) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
       height: MediaQuery.of(context).size.height * 0.28,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

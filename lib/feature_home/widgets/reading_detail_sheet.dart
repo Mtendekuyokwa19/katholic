@@ -152,11 +152,7 @@ class ReadingDetailSheet extends StatelessWidget {
     return Text(
       formattedText,
       textAlign: TextAlign.justify,
-      style: TextStyle(
-        fontSize: AppSizes.bodyText + 2,
-        height: 2.0,
-        color: colors.primary,
-      ),
+      style: TextStyle(fontSize: AppSizes.bodyText + 5, height: 2.0),
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:njirayamtanda/common/notification_service.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ import 'feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initialize();
 
   try {
     final DatabaseHelper dbHelper = DatabaseHelper.instance;
@@ -26,6 +28,8 @@ Future<void> main() async {
       );
       await dbHelper.loadFromReadings2026Json(jsonString);
     }
+
+    await NotificationService.scheduleDailySaintNotification();
 
     runApp(
       MultiProvider(
