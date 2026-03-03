@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/strings.dart';
+
+import '../../constants/strings.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -10,21 +11,18 @@ class MoreScreen extends StatelessWidget {
     final colors = context.theme.colors;
 
     final contributors = [
-      {'name': 'Fr. John Chinjole', 'role': 'Spiritual Director'},
-      {'name': 'Mtende Mkandawire', 'role': 'Lead Developer'},
-      {'name': 'Catherine Phiri', 'role': 'Content Editor'},
-      {'name': 'Emmanuel Zidu', 'role': 'Translation'},
+      {'name': 'Vincent Chilemba', 'role': 'Liturgical Director'},
+      {'name': 'Mtende Kuyokwa', 'role': 'Developer'},
+      {'name': 'Tamandani Nsiku', 'role': 'Lead Coordinator'},
     ];
 
     return Scaffold(
       backgroundColor: colors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(colors),
               const SizedBox(height: 32),
               _buildDonationsSection(colors),
               const SizedBox(height: 32),

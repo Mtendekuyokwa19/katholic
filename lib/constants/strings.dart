@@ -83,7 +83,7 @@ class Strings {
 
   static const String supportUs = "SUPPORT US";
 
-  static const String makeDonation = "Make a Donation";
+  static const String makeDonation = "Learn how to contribute";
 
   static const String donationDescription =
       "Support the development of this app";
@@ -92,7 +92,7 @@ class Strings {
 
   static const String madeWithLove = "Made with love for the Church";
 
-  static const String catholicApp = "Catholic App";
+  static const String catholicApp = "Katholic App";
 
   static const String stationProgress = "Station Progress";
 
@@ -106,6 +106,14 @@ class Strings {
   static const String solemnity = "Solemnity";
 
   static const String purpleVestments = "Purple Vestments";
+
+  static const String greenVestments = "Green Vestments";
+
+  static const String whiteVestments = "White Vestments";
+
+  static const String redVestments = "Red Vestments";
+
+  static const String roseVestments = "Rose Vestments";
 
   static const String liturgyOfTheWord = "Liturgy of the Word";
 

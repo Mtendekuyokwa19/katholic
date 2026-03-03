@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_constants.dart';
+import 'package:njirayamtanda/utilities/date_fns.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_colors.dart';
@@ -59,12 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildHeader(colors),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(AppSizes.s1),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLiturgicalDayCard(colors),
-                    const SizedBox(height: 24),
+                    _buildLiturgicalDayCard(colors, dateProvider.selectedDate),
+                    SizedBox(height: AppSizes.s12),
                     _buildCalendarSection(context, dateProvider),
                     const SizedBox(height: 24),
                     _buildReadingsSection(colors),
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             children: [
               Text(
-                '${_currentReadings.liturgicalYear ?? ""} • ${_currentReadings.liturgicalSeason ?? ""}',
+                '${AppConstants.year} • ${_currentReadings.liturgicalSeason ?? ""}',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -106,11 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildLiturgicalDayCard(FColors colors) {
+  Widget _buildLiturgicalDayCard(FColors colors, DateTime date) {
     return Container(
       width: double.infinity,
-      height: 200,
-      padding: const EdgeInsets.all(20),
+      height: AppSizes.s150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: colors.border),
@@ -121,8 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Container(
+        padding: EdgeInsets.all(AppSizes.s16),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppSizes.s16),
           gradient: LinearGradient(
             colors: [Colors.transparent, colors.background.withAlpha(200)],
             begin: Alignment.topCenter,
@@ -143,11 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Sunday, Dec 7, 2025',
+              DateFns.formatDateInSundayDec72026(date),
               style: TextStyle(fontSize: 14, color: colors.mutedForeground),
             ),
             const SizedBox(height: 12),
-            VestmentInfoWidget(colors: colors),
+            VestmentInfoWidget(
+              colors: colors,
+              liturgicalSeason: _currentReadings.liturgicalSeason,
+            ),
           ],
         ),
       ),

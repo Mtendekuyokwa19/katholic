@@ -19,14 +19,8 @@ This file contains guidelines for coding agents working on the Njira ya Mtanda F
 flutter pub get
 
 # Run the app
-flutter run
+flutter run -v
 
-# Build for different platforms
-flutter build apk          # Android APK
-flutter build ios          # iOS (requires macOS)
-flutter build web          # Web
-flutter build linux        # Linux
-flutter build windows      # Windows
 ```
 
 ### Linting and Analysis
@@ -40,34 +34,6 @@ dart format .
 
 # Fix auto-fixable issues
 dart fix --apply
-```
-
-### Testing
-
-```bash
-# Run all tests
-flutter test
-
-# Run tests with coverage
-flutter test --coverage
-
-# Run a specific test file
-flutter test test/path/to/test_file.dart
-
-# Run tests matching a pattern
-flutter test --name="test_pattern"
-
-# Run tests in a specific directory
-flutter test test/feature_name/
-
-# Run widget tests only
-flutter test --tags=widget
-
-# Run integration tests
-flutter test integration_test/
-
-# Debug a failing test
-flutter test --debug test/path/to/failing_test.dart
 ```
 
 ### Development Workflow
@@ -85,6 +51,8 @@ flutter pub outdated
 # Run with hot reload enabled
 flutter run --hot
 ```
+
+**Note:** You do not need to run `flutter run --debug` to test fixes for build-time errors. Use `flutter analyze` for static analysis instead.
 
 ## Code Style Guidelines
 
@@ -573,4 +541,3 @@ lib/
 ---
 
 This guide should be updated as the project evolves. Last updated: March 2026
-

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:provider/provider.dart';
 
 import 'common/database_helper.dart';
@@ -75,16 +76,6 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
-  static final List<FHeader?> _headers = <FHeader?>[
-    null,
-    null,
-    FHeader(title: Text(Strings.wayofthecross)),
-    FHeader(
-      title: Text(Strings.more),
-      suffixes: [FHeaderAction(icon: Icon(FIcons.ellipsis), onPress: () {})],
-    ),
-  ];
-
   static const List<Widget> _content = <Widget>[
     HomeScreen(),
     WayOfTheCrossScreen(),
@@ -96,8 +87,6 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: _headers[_index],
-      child: _content[_index],
       footer: FBottomNavigationBar(
         onChange: (int index) => setState(() => _index = index),
         children: [
@@ -114,6 +103,10 @@ class _RootScreenState extends State<RootScreen> {
             label: Text(Strings.more),
           ),
         ],
+      ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(0, AppSizes.s12, 0, 0),
+        child: _content[_index],
       ),
     );
   }

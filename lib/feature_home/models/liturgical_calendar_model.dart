@@ -57,7 +57,7 @@ class LiturgicalEvent {
   final String dayOfTheWeekShort;
   final String dayOfTheWeekLong;
   final LiturgicalReadings readings;
-  final String liturgicalYear;
+  final String? liturgicalYear;
   final bool? isVigilMass;
   final String? isVigilFor;
   final bool? hasVigilMass;
@@ -128,10 +128,18 @@ class LiturgicalEvent {
       dayOfTheWeekIso8601: json['day_of_the_week_iso8601'] as int,
       dayOfTheWeekShort: json['day_of_the_week_short'] as String,
       dayOfTheWeekLong: json['day_of_the_week_long'] as String,
-      readings: LiturgicalReadings.fromJson(
-        json['readings'] as Map<String, dynamic>,
-      ),
-      liturgicalYear: json['liturgical_year'] as String,
+      readings: json['readings'] is Map<String, dynamic>
+          ? LiturgicalReadings.fromJson(
+              json['readings'] as Map<String, dynamic>,
+            )
+          : LiturgicalReadings(
+              firstReading: null,
+              responsorialPsalm: null,
+              secondReading: null,
+              gospelAcclamation: null,
+              gospel: null,
+            ),
+      liturgicalYear: json['liturgical_year'] as String?,
       isVigilMass: json['is_vigil_mass'] as bool?,
       isVigilFor: json['is_vigil_for'] as String?,
       hasVigilMass: json['has_vigil_mass'] as bool?,
