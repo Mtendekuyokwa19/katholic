@@ -21,12 +21,14 @@ A Flutter application providing Catholic daily readings and the Way of the Cross
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/njirayamtanda.git
    cd njirayamtanda
    ```
 
 2. Install dependencies:
+
    ```bash
    flutter pub get
    ```
@@ -54,14 +56,11 @@ The app loads initial data from JSON files and stores it in a local SQLite datab
 
 ## Contributing
 
-We welcome contributions! Please follow these steps:
+We are _not_ accepting contributions!:
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes and test thoroughly
-4. Commit your changes: `git commit -m 'Add some feature'`
-5. Push to the branch: `git push origin feature/your-feature`
-6. Open a Pull Request
+- The codebase is currently messy and not up to standard but you can open an issue.
+- When the code is up in quality we will accept contributions.
+- currently you can leave a star for the repo
 
 ### Development Setup
 
@@ -78,3 +77,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you find this app helpful, consider supporting its development through donations.
 
 Made with love for the Church.
+
