@@ -22,11 +22,17 @@ class DailyReadings {
   final String date;
   final String? liturgicalDay;
   final List<Reading> readings;
+  final String? liturgicalYear;
+  final String? liturgicalSeason;
+  final String? monthLong;
 
   DailyReadings({
     required this.date,
     this.liturgicalDay,
     required this.readings,
+    this.liturgicalYear,
+    this.liturgicalSeason,
+    this.monthLong,
   });
 
   factory DailyReadings.fromJson(Map<String, dynamic> json) {
@@ -38,6 +44,9 @@ class DailyReadings {
               ?.map((e) => Reading.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      liturgicalYear: json['liturgical_year'] as String?,
+      liturgicalSeason: json['liturgical_season'] as String?,
+      monthLong: json['month_long'] as String?,
     );
   }
 
@@ -46,6 +55,9 @@ class DailyReadings {
       'date': date,
       'liturgical_day': liturgicalDay,
       'readings': readings.map((e) => e.toJson()).toList(),
+      'liturgical_year': liturgicalYear,
+      'liturgical_season': liturgicalSeason,
+      'month_long': monthLong,
     };
   }
 }

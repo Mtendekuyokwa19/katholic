@@ -3,7 +3,9 @@ import 'package:forui/forui.dart';
 import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/screens/search_stations_screen.dart';
+import 'package:provider/provider.dart';
 
 class WayOfTheCrossScreen extends StatefulWidget {
   const WayOfTheCrossScreen({super.key});
@@ -15,8 +17,6 @@ class WayOfTheCrossScreen extends StatefulWidget {
 class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
     with SingleTickerProviderStateMixin {
   WayOfTheCrossData? _data;
-  int _currentStationIndex = 0;
-  bool _isPlaying = false;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -47,44 +47,37 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
   }
 
   void _nextStation() {
-    if (_data == null || _currentStationIndex >= _data!.stations.length - 1) {
+    if (_data == null) return;
+    final provider = Provider.of<WayOfTheCrossProvider>(context, listen: false);
+    if (provider.currentStationIndex >= _data!.stations.length - 1) {
       return;
     }
     _animationController.reset();
-    setState(() {
-      _currentStationIndex++;
-    });
+    provider.nextStation(_data!.stations.length);
     _animationController.forward();
   }
 
   void _previousStation() {
-    if (_data == null || _currentStationIndex <= 0) {
+    if (_data == null) return;
+    final provider = Provider.of<WayOfTheCrossProvider>(context, listen: false);
+    if (provider.currentStationIndex <= 0) {
       return;
     }
     _animationController.reset();
-    setState(() {
-      _currentStationIndex--;
-    });
+    provider.previousStation();
     _animationController.forward();
-  }
-
-  void _togglePlayPause() {
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
   }
 
   void _openSearch() {
     if (_data == null) return;
+    final provider = Provider.of<WayOfTheCrossProvider>(context, listen: false);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SearchStationsScreen(
           data: _data!,
           onStationSelected: (index) {
             _animationController.reset();
-            setState(() {
-              _currentStationIndex = index;
-            });
+            provider.setStationIndex(index);
             _animationController.forward();
             Navigator.of(context).pop();
           },
@@ -101,44 +94,58 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.theme.colors;
+    return Consumer<WayOfTheCrossProvider>(
+      builder: (context, stationProvider, child) {
+        final colors = context.theme.colors;
 
-    if (_data == null) {
-      return _LoadingScreen(colors: colors);
-    }
+        if (_data == null) {
+          return _LoadingScreen(colors: colors);
+        }
 
-    final station = _data!.stations[_currentStationIndex];
+        final station = _data!.stations[stationProvider.currentStationIndex];
 
-    return Scaffold(
-      backgroundColor: colors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: SlideTransition(
-                  position: _slideAnimation,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildHeader(colors),
-                        _buildFeaturedImage(colors, station),
-                        _buildProgressBar(colors),
-                        const SizedBox(height: 20),
-                        _buildContentSection(colors, station),
-                        const SizedBox(height: 100),
-                      ],
+        return Scaffold(
+          backgroundColor: colors.background,
+          body: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: SlideTransition(
+                      position: _slideAnimation,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildHeader(colors),
+                            _buildFeaturedImage(
+                              colors,
+                              station,
+                              stationProvider.currentStationIndex,
+                            ),
+                            _buildProgressBar(
+                              colors,
+                              stationProvider.currentStationIndex,
+                            ),
+                            const SizedBox(height: 20),
+                            _buildContentSection(colors, station),
+                            const SizedBox(height: 100),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                _buildBottomNavigation(
+                  colors,
+                  stationProvider.currentStationIndex,
+                ),
+              ],
             ),
-            _buildBottomNavigation(colors),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -182,7 +189,11 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
     );
   }
 
-  Widget _buildFeaturedImage(FColors colors, Station station) {
+  Widget _buildFeaturedImage(
+    FColors colors,
+    Station station,
+    int currentIndex,
+  ) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       height: MediaQuery.of(context).size.height * 0.28,
@@ -227,7 +238,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '${Strings.station} ${_currentStationIndex + 1}',
+                  '${Strings.station} ${currentIndex + 1}',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -251,7 +262,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
     );
   }
 
-  Widget _buildProgressBar(FColors colors) {
+  Widget _buildProgressBar(FColors colors, int currentIndex) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
@@ -265,7 +276,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
                 style: TextStyle(fontSize: 11, color: colors.mutedForeground),
               ),
               Text(
-                '${_currentStationIndex + 1} of ${_data!.stations.length}',
+                '${currentIndex + 1} of ${_data!.stations.length}',
                 style: TextStyle(fontSize: 11, color: colors.mutedForeground),
               ),
             ],
@@ -274,7 +285,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
-              value: (_currentStationIndex + 1) / _data!.stations.length,
+              value: (currentIndex + 1) / _data!.stations.length,
               backgroundColor: colors.border,
               valueColor: AlwaysStoppedAnimation<Color>(colors.primary),
               minHeight: 6,
@@ -455,7 +466,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
     );
   }
 
-  Widget _buildBottomNavigation(FColors colors) {
+  Widget _buildBottomNavigation(FColors colors, int currentIndex) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
@@ -470,7 +481,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
               label: Strings.previous,
               isGhost: true,
               colors: colors,
-              onPressed: _currentStationIndex > 0 ? _previousStation : null,
+              onPressed: currentIndex > 0 ? _previousStation : null,
             ),
           ),
           const SizedBox(width: 16),
@@ -480,43 +491,12 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
               label: Strings.nextStation,
               isGhost: false,
               colors: colors,
-              onPressed: _currentStationIndex < _data!.stations.length - 1
+              onPressed: currentIndex < _data!.stations.length - 1
                   ? _nextStation
                   : null,
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildPlayPauseButton(FColors colors) {
-    return GestureDetector(
-      onTap: _togglePlayPause,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 56,
-        height: 56,
-        decoration: BoxDecoration(
-          color: _isPlaying ? colors.secondary : colors.primary,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: (_isPlaying ? colors.secondary : colors.primary).withAlpha(
-                100,
-              ),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Icon(
-          _isPlaying ? FIcons.pause : FIcons.play,
-          color: _isPlaying
-              ? colors.secondaryForeground
-              : colors.primaryForeground,
-          size: 24,
-        ),
       ),
     );
   }

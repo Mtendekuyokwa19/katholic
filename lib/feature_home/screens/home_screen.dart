@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:njirayamtanda/constants/app_colors.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/functions/readings_fns.dart';
@@ -50,11 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(colors),
-            Expanded(
-              child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(colors),
+              Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -79,22 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: colors.secondary.withAlpha(30),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(FIcons.menu, color: colors.foreground, size: 22),
-            ),
-          ),
           const Spacer(),
           Column(
             children: [
               Text(
-                'Year C • Advent',
+                '${_currentReadings.liturgicalYear ?? ""} • ${_currentReadings.liturgicalSeason ?? ""}',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -102,37 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                'December 2025',
+                _currentReadings.monthLong ?? '',
                 style: TextStyle(fontSize: 12, color: colors.mutedForeground),
               ),
             ],
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: colors.primary.withAlpha(25),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(FIcons.calendar, color: colors.primary, size: 16),
-                  const SizedBox(width: 6),
-                  Text(
-                    'today',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: colors.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -141,64 +107,83 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildLiturgicalDayCard(FColors colors) {
     return Container(
       width: double.infinity,
+      height: 200,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colors.secondary.withAlpha(25),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: colors.border),
+        image: const DecorationImage(
+          image: AssetImage(AppImages.churchOfEaster),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black54, BlendMode.overlay),
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _currentReadings.liturgicalDay ?? Strings.noLiturgicalDay,
-            style: TextStyle(
-              fontSize: AppSizes.heading3,
-              fontWeight: FontWeight.bold,
-              color: colors.foreground,
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            colors: [Colors.transparent, colors.background.withAlpha(200)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Sunday, Dec 7, 2025',
-            style: TextStyle(fontSize: 14, color: colors.mutedForeground),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: colors.primary.withAlpha(25),
-              borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              _currentReadings.liturgicalDay ?? Strings.noLiturgicalDay,
+              style: TextStyle(
+                fontSize: AppSizes.heading3,
+                fontWeight: FontWeight.bold,
+                color: colors.foreground,
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: colors.primary,
-                    shape: BoxShape.circle,
+            const SizedBox(height: 8),
+            Text(
+              'Sunday, Dec 7, 2025',
+              style: TextStyle(fontSize: 14, color: colors.mutedForeground),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: colors.primary.withAlpha(25),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: colors.primary,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Solemnity',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: colors.primary,
+                  const SizedBox(width: 8),
+                  Text(
+                    'Solemnity',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: colors.primary,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Purple Vestments',
-                  style: TextStyle(fontSize: 12, color: colors.mutedForeground),
-                ),
-              ],
+                  const SizedBox(width: 8),
+                  Text(
+                    'Purple Vestments',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colors.mutedForeground,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -210,6 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final colors = context.theme.colors;
 
     return Container(
+      key: ValueKey(dateProvider.selectedDate.toIso8601String()),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
