@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../common/providers/settings_provider.dart';
 import '../../constants/strings.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -31,46 +33,13 @@ class MoreScreen extends StatelessWidget {
               const SizedBox(height: 32),
               _buildShareSection(colors),
               const SizedBox(height: 32),
+              _buildSettingsSection(colors, context),
+              const SizedBox(height: 32),
               _buildFooter(colors),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildHeader(FColors colors) {
-    return Row(
-      children: [
-        Container(
-          width: 72,
-          height: 72,
-          decoration: BoxDecoration(
-            color: colors.primary.withAlpha(25),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Icon(FIcons.personStanding, color: colors.primary, size: 36),
-        ),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              Strings.appName,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: colors.foreground,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              Strings.appSubtitle,
-              style: TextStyle(fontSize: 14, color: colors.mutedForeground),
-            ),
-          ],
-        ),
-      ],
     );
   }
 
@@ -251,7 +220,7 @@ class MoreScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Share',
+          Strings.share,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
@@ -296,7 +265,7 @@ class MoreScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Share with Friends',
+                            Strings.shareWithFriends,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -305,7 +274,7 @@ class MoreScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Spread the word about this app',
+                            Strings.spreadTheWord,
                             style: TextStyle(
                               fontSize: 14,
                               color: colors.mutedForeground,
@@ -322,6 +291,182 @@ class MoreScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSettingsSection(FColors colors, BuildContext context) {
+    return Consumer<SettingsProvider>(
+      builder: (context, settingsProvider, child) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              Strings.settings,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: colors.mutedForeground,
+                letterSpacing: 1,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              decoration: BoxDecoration(
+                color: colors.secondary.withAlpha(20),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: colors.border),
+              ),
+              child: Column(
+                children: [
+                  // Font Size
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Strings.fontSize,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: colors.foreground,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              Strings.small,
+                              style: TextStyle(color: colors.mutedForeground),
+                            ),
+                            Expanded(
+                              child: Slider(
+                                value: settingsProvider.fontSizeFactor,
+                                onChanged: (value) =>
+                                    settingsProvider.setFontSizeFactor(value),
+                                min: 0.8,
+                                max: 1.5,
+                                divisions: 7,
+                                label:
+                                    '${(settingsProvider.fontSizeFactor * 100).round()}%',
+                              ),
+                            ),
+                            Text(
+                              Strings.large,
+                              style: TextStyle(color: colors.mutedForeground),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: colors.border,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  // Color Scheme
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Strings.colorScheme,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: colors.foreground,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        DropdownButton<ColorSchemeType>(
+                          value: settingsProvider.colorScheme,
+                          onChanged: (value) {
+                            if (value != null) {
+                              settingsProvider.setColorScheme(value);
+                            }
+                          },
+                          items: ColorSchemeType.values.map((scheme) {
+                            return DropdownMenuItem(
+                              value: scheme,
+                              child: Text(
+                                scheme.name[0].toUpperCase() +
+                                    scheme.name.substring(1),
+                              ),
+                            );
+                          }).toList(),
+                          isExpanded: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: colors.border,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  // Brightness
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Strings.brightness,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: colors.foreground,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () => settingsProvider.setBrightness(
+                                  BrightnessType.light,
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      settingsProvider.brightness ==
+                                          BrightnessType.light
+                                      ? colors.primary
+                                      : colors.secondary,
+                                ),
+                                child: const Text(Strings.light),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () => settingsProvider.setBrightness(
+                                  BrightnessType.dark,
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      settingsProvider.brightness ==
+                                          BrightnessType.dark
+                                      ? colors.primary
+                                      : colors.secondary,
+                                ),
+                                child: const Text(Strings.dark),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

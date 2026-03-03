@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 import 'common/database_helper.dart';
 import 'constants/strings.dart';
 import 'feature_home/providers/date_on_calender_provider.dart';
-import 'feature_home/screens/home_screen.dart';
 import 'feature_more/screens/more_screen.dart';
 import 'feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
 import 'feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
+import 'common/providers/settings_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +34,9 @@ Future<void> main() async {
     runApp(
       MultiProvider(
         providers: [
+          ChangeNotifierProvider<SettingsProvider>(
+            create: (_) => SettingsProvider(),
+          ),
           ChangeNotifierProvider<DateOnCalenderProvider>(
             create: (_) => DateOnCalenderProvider(),
           ),
@@ -56,34 +59,58 @@ Future<void> main() async {
   }
 }
 
-class Application extends StatelessWidget {
+class Application extends StatefulWidget {
   const Application({super.key});
 
   @override
+  State<Application> createState() => _ApplicationState();
+}
+
+class _ApplicationState extends State<Application> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final settingsProvider = Provider.of<SettingsProvider>(
+        context,
+        listen: false,
+      );
+      settingsProvider.loadSettings();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final FThemeData baseTheme = FThemes.green.dark;
+    return Consumer<SettingsProvider>(
+      builder: (context, settingsProvider, child) {
+        final baseTheme = settingsProvider.currentTheme;
 
-    // Get the approximate Material theme and customize the text theme
-    final ThemeData materialTheme = baseTheme
-        .toApproximateMaterialTheme()
-        .copyWith(
-          textTheme: GoogleFonts.robotoTextTheme(
-            baseTheme.toApproximateMaterialTheme().textTheme.apply(
-              fontSizeFactor: 1.0,
-              fontSizeDelta:
-                  2.0, // Increase all font sizes by 2 to ensure minimum 14
-            ),
-          ),
+        // Get the approximate Material theme and customize the text theme
+        final ThemeData materialTheme = baseTheme
+            .toApproximateMaterialTheme()
+            .copyWith(
+              textTheme: GoogleFonts.robotoTextTheme(
+                baseTheme.toApproximateMaterialTheme().textTheme.apply(
+                  fontSizeFactor: settingsProvider.fontSizeFactor,
+                  fontSizeDelta:
+                      2.0, // Increase all font sizes by 2 to ensure minimum 14
+                ),
+              ),
+            );
+
+        final FThemeData theme = baseTheme.copyWith();
+
+        return MaterialApp(
+          supportedLocales: FLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            ...FLocalizations.localizationsDelegates,
+          ],
+          theme: materialTheme,
+          builder: (_, Widget? child) =>
+              FAnimatedTheme(data: theme, child: child!),
+          home: const RootScreen(),
         );
-
-    final FThemeData theme = baseTheme.copyWith();
-
-    return MaterialApp(
-      supportedLocales: FLocalizations.supportedLocales,
-      localizationsDelegates: const [...FLocalizations.localizationsDelegates],
-      theme: materialTheme,
-      builder: (_, Widget? child) => FAnimatedTheme(data: theme, child: child!),
-      home: const RootScreen(),
+      },
     );
   }
 }
@@ -96,7 +123,7 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
-  static const List<Widget> _content = <Widget>[
+  static final List<Widget> _content = <Widget>[
     HomeScreen(),
     WayOfTheCrossScreen(),
     MoreScreen(),

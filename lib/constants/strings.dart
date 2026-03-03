@@ -168,4 +168,21 @@ class Strings {
   static const String thirteenthStation = "Thirteenth Station";
 
   static const String fourteenthStation = "Fourteenth Station";
+
+  // Settings strings
+  static const String settings = "Settings";
+  static const String fontSize = "Font Size";
+  static const String colorScheme = "Color Scheme";
+  static const String brightness = "Brightness";
+  static const String small = "Small";
+  static const String large = "Large";
+
+  // Share strings
+  static const String share = "Share";
+  static const String shareWithFriends = "Share with Friends";
+  static const String spreadTheWord = "Spread the word about this app";
+
+  // Brightness strings
+  static const String light = "Light";
+  static const String dark = "Dark";
 }
