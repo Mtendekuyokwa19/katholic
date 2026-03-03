@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:njirayamtanda/constants/app_colors.dart';
-import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
@@ -46,14 +45,6 @@ class ReadingDetailSheet extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            image: const AssetImage(AppImages.jesusOnCross),
-                            fit: BoxFit.cover,
-                            colorFilter: ColorFilter.mode(
-                              Colors.black.withAlpha(102),
-                              BlendMode.darken,
-                            ),
-                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,11 +146,15 @@ class ReadingDetailSheet extends StatelessWidget {
   }
 
   Widget _buildContent() {
+    // Format the text for better readability by adding line breaks after sentences
+    String formattedText = (reading.text ?? '').replaceAll('. ', '.\n\n');
+
     return Text(
-      reading.text ?? '',
+      formattedText,
+      textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize: AppSizes.bodyText + 2,
-        height: 1.8,
+        height: 2.0,
         color: colors.primary,
       ),
     );

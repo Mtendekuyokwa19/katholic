@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -56,12 +57,23 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FThemeData theme = FThemes.green.dark;
+    final FThemeData baseTheme = FThemes.green.dark;
+
+    // Get the approximate Material theme and customize the text theme
+    final ThemeData materialTheme = baseTheme
+        .toApproximateMaterialTheme()
+        .copyWith(
+          textTheme: GoogleFonts.crimsonTextTextTheme(
+            baseTheme.toApproximateMaterialTheme().textTheme,
+          ),
+        );
+
+    final FThemeData theme = baseTheme.copyWith();
 
     return MaterialApp(
       supportedLocales: FLocalizations.supportedLocales,
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
-      theme: theme.toApproximateMaterialTheme(),
+      theme: materialTheme,
       builder: (_, Widget? child) => FAnimatedTheme(data: theme, child: child!),
       home: const RootScreen(),
     );

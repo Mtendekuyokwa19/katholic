@@ -149,10 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 14, color: colors.mutedForeground),
             ),
             const SizedBox(height: 12),
-            VestmentInfoWidget(
-              colors: colors,
-              liturgicalSeason: _currentReadings.liturgicalSeason,
-            ),
+            VestmentInfoWidget(colors: colors),
           ],
         ),
       ),
