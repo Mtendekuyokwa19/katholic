@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
 import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/screens/search_stations_screen.dart';
 import 'package:njirayamtanda/feature_more/screens/more_screen.dart';
 import 'package:njirayamtanda/common/database_helper.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +84,8 @@ class _RootScreenState extends State<RootScreen> {
       ],
     ),
   ];
-  final _content = [
+
+  List<Widget> get _content => [
     SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,20 +93,7 @@ class _RootScreenState extends State<RootScreen> {
         children: const [HomeScreen()],
       ),
     ),
-    const Column(
-      mainAxisAlignment: .center,
-      children: [Text('Categories Placeholder')],
-    ),
-    const Column(
-      mainAxisAlignment: .center,
-      children: [Text('Search Placeholder')],
-    ),
-
-    const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [Text('Search Placeholder')],
-    ),
-
+    _buildSearchStationsTab(),
     const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [WayOfTheCrossScreen()],
@@ -115,7 +105,9 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: _index == 2 || _index == 3 ? null : _headers[_index],
+      header: _index == 1 || _index == 2 || _index == 3
+          ? null
+          : _headers[_index],
       child: _content[_index],
       footer: FBottomNavigationBar(
         onChange: (index) => setState(() => _index = index),
@@ -140,6 +132,31 @@ class _RootScreenState extends State<RootScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSearchStationsTab() {
+    return FutureBuilder<WayOfTheCrossData>(
+      future: WayOfTheCrossData.load(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text(Strings.somethingWentWrong));
+        }
+        if (!snapshot.hasData) {
+          return Center(child: Text(Strings.noResults));
+        }
+        return SearchStationsScreen(
+          data: snapshot.data!,
+          onStationSelected: (index) {
+            setState(() {
+              _index = 2;
+            });
+          },
+        );
+      },
     );
   }
 }

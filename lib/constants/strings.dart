@@ -94,4 +94,11 @@ class Strings {
   static String catholicApp = "Catholic App";
 
   static String stationProgress = "Station Progress";
+
+  static String searchReadings = "Search Readings";
+
+  static String trySearching =
+      "Try searching for a reading, prayer or reflection";
+
+  static String suggestions = "Suggestions";
 }
