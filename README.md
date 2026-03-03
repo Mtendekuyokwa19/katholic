@@ -1,16 +1,80 @@
-# njirayamtanda
+# Njira ya Mtanda
 
-A new Flutter project.
+A Flutter application providing Catholic daily readings and the Way of the Cross, designed to help users engage with their faith through accessible digital tools.
+
+## Features
+
+- **Daily Catholic Readings**: Access liturgical readings for each day, including scriptures and reflections.
+- **Way of the Cross**: Interactive stations with prayers, reflections, and meditations.
+- **Liturgical Calendar**: View liturgical days and special feast days.
+- **Offline Support**: Local database storage for readings and data.
+- **Multi-language**: Supports English and Chichewa (Malawi).
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK (^3.10.1)
+- Dart SDK
+- Android Studio or VS Code with Flutter extensions
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/njirayamtanda.git
+   cd njirayamtanda
+   ```
+
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+
+3. Run the app:
+   ```bash
+   flutter run
+   ```
+
+### Building for Different Platforms
+
+- **Android**: `flutter build apk`
+- **iOS**: `flutter build ios` (requires macOS)
+- **Web**: `flutter build web`
+- **Linux**: `flutter build linux`
+- **Windows**: `flutter build windows`
+
+## Usage
+
+- **Home Screen**: View daily readings and liturgical information.
+- **Way of the Cross**: Navigate through the 14 stations with prayers and reflections.
+- **More**: Access additional features and settings.
+
+The app loads initial data from JSON files and stores it in a local SQLite database for offline access.
+
+## Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Make your changes and test thoroughly
+4. Commit your changes: `git commit -m 'Add some feature'`
+5. Push to the branch: `git push origin feature/your-feature`
+6. Open a Pull Request
+
+### Development Setup
+
+- Run tests: `flutter test`
+- Lint code: `flutter analyze`
+- Format code: `dart format .`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you find this app helpful, consider supporting its development through donations.
+
+Made with love for the Church.
