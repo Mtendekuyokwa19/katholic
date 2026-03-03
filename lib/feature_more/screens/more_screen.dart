@@ -9,6 +9,13 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.theme.colors;
 
+    final contributors = [
+      {'name': 'Fr. John Chinjole', 'role': 'Spiritual Director'},
+      {'name': 'Mtende Mkandawire', 'role': 'Lead Developer'},
+      {'name': 'Catherine Phiri', 'role': 'Content Editor'},
+      {'name': 'Emmanuel Zidu', 'role': 'Translation'},
+    ];
+
     return Scaffold(
       backgroundColor: colors.background,
       body: SafeArea(
@@ -19,117 +26,9 @@ class MoreScreen extends StatelessWidget {
             children: [
               _buildHeader(colors),
               const SizedBox(height: 32),
-              _buildSection(
-                title: 'App Settings',
-                colors: colors,
-                children: [
-                  _SettingsTile(
-                    icon: FIcons.bell,
-                    title: 'Notifications',
-                    subtitle: 'Daily reading reminders',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.moon,
-                    title: 'Appearance',
-                    subtitle: 'Dark mode, theme settings',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.globe,
-                    title: 'Language',
-                    subtitle: 'English, Chichewa',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              _buildSection(
-                title: 'Readings',
-                colors: colors,
-                children: [
-                  _SettingsTile(
-                    icon: FIcons.bookOpen,
-                    title: 'Daily Readings',
-                    subtitle: 'View all daily readings',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.calendar,
-                    title: 'Liturgical Calendar',
-                    subtitle: 'Full liturgical year',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.heart,
-                    title: 'Favorites',
-                    subtitle: 'Saved readings',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              _buildSection(
-                title: 'Prayers',
-                colors: colors,
-                children: [
-                  _SettingsTile(
-                    icon: FIcons.cross,
-                    title: Strings.wayOfTheCross,
-                    subtitle: '14 stations of the cross',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.sparkles,
-                    title: 'Novenas',
-                    subtitle: 'Special prayers',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.heart,
-                    title: 'Daily Prayers',
-                    subtitle: 'Morning & evening prayers',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              _buildSection(
-                title: 'About',
-                colors: colors,
-                children: [
-                  _SettingsTile(
-                    icon: FIcons.info,
-                    title: 'About App',
-                    subtitle: 'Version 1.0.0',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.star,
-                    title: 'Rate App',
-                    subtitle: 'Share your feedback',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                  _SettingsTile(
-                    icon: FIcons.share,
-                    title: 'Share App',
-                    subtitle: 'Invite others',
-                    colors: colors,
-                    onTap: () {},
-                  ),
-                ],
-              ),
+              _buildDonationsSection(colors),
+              const SizedBox(height: 32),
+              _buildContributorsSection(colors, contributors),
               const SizedBox(height: 32),
               _buildFooter(colors),
             ],
@@ -156,7 +55,7 @@ class MoreScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Njira ya Mtanda',
+              Strings.appName,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -165,7 +64,7 @@ class MoreScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Catholic Daily Readings',
+              Strings.appSubtitle,
               style: TextStyle(fontSize: 14, color: colors.mutedForeground),
             ),
           ],
@@ -174,16 +73,92 @@ class MoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSection({
-    required String title,
-    required FColors colors,
-    required List<Widget> children,
-  }) {
+  Widget _buildDonationsSection(FColors colors) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title.toUpperCase(),
+          Strings.supportUs,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: colors.mutedForeground,
+            letterSpacing: 1,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: colors.primary.withAlpha(15),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: colors.primary.withAlpha(50)),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: colors.primary.withAlpha(30),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Icon(
+                        FIcons.heart,
+                        color: colors.primary,
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Strings.makeDonation,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: colors.foreground,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            Strings.donationDescription,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: colors.mutedForeground,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(FIcons.chevronRight, color: colors.primary, size: 22),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContributorsSection(
+    FColors colors,
+    List<Map<String, String>> contributors,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          Strings.contributors,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
@@ -198,7 +173,73 @@ class MoreScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: colors.border),
           ),
-          child: Column(children: children),
+          child: Column(
+            children: contributors.asMap().entries.map((entry) {
+              final index = entry.key;
+              final contributor = entry.value;
+              final isLast = index == contributors.length - 1;
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: colors.primary.withAlpha(20),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              contributor['name']!.substring(0, 1),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: colors.primary,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                contributor['name']!,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: colors.foreground,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                contributor['role']!,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: colors.mutedForeground,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (!isLast)
+                    Divider(
+                      height: 1,
+                      color: colors.border,
+                      indent: 16,
+                      endIndent: 16,
+                    ),
+                ],
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
@@ -209,7 +250,7 @@ class MoreScreen extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Made with love for the Church',
+            Strings.madeWithLove,
             style: TextStyle(fontSize: 12, color: colors.mutedForeground),
           ),
           const SizedBox(height: 4),
@@ -219,84 +260,12 @@ class MoreScreen extends StatelessWidget {
               Icon(FIcons.heart, color: colors.primary, size: 14),
               const SizedBox(width: 4),
               Text(
-                'Catholic App',
+                Strings.catholicApp,
                 style: TextStyle(fontSize: 12, color: colors.mutedForeground),
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SettingsTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final FColors colors;
-  final VoidCallback onTap;
-
-  const _SettingsTile({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.colors,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  color: colors.primary.withAlpha(20),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: colors.primary, size: 20),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: colors.foreground,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: colors.mutedForeground,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                FIcons.chevronRight,
-                color: colors.mutedForeground,
-                size: 18,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

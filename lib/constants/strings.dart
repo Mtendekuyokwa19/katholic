@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-
 class Strings {
   static const String somethingWentWrong =
       "Something Went Wrong. Please try again later.";
@@ -78,4 +76,22 @@ class Strings {
   static String clearAll = "Clear All";
 
   static String noResults = "No results found";
+
+  static String appName = "Njira ya Mtanda";
+
+  static String appSubtitle = "Catholic Daily Readings";
+
+  static String supportUs = "SUPPORT US";
+
+  static String makeDonation = "Make a Donation";
+
+  static String donationDescription = "Support the development of this app";
+
+  static String contributors = "CONTRIBUTORS";
+
+  static String madeWithLove = "Made with love for the Church";
+
+  static String catholicApp = "Catholic App";
+
+  static String stationProgress = "Station Progress";
 }

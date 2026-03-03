@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:njirayamtanda/constants/app_colors.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
@@ -46,9 +47,7 @@ class ReadingDetailSheet extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           image: DecorationImage(
-                            image: const AssetImage(
-                              'assets/images/jesus_on_cross.jpg',
-                            ),
+                            image: const AssetImage(AppImages.jesusOnCross),
                             fit: BoxFit.cover,
                             colorFilter: ColorFilter.mode(
                               Colors.black.withAlpha(102),

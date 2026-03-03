@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 
@@ -15,7 +16,7 @@ class EmptyStateWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: const DecorationImage(
-          image: AssetImage('assets/images/animation_person_catholic.jpg'),
+          image: AssetImage(AppImages.animationPersonCatholic),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
 import 'package:njirayamtanda/feature_way_of_the_cross/screens/search_stations_screen.dart';
@@ -199,7 +200,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: const DecorationImage(
-          image: AssetImage('assets/images/cross_crusader.jpg'),
+          image: AssetImage(AppImages.crossCrusader),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(Colors.black54, BlendMode.overlay),
         ),
@@ -271,7 +272,7 @@ class _WayOfTheCrossScreenState extends State<WayOfTheCrossScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Station Progress',
+                Strings.stationProgress,
                 style: TextStyle(fontSize: 11, color: colors.mutedForeground),
               ),
               Text(

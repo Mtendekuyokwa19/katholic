@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 
@@ -15,7 +16,7 @@ class HeaderSection extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: const DecorationImage(
-          image: AssetImage('assets/images/cross_crusader.jpg'),
+          image: AssetImage(AppImages.crossCrusader),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:njirayamtanda/constants/app_images.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/constants/strings.dart';
 import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
@@ -23,7 +24,7 @@ class LiturgicalDayCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: const DecorationImage(
-          image: AssetImage('assets/images/church_of_easr.jpg'),
+          image: AssetImage(AppImages.churchOfEaster),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
         ),
