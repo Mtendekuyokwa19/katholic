@@ -1,5 +1,6 @@
 # Katholic app
-
+![Screenshot off app](./screenshot_of_app1.png)
+![Screenshot off app](./screenshot_of_app2.png)
 A Flutter application providing Catholic daily readings and the Way of the Cross, designed to help users engage with their faith through accessible digital tools.
 
 ## Features
