@@ -5,15 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:njirayamtanda/common/notification_service.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
 import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
+import 'package:njirayamtanda/feature_more/screens/more_screen.dart';
+import 'package:njirayamtanda/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'common/database_helper.dart';
 import 'constants/strings.dart';
 import 'feature_home/providers/date_on_calender_provider.dart';
-import 'feature_more/screens/more_screen.dart';
 import 'feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
-import 'feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 import 'common/providers/settings_provider.dart';
+import 'common/providers/home_widget_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +44,9 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider<WayOfTheCrossProvider>(
             create: (_) => WayOfTheCrossProvider(),
+          ),
+          ChangeNotifierProvider<HomeWidgetProvider>(
+            create: (_) => HomeWidgetProvider(),
           ),
         ],
         child: const Application(),

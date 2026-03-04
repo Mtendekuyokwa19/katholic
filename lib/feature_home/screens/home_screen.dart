@@ -8,6 +8,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_images.dart';
 import '../../constants/app_sizes.dart';
 import '../../constants/strings.dart';
+import '../../common/providers/home_widget_provider.dart';
 import '../functions/readings_fns.dart';
 import '../models/catholic_readings_model.dart';
 import '../providers/date_on_calender_provider.dart';
@@ -402,6 +403,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _showReadingDetail(BuildContext context, Reading reading) {
     final colors = context.theme.colors;
+
+    // Track reading activity for home widget
+    final homeWidgetProvider = Provider.of<HomeWidgetProvider>(
+      context,
+      listen: false,
+    );
+    homeWidgetProvider.incrementToday();
 
     showModalBottomSheet(
       context: context,

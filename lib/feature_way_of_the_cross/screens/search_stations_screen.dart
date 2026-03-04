@@ -132,7 +132,10 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
                   style: TextStyle(color: colors.foreground),
                   decoration: InputDecoration(
                     hintText: Strings.search,
-                    hintStyle: TextStyle(color: colors.mutedForeground),
+                    hintStyle: TextStyle(
+                      color: colors.mutedForeground,
+                      fontSize: 16,
+                    ),
                     prefixIcon: Icon(
                       Icons.search,
                       color: colors.mutedForeground,
@@ -149,7 +152,6 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
                             },
                           )
                         : null,
-                    border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
@@ -167,7 +169,7 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
             Expanded(
               child: _showResults
                   ? _buildSearchResults(colors)
-                  : _buildRecentSearches(colors),
+                  : _emptySearch(colors),
             ),
           ],
         ),
@@ -276,81 +278,34 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
     );
   }
 
-  Widget _buildRecentSearches(FColors colors) {
-    if (_recentSearches.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _emptySearch(FColors colors) {
+    return Center(
+      child: FCard(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
+              Icon(Icons.search, size: 64, color: colors.primary),
+              const SizedBox(height: 16),
               Text(
-                Strings.recentSearches,
+                Strings.getStarted,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: colors.mutedForeground,
+                  color: colors.foreground,
                 ),
               ),
-              TextButton(
-                onPressed: _clearRecentSearches,
-                child: Text(
-                  Strings.clearAll,
-                  style: TextStyle(color: colors.primary, fontSize: 14),
-                ),
+              const SizedBox(height: 8),
+              Text(
+                Strings.searchStations,
+                style: TextStyle(fontSize: 14, color: colors.mutedForeground),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: _recentSearches.length,
-            itemBuilder: (context, index) {
-              final query = _recentSearches[index];
-              return InkWell(
-                onTap: () {
-                  _searchController.text = query;
-                  _onSearch(query);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.history, color: colors.mutedForeground),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          query,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: colors.foreground,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: colors.mutedForeground,
-                          size: 18,
-                        ),
-                        onPressed: () => _removeRecentSearch(query),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+      ),
     );
   }
 

@@ -73,6 +73,13 @@ class Strings {
 
   static const String recentSearches = "Recent Searches";
 
+  static const String getStarted = "Get started";
+
+  static const String readingActivity = "Reading Activity";
+
+  static const String searchStationsDescription =
+      "Search through the 14 Stations of the Cross";
+
   static const String clearAll = "Clear All";
 
   static const String noResults = "No results found";
