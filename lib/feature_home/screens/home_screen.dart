@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSizes.s16),
           gradient: LinearGradient(
-            colors: [Colors.transparent, colors.background.withAlpha(200)],
+            colors: [Colors.transparent, Colors.black54.withAlpha(200)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -140,13 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 fontSize: AppSizes.heading3,
                 fontWeight: FontWeight.bold,
-                color: colors.foreground,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               DateFns.formatDateInSundayDec72026(date),
-              style: TextStyle(fontSize: 14, color: colors.mutedForeground),
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 12),
             VestmentInfoWidget(colors: colors),

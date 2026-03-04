@@ -163,13 +163,13 @@ class VestmentInfoWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: colors.primary,
+                  color: Colors.grey,
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 vestmentText,
-                style: TextStyle(fontSize: 12, color: colors.mutedForeground),
+                style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),

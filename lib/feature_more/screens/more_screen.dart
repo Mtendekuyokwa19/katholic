@@ -31,9 +31,10 @@ class MoreScreen extends StatelessWidget {
               const SizedBox(height: 32),
               _buildContributorsSection(colors, contributors),
               const SizedBox(height: 32),
-              _buildShareSection(colors),
-              const SizedBox(height: 32),
               _buildSettingsSection(colors, context),
+
+              const SizedBox(height: 32),
+              _buildShareSection(colors),
               const SizedBox(height: 32),
               _buildFooter(colors),
             ],
@@ -219,16 +220,6 @@ class MoreScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          Strings.share,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: colors.mutedForeground,
-            letterSpacing: 1,
-          ),
-        ),
-        const SizedBox(height: 12),
         Container(
           decoration: BoxDecoration(
             color: colors.secondary.withAlpha(20),
@@ -239,27 +230,13 @@ class MoreScreen extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () => Share.share(
-                'Check out this amazing Catholic app for daily readings and Way of the Cross: ${Strings.appName} - ${Strings.appSubtitle}',
+                'Check out this amazing Catholic app for daily readings and Way of the Cross: ${Strings.appName} - ${Strings.appSubtitle}. \n you can become a contributor too. checkout the github: https://github.com/mtendekuyokwa19/katholic ',
               ),
               borderRadius: BorderRadius.circular(16),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        color: colors.primary.withAlpha(30),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Icon(
-                        FIcons.share,
-                        color: colors.primary,
-                        size: 28,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,7 +260,7 @@ class MoreScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(FIcons.chevronRight, color: colors.primary, size: 22),
+                    Icon(FIcons.share, color: colors.primary, size: 22),
                   ],
                 ),
               ),

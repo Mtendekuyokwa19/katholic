@@ -4,6 +4,7 @@ import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:njirayamtanda/common/notification_service.dart';
 import 'package:njirayamtanda/constants/app_sizes.dart';
+import 'package:njirayamtanda/feature_home/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'common/database_helper.dart';
