@@ -90,18 +90,39 @@ class _ApplicationState extends State<Application> {
       builder: (context, settingsProvider, child) {
         final baseTheme = settingsProvider.currentTheme;
 
-        // Get the approximate Material theme and customize the text theme
-        final ThemeData materialTheme = baseTheme
+        final baseTextTheme = baseTheme
             .toApproximateMaterialTheme()
+            .textTheme
+            .apply(
+              fontSizeFactor: settingsProvider.fontSizeFactor,
+              fontSizeDelta: 2.0,
+            );
+
+        final materialTextTheme = GoogleFonts.quicksandTextTheme(baseTextTheme)
             .copyWith(
-              textTheme: GoogleFonts.robotoTextTheme(
-                baseTheme.toApproximateMaterialTheme().textTheme.apply(
-                  fontSizeFactor: settingsProvider.fontSizeFactor,
-                  fontSizeDelta:
-                      2.0, // Increase all font sizes by 2 to ensure minimum 14
-                ),
+              bodyLarge: GoogleFonts.manrope(
+                textStyle: baseTextTheme.bodyLarge,
+              ),
+              bodyMedium: GoogleFonts.manrope(
+                textStyle: baseTextTheme.bodyMedium,
+              ),
+              bodySmall: GoogleFonts.manrope(
+                textStyle: baseTextTheme.bodySmall,
+              ),
+              labelLarge: GoogleFonts.manrope(
+                textStyle: baseTextTheme.labelLarge,
+              ),
+              labelMedium: GoogleFonts.manrope(
+                textStyle: baseTextTheme.labelMedium,
+              ),
+              labelSmall: GoogleFonts.manrope(
+                textStyle: baseTextTheme.labelSmall,
               ),
             );
+
+        final ThemeData materialTheme = baseTheme
+            .toApproximateMaterialTheme()
+            .copyWith(textTheme: materialTextTheme);
 
         final FThemeData theme = baseTheme.copyWith();
 
