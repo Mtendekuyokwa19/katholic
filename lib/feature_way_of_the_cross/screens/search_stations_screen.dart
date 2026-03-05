@@ -69,18 +69,6 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
     }
   }
 
-  void _clearRecentSearches() {
-    setState(() {
-      _recentSearches = [];
-    });
-  }
-
-  void _removeRecentSearch(String query) {
-    setState(() {
-      _recentSearches.remove(query);
-    });
-  }
-
   String _getStationType(int number) {
     final stationTypes = [
       Strings.firstStation,
@@ -101,7 +89,7 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
     if (number >= 1 && number <= 14) {
       return stationTypes[number - 1];
     }
-    return '$number Station';
+    return '$number ${Strings.stationType}';
   }
 
   void _onStationTap(Station station) {
@@ -233,7 +221,7 @@ class _SearchStationsScreenState extends State<SearchStationsScreen> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: colors.primary.withOpacity(0.1),
+                color: colors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(

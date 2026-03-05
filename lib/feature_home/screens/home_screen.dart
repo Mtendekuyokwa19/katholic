@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:katholic/constants/app_constants.dart';
-import 'package:katholic/utilities/date_fns.dart';
+import 'package:katholic/feature_home/widgets/calender_section_wid.dart';
+import 'package:katholic/feature_home/widgets/header_home_wid.dart';
+import 'package:katholic/feature_home/widgets/liturgy_card_wid.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/app_colors.dart';
-import '../../constants/app_images.dart';
 import '../../constants/app_sizes.dart';
 import '../../constants/strings.dart';
 import '../../common/providers/home_widget_provider.dart';
@@ -14,7 +13,7 @@ import '../models/catholic_readings_model.dart';
 import '../providers/date_on_calender_provider.dart';
 import '../widgets/empty_state_widget.dart';
 import '../widgets/reading_detail_sheet.dart';
-import '../widgets/vestment_info_widget.dart';
+import '../widgets/reading_item_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -82,79 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeader(FColors colors) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          const Spacer(),
-          Column(
-            children: [
-              Text(
-                '${AppConstants.year} • ${_currentReadings.liturgicalSeason ?? ""}',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: colors.foreground,
-                ),
-              ),
-              Text(
-                _currentReadings.monthLong ?? '',
-                style: TextStyle(fontSize: 12, color: colors.mutedForeground),
-              ),
-            ],
-          ),
-          const Spacer(),
-        ],
-      ),
-    );
+    return HeaderHomeWid(currentReadings: _currentReadings);
   }
 
   Widget _buildLiturgicalDayCard(FColors colors, DateTime date) {
-    return Container(
-      width: double.infinity,
-      height: AppSizes.s150,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.border),
-        image: const DecorationImage(
-          image: AssetImage(AppImages.churchOfEaster),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black54, BlendMode.overlay),
-        ),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(AppSizes.s16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.s16),
-          gradient: LinearGradient(
-            colors: [Colors.transparent, Colors.black54.withAlpha(200)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              _currentReadings.liturgicalDay ?? Strings.noLiturgicalDay,
-              style: TextStyle(
-                fontSize: AppSizes.heading3,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              DateFns.formatDateInSundayDec72026(date),
-              style: TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-            const SizedBox(height: 12),
-            VestmentInfoWidget(colors: colors),
-          ],
-        ),
-      ),
-    );
+    return LiturgycardDay(currentReadings: _currentReadings, date: date);
   }
 
   Widget _buildCalendarSection(
@@ -163,41 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ) {
     final colors = context.theme.colors;
 
-    return Container(
-      key: ValueKey(dateProvider.selectedDate.toIso8601String()),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: colors.foreground.withAlpha(13),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: FCard(
-        child: FLineCalendar(
-          control: .lifted(
-            date: dateProvider.selectedDate,
-            selectable: (date) => true,
-            onChange: (date) {
-              if (date != null) {
-                dateProvider.setSelectedDate(date);
-              }
-            },
-          ),
-          initialScroll: dateProvider.selectedDate,
-          initialScrollAlignment: .center,
-          cacheExtent: null,
-          keyboardDismissBehavior: .manual,
-          physics: null,
-          start: .utc(2025),
-          end: .utc(2027),
-          today: .now(),
-          builder: (context, data, child) => child!,
-        ),
-      ),
-    );
+    return CalenderSection(colors: colors);
   }
 
   Widget _buildReadingsSection(FColors colors) {
@@ -239,80 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildReadingItem(FColors colors, Reading reading) {
-    final iconColor = _getReadingColor(reading.type);
-
-    return GestureDetector(
+    return ReadingItemWidget(
+      reading: reading,
+      colors: colors,
       onTap: () => _showReadingDetail(context, reading),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: colors.background,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.border),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: iconColor.withAlpha(25),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    _getReadingIcon(reading.type),
-                    color: iconColor,
-                    size: 18,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        reading.type ?? Strings.reading,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: iconColor,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        reading.reference ?? '',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: colors.foreground,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  FIcons.chevronRight,
-                  color: colors.mutedForeground,
-                  size: 18,
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              reading.text ?? '',
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 13,
-                height: 1.5,
-                color: colors.mutedForeground,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -367,38 +194,6 @@ class _HomeScreenState extends State<HomeScreen> {
       reference: reading.reference,
       text: reading.text,
     );
-  }
-
-  IconData _getReadingIcon(String? type) {
-    switch (type?.toUpperCase()) {
-      case 'FIRST READING':
-      case 'SECOND READING':
-        return FIcons.book;
-      case 'RESPONSORIAL PSALM':
-        return FIcons.music;
-      case 'ALLELUIA':
-        return FIcons.star;
-      case 'GOSPEL':
-        return FIcons.bookOpen;
-      default:
-        return FIcons.fileText;
-    }
-  }
-
-  Color _getReadingColor(String? type) {
-    switch (type?.toUpperCase()) {
-      case 'FIRST READING':
-      case 'SECOND READING':
-        return AppColors.readingColor;
-      case 'RESPONSORIAL PSALM':
-        return AppColors.psalmColor;
-      case 'ALLELUIA':
-        return AppColors.alleluiaColor;
-      case 'GOSPEL':
-        return AppColors.gospelColor;
-      default:
-        return AppColors.readingColor;
-    }
   }
 
   void _showReadingDetail(BuildContext context, Reading reading) {

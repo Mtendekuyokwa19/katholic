@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:katholic/common/notification_service.dart';
@@ -7,6 +8,7 @@ import 'package:katholic/constants/app_sizes.dart';
 import 'package:katholic/feature_home/screens/home_screen.dart';
 import 'package:katholic/feature_more/screens/more_screen.dart';
 import 'package:katholic/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
+import 'package:katholic/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'common/database_helper.dart';
@@ -53,12 +55,9 @@ Future<void> main() async {
       ),
     );
   } catch (e) {
-    debugPrint('Error initializing app: $e');
     runApp(
-      const MaterialApp(
-        home: Scaffold(
-          body: Center(child: Text('Error loading app. Please restart.')),
-        ),
+      MaterialApp(
+        home: FScaffold(child: Center(child: Text(Strings.somethingWentWrong))),
       ),
     );
   }
@@ -127,8 +126,12 @@ class _ApplicationState extends State<Application> {
         final FThemeData theme = baseTheme.copyWith();
 
         return MaterialApp(
-          supportedLocales: FLocalizations.supportedLocales,
+          supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
             ...FLocalizations.localizationsDelegates,
           ],
           theme: materialTheme,

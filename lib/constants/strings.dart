@@ -176,6 +176,8 @@ class Strings {
 
   static const String fourteenthStation = "Fourteenth Station";
 
+  static const String stationType = "Station";
+
   // Settings strings
   static const String settings = "Settings";
   static const String fontSize = "Font Size";

@@ -1,0 +1,24 @@
+{
+  "helloWorld": "¡Hola Mundo!",
+  "@helloWorld": {
+    "description": "Standard greeting"
+  },
+  "greeting": "Hola {userName}",
+  "@greeting": {
+    "description": "Greeting with a parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "nWombats": "{count, plural, =0{ningún uómbat} =1{1 uómbat} other{{count} uómbatos}}",
+  "@nWombats": {
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  }
+}

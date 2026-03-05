@@ -1,0 +1,24 @@
+{
+  "helloWorld": "Moni!",
+  "@helloWorld": {
+    "description": "Standard greeting"
+  },
+  "greeting": "Moni {userName}",
+  "@greeting": {
+    "description": "Greeting with a parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "nWombats": "{count, plural, =0{pali wombats wosachepera} =1{wombat imodzi} other{{count} wombats}}",
+  "@nWombats": {
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  }
+}
