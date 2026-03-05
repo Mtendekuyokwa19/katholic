@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_images.dart';
-import 'package:njirayamtanda/constants/app_sizes.dart';
-import 'package:njirayamtanda/constants/strings.dart';
+import 'package:katholic/constants/app_images.dart';
+import 'package:katholic/constants/app_sizes.dart';
+import 'package:katholic/constants/strings.dart';
 
 class HeaderSection extends StatelessWidget {
   final FColors colors;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/strings.dart';
+import 'package:katholic/constants/strings.dart';
 import 'package:provider/provider.dart';
 import '../providers/date_on_calender_provider.dart';
 

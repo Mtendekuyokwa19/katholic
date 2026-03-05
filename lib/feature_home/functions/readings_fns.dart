@@ -1,6 +1,6 @@
-import 'package:njirayamtanda/constants/app_json.dart';
-import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
-import 'package:njirayamtanda/feature_home/models/liturgical_calendar_model.dart';
+import 'package:katholic/constants/app_json.dart';
+import 'package:katholic/feature_home/models/catholic_readings_model.dart';
+import 'package:katholic/feature_home/models/liturgical_calendar_model.dart';
 
 class ReadingsFns {
   final _dailyReadings = AppJson.catholicReadings2026

@@ -1,4 +1,4 @@
-name: njirayamtanda
+name: katholic
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -50,12 +50,15 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.1
 
 dependency_overrides:
   extended_image: ^10.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/appIcon.png"
 
 # The following section is specific to Flutter packages.
 flutter:

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_colors.dart';
-import 'package:njirayamtanda/constants/app_sizes.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
+import 'package:katholic/constants/app_colors.dart';
+import 'package:katholic/constants/app_sizes.dart';
+import 'package:katholic/constants/strings.dart';
+import 'package:katholic/feature_home/models/catholic_readings_model.dart';
 
 class ReadingCard extends StatelessWidget {
   final Reading reading;

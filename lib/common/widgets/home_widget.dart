@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
-import 'package:njirayamtanda/constants/strings.dart';
+import 'package:katholic/constants/strings.dart';
 
 class CatholicReadingWidget extends StatelessWidget {
   const CatholicReadingWidget({super.key});

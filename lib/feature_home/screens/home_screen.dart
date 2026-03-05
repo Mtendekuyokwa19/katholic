@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_constants.dart';
-import 'package:njirayamtanda/utilities/date_fns.dart';
+import 'package:katholic/constants/app_constants.dart';
+import 'package:katholic/utilities/date_fns.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_colors.dart';

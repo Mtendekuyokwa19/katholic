@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/app_images.dart';
-import 'package:njirayamtanda/constants/app_sizes.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_home/models/catholic_readings_model.dart';
-import 'package:njirayamtanda/feature_home/providers/date_on_calender_provider.dart';
-import 'package:njirayamtanda/utilities/date_fns.dart';
+import 'package:katholic/constants/app_images.dart';
+import 'package:katholic/constants/app_sizes.dart';
+import 'package:katholic/constants/strings.dart';
+import 'package:katholic/feature_home/models/catholic_readings_model.dart';
+import 'package:katholic/feature_home/providers/date_on_calender_provider.dart';
+import 'package:katholic/utilities/date_fns.dart';
 import 'package:provider/provider.dart';
 
 class LiturgicalDayCard extends StatelessWidget {

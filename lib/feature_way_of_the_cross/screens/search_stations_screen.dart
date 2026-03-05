@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:njirayamtanda/constants/strings.dart';
-import 'package:njirayamtanda/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
+import 'package:katholic/constants/strings.dart';
+import 'package:katholic/feature_way_of_the_cross/models/way_of_the_cross_model.dart';
 
 class SearchStationsScreen extends StatefulWidget {
   final WayOfTheCrossData data;
