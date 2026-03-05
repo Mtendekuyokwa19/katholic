@@ -11,10 +11,7 @@ import 'package:provider/provider.dart';
 import 'splash_screen.dart';
 import 'common/database_helper.dart';
 import 'constants/strings.dart';
-import 'feature_home/providers/date_on_calender_provider.dart';
-import 'feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
 import 'common/providers/settings_provider.dart';
-import 'common/providers/home_widget_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
