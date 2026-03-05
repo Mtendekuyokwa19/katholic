@@ -1,4 +1,3 @@
-// ignore: experimental_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
@@ -86,43 +85,30 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     return Consumer<SettingsProvider>(
       builder: (context, settingsProvider, child) {
-        final baseTheme = settingsProvider.currentTheme;
+        final fTheme = settingsProvider.currentTheme;
+        final fontSizeFactor = settingsProvider.fontSizeFactor;
 
-        final baseTextTheme = baseTheme
-            .toApproximateMaterialTheme()
-            .textTheme
-            .apply(
-              fontSizeFactor: settingsProvider.fontSizeFactor,
-              fontSizeDelta: 2.0,
-            );
+        final baseTextTheme = _buildTextTheme(fTheme, fontSizeFactor);
 
-        final materialTextTheme = GoogleFonts.quicksandTextTheme(baseTextTheme)
-            .copyWith(
-              bodyLarge: GoogleFonts.manrope(
-                textStyle: baseTextTheme.bodyLarge,
-              ),
-              bodyMedium: GoogleFonts.manrope(
-                textStyle: baseTextTheme.bodyMedium,
-              ),
-              bodySmall: GoogleFonts.manrope(
-                textStyle: baseTextTheme.bodySmall,
-              ),
-              labelLarge: GoogleFonts.manrope(
-                textStyle: baseTextTheme.labelLarge,
-              ),
-              labelMedium: GoogleFonts.manrope(
-                textStyle: baseTextTheme.labelMedium,
-              ),
-              labelSmall: GoogleFonts.manrope(
-                textStyle: baseTextTheme.labelSmall,
-              ),
-            );
+        final isDark = fTheme.colors.brightness == Brightness.dark;
 
-        final ThemeData materialTheme = baseTheme
-            .toApproximateMaterialTheme()
-            .copyWith(textTheme: materialTextTheme);
-
-        final FThemeData theme = baseTheme.copyWith();
+        final materialTheme = ThemeData(
+          useMaterial3: true,
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          colorScheme: ColorScheme(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+            primary: fTheme.colors.primary,
+            onPrimary: fTheme.colors.primaryForeground,
+            secondary: fTheme.colors.secondary,
+            onSecondary: fTheme.colors.secondaryForeground,
+            error: fTheme.colors.destructive,
+            onError: fTheme.colors.destructiveForeground,
+            surface: fTheme.colors.background,
+            onSurface: fTheme.colors.foreground,
+          ),
+          scaffoldBackgroundColor: fTheme.colors.background,
+          textTheme: baseTextTheme,
+        );
 
         return MaterialApp(
           supportedLocales: FLocalizations.supportedLocales,
@@ -131,10 +117,99 @@ class _ApplicationState extends State<Application> {
           ],
           theme: materialTheme,
           builder: (_, Widget? child) =>
-              FAnimatedTheme(data: theme, child: child!),
+              FAnimatedTheme(data: fTheme, child: child!),
           home: const RootScreen(),
         );
       },
+    );
+  }
+
+  TextTheme _buildTextTheme(FThemeData fTheme, double fontSizeFactor) {
+    final defaultTextTheme = TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 57 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 45 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 36 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 32 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 28 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 24 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 22 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.foreground,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 16 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.foreground,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.foreground,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.foreground,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12 * fontSizeFactor,
+        fontWeight: FontWeight.w400,
+        color: fTheme.colors.mutedForeground,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 14 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.foreground,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 12 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.foreground,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 11 * fontSizeFactor,
+        fontWeight: FontWeight.w500,
+        color: fTheme.colors.mutedForeground,
+      ),
+    );
+
+    return GoogleFonts.quicksandTextTheme(defaultTextTheme).copyWith(
+      bodyLarge: GoogleFonts.manrope(textStyle: defaultTextTheme.bodyLarge),
+      bodyMedium: GoogleFonts.manrope(textStyle: defaultTextTheme.bodyMedium),
+      bodySmall: GoogleFonts.manrope(textStyle: defaultTextTheme.bodySmall),
+      labelLarge: GoogleFonts.manrope(textStyle: defaultTextTheme.labelLarge),
+      labelMedium: GoogleFonts.manrope(textStyle: defaultTextTheme.labelMedium),
+      labelSmall: GoogleFonts.manrope(textStyle: defaultTextTheme.labelSmall),
     );
   }
 }
