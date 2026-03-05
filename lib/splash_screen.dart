@@ -8,7 +8,6 @@ import 'package:katholic/feature_home/screens/home_screen.dart';
 import 'package:katholic/feature_more/screens/more_screen.dart';
 import 'package:katholic/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 import 'package:provider/provider.dart';
-import 'splash_screen.dart';
 import 'common/database_helper.dart';
 import 'constants/strings.dart';
 import 'feature_home/providers/date_on_calender_provider.dart';
@@ -34,18 +33,22 @@ Future<void> main() async {
     await NotificationService.scheduleDailySaintNotification();
 
     runApp(
-      MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF2E7D32)),
-          textTheme: GoogleFonts.quicksandTextTheme(
-            ThemeData.light().textTheme.apply(
-              fontSizeFactor: 1.0,
-              fontSizeDelta: 2.0,
-            ),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<SettingsProvider>(
+            create: (_) => SettingsProvider(),
           ),
-        ),
-        home: const SplashScreen(),
+          ChangeNotifierProvider<DateOnCalenderProvider>(
+            create: (_) => DateOnCalenderProvider(),
+          ),
+          ChangeNotifierProvider<WayOfTheCrossProvider>(
+            create: (_) => WayOfTheCrossProvider(),
+          ),
+          ChangeNotifierProvider<HomeWidgetProvider>(
+            create: (_) => HomeWidgetProvider(),
+          ),
+        ],
+        child: const Application(),
       ),
     );
   } catch (e) {
@@ -174,6 +177,56 @@ class _RootScreenState extends State<RootScreen> {
       child: Container(
         padding: EdgeInsets.fromLTRB(0, AppSizes.s12, 0, 0),
         child: _content[_index],
+      ),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToHome();
+  }
+
+  Future<void> _navigateToHome() async {
+    await Future.delayed(const Duration(seconds: 2));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const RootScreen()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FScaffold(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/appIcon.png', width: 120, height: 120),
+            const SizedBox(height: 16),
+            Text(
+              Strings.appName,
+              style: GoogleFonts.quicksand(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              Strings.catholicApp,
+              style: GoogleFonts.manrope(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ],
+        ),
       ),
     );
   }

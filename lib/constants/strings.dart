@@ -192,4 +192,7 @@ class Strings {
   // Brightness strings
   static const String light = "Light";
   static const String dark = "Dark";
+
+  // Error strings
+  static const String errorLoadingApp = "Error loading app. Please restart.";
 }
