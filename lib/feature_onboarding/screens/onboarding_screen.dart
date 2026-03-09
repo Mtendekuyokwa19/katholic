@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:katholic/constants/strings.dart';
-import 'package:katholic/feature_onboarding/widgets/onboarding_page.dart';
-import 'package:katholic/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:katholic/feature_onboarding/providers/onboarding_provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -11,174 +10,345 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen>
-    with SingleTickerProviderStateMixin {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
 
-  final List<Map<String, String>> _onboardingPages = [
+  static const Color _primaryColor = Color(0xFF0D59F2);
+
+  final List<Map<String, dynamic>> _onboardingPages = [
     {
-      'title': 'Welcome to Katholic App',
-      'description': 'Discover daily Catholic readings and spiritual guidance',
+      'title': 'Peace in Prayer',
+      'description':
+          'A minimalist space for your daily spiritual devotion and reflection.',
       'image': 'assets/images/onboarding1.png',
+      'buttonText': 'Get Started',
     },
     {
       'title': 'Way of the Cross',
-      'description': 'Follow the stations of the cross with reflections',
+      'description':
+          'Experience the stations with scripture and meditation, leading you closer to the Liturgy.',
       'image': 'assets/images/onboarding2.png',
+      'buttonText': 'Next',
     },
     {
-      'title': 'Personalized Experience',
-      'description': 'Customize your spiritual journey with our app',
+      'title': 'Sacred Seasons',
+      'description':
+          'Stay connected with the Liturgical Calendar, daily readings, and the rhythms of the Church.',
       'image': 'assets/images/onboarding3.png',
+      'buttonText': 'Get Started',
     },
   ];
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
-
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
-
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0.0, 0.5), end: Offset.zero).animate(
-          CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
-        );
-
-    _animationController.forward();
-
     _pageController.addListener(() {
-      if (_pageController.page?.round() != _currentPage) {
+      final page = _pageController.page?.round() ?? 0;
+      if (page != _currentPage) {
         setState(() {
-          _currentPage = _pageController.page!.round();
+          _currentPage = page;
         });
-        _animationController.reset();
-        _animationController.forward();
       }
     });
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
+  void _goToNextPage() {
+    if (_currentPage < _onboardingPages.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _completeOnboarding();
+    }
+  }
+
+  void _goToPreviousPage() {
+    if (_currentPage > 0) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _completeOnboarding() {
+    context.read<OnboardingProvider>().completeOnboarding();
+    Navigator.of(context).pushReplacementNamed('/home');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final fTheme = FTheme.of(context);
+    final colors = fTheme.colors;
+    final isLastPage = _currentPage == _onboardingPages.length - 1;
 
-    return FScaffold(
-      child: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: _onboardingPages.length,
-              onPageChanged: (int page) {
-                setState(() {
-                  _currentPage = page;
-                });
-              },
-              itemBuilder: (context, index) {
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: SlideTransition(
-                    position: _slideAnimation,
-                    child: OnboardingPage(
-                      title: _onboardingPages[index]['title']!,
-                      description: _onboardingPages[index]['description']!,
-                      imagePath: _onboardingPages[index]['image']!,
+    return Scaffold(
+      backgroundColor: colors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (_currentPage > 0)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back, color: colors.foreground),
+                      onPressed: _goToPreviousPage,
                     ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      _onboardingPages.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: AnimatedScale(
-                          duration: const Duration(milliseconds: 200),
-                          scale: _currentPage == index ? 1.2 : 1.0,
-                          child: IconButton(
-                            icon: Icon(
-                              _currentPage == index
-                                  ? Icons.circle
-                                  : Icons.circle_outlined,
-                              size: 12,
-                              color: _currentPage == index
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.grey,
-                            ),
-                            onPressed: () {
-                              _pageController.animateToPage(
-                                index,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                          ),
+                    TextButton(
+                      onPressed: _completeOnboarding,
+                      child: const Text(
+                        'Skip',
+                        style: TextStyle(
+                          color: _primaryColor,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 24),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: _currentPage == _onboardingPages.length - 1
-                      ? 200
-                      : 150,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_currentPage == _onboardingPages.length - 1) {
-                        // Navigate to home screen
-                        Navigator.of(context).pushReplacementNamed('/home');
-                      } else {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
-                    child: Text(
-                      _currentPage == _onboardingPages.length - 1
-                          ? localizations.helloWorld
-                          : Strings.next,
+              ),
+            if (_currentPage == 0)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FIcons.church, color: _primaryColor, size: 28),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Katholic',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                        color: colors.foreground,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _onboardingPages.length,
+                onPageChanged: (page) {
+                  setState(() {
+                    _currentPage = page;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  final page = _onboardingPages[index];
+                  return _OnboardingPageContent(
+                    title: page['title'] as String,
+                    description: page['description'] as String,
+                    imagePath: page['image'] as String,
+                    isFirstPage: index == 0,
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  _PageIndicator(
+                    currentPage: _currentPage,
+                    totalPages: _onboardingPages.length,
+                    activeColor: _primaryColor,
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _goToNextPage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _primaryColor,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            isLastPage ? 'Get Started' : 'Next',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.arrow_forward, size: 20),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if (_currentPage < _onboardingPages.length - 1)
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/home');
+                  if (isLastPage) ...[
+                    const SizedBox(height: 12),
+                    TextButton(
+                      onPressed: _goToPreviousPage,
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          color: colors.mutedForeground,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OnboardingPageContent extends StatelessWidget {
+  final String title;
+  final String description;
+  final String imagePath;
+  final bool isFirstPage;
+
+  static const Color _primaryColor = Color(0xFF0D59F2);
+
+  const _OnboardingPageContent({
+    required this.title,
+    required this.description,
+    required this.imagePath,
+    required this.isFirstPage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final fTheme = FTheme.of(context);
+    final colors = fTheme.colors;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            height: isFirstPage ? 280 : 220,
+            width: double.infinity,
+            margin: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: _primaryColor.withAlpha(26),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: _primaryColor.withAlpha(51), width: 1),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Icon(
+                          isFirstPage ? Icons.church : Icons.route,
+                          size: 64,
+                          color: _primaryColor.withAlpha(128),
+                        ),
+                      );
                     },
-                    child: Text(Strings.skip),
                   ),
+                  if (isFirstPage)
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            colors.background.withAlpha(204),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: colors.foreground,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: colors.mutedForeground,
+                    height: 1.5,
+                  ),
+                ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PageIndicator extends StatelessWidget {
+  final int currentPage;
+  final int totalPages;
+  final Color activeColor;
+
+  const _PageIndicator({
+    required this.currentPage,
+    required this.totalPages,
+    required this.activeColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        totalPages,
+        (index) => AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: currentPage == index ? 24 : 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: currentPage == index
+                ? activeColor
+                : activeColor.withAlpha(77),
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
       ),
     );
   }

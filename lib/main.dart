@@ -138,7 +138,7 @@ class _ApplicationState extends State<Application> {
           theme: materialTheme,
           builder: (_, Widget? child) =>
               FAnimatedTheme(data: theme, child: child!),
-          home: const OnboardingScreen(),
+          home: const RootScreen(),
         );
       },
     );
