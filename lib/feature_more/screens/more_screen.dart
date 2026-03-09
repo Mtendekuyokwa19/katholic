@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:katholic/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -296,53 +297,6 @@ class MoreScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // Font Size
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Strings.fontSize,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: colors.foreground,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Text(
-                              Strings.small,
-                              style: TextStyle(color: colors.mutedForeground),
-                            ),
-                            Expanded(
-                              child: Slider(
-                                value: settingsProvider.fontSizeFactor,
-                                onChanged: (value) =>
-                                    settingsProvider.setFontSizeFactor(value),
-                                min: 0.8,
-                                max: 1.5,
-                                divisions: 7,
-                                label:
-                                    '${(settingsProvider.fontSizeFactor * 100).round()}%',
-                              ),
-                            ),
-                            Text(
-                              Strings.large,
-                              style: TextStyle(color: colors.mutedForeground),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                    color: colors.border,
-                    indent: 16,
-                    endIndent: 16,
-                  ),
                   // Color Scheme
                   Padding(
                     padding: const EdgeInsets.all(16),
@@ -358,23 +312,42 @@ class MoreScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        DropdownButton<ColorSchemeType>(
-                          value: settingsProvider.colorScheme,
-                          onChanged: (value) {
-                            if (value != null) {
-                              settingsProvider.setColorScheme(value);
-                            }
-                          },
-                          items: ColorSchemeType.values.map((scheme) {
-                            return DropdownMenuItem(
-                              value: scheme,
-                              child: Text(
-                                scheme.name[0].toUpperCase() +
-                                    scheme.name.substring(1),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: ColorSchemeType.values.map((scheme) {
+                            final isSelected =
+                                settingsProvider.colorScheme == scheme;
+                            final schemeColor = _getColorForScheme(
+                              scheme,
+                              colors,
+                            );
+                            return GestureDetector(
+                              onTap: () =>
+                                  settingsProvider.setColorScheme(scheme),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: schemeColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: isSelected
+                                      ? Border.all(
+                                          color: colors.primary,
+                                          width: 2,
+                                        )
+                                      : null,
+                                ),
+                                child: isSelected
+                                    ? Icon(
+                                        FIcons.check,
+                                        color: colors.background,
+                                        size: 20,
+                                      )
+                                    : null,
                               ),
                             );
                           }).toList(),
-                          isExpanded: true,
                         ),
                       ],
                     ),
@@ -445,6 +418,21 @@ class MoreScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color _getColorForScheme(ColorSchemeType scheme, FColors colors) {
+    switch (scheme) {
+      case ColorSchemeType.green:
+        return AppColors.liturgicalGreen;
+      case ColorSchemeType.zinc:
+        return const Color(0xFF71717A); // Zinc color
+      case ColorSchemeType.slate:
+        return const Color(0xFF64748B); // Slate color
+      case ColorSchemeType.red:
+        return const Color(0xFFEF4444); // Red color
+      case ColorSchemeType.orange:
+        return const Color(0xFFF97316); // Orange color
+    }
   }
 
   Widget _buildFooter(FColors colors) {

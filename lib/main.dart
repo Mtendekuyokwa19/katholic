@@ -7,6 +7,7 @@ import 'package:katholic/common/notification_service.dart';
 import 'package:katholic/constants/app_sizes.dart';
 import 'package:katholic/feature_home/screens/home_screen.dart';
 import 'package:katholic/feature_more/screens/more_screen.dart';
+import 'package:katholic/feature_onboarding/screens/onboarding_screen.dart';
 import 'package:katholic/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 import 'package:katholic/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -137,7 +138,7 @@ class _ApplicationState extends State<Application> {
           theme: materialTheme,
           builder: (_, Widget? child) =>
               FAnimatedTheme(data: theme, child: child!),
-          home: const RootScreen(),
+          home: const OnboardingScreen(),
         );
       },
     );
