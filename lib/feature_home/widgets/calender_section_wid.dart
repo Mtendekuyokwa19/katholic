@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:provider/provider.dart';
+import '../providers/date_on_calender_provider.dart';
 
 class CalenderSection extends StatelessWidget {
   const CalenderSection({super.key, required this.colors});
@@ -9,7 +10,10 @@ class CalenderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dateProvider = Provider.of(context, listen: false);
+    var dateProvider = Provider.of<DateOnCalenderProvider>(
+      context,
+      listen: false,
+    );
     return Container(
       key: ValueKey(dateProvider.selectedDate.toIso8601String()),
       decoration: BoxDecoration(

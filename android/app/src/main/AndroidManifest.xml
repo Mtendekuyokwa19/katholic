@@ -3,7 +3,6 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:label="Katholic"
-        android:name="Katholic"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -32,22 +31,22 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <broadcast
+         <receiver
             android:name="es.antonborri.home_widget.HomeWidgetBackgroundReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="es.antonborri.home_widget.action.BACKGROUND" />
             </intent-filter>
-        </broadcast>
-        <broadcast
+        </receiver>
+        <receiver
             android:name="com.example.njirayamtanda.CatholicReadingWidgetProvider"
             android:enabled="true"
             android:exported="true">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/catholic_reading_widget_info" />
-        </broadcast>
+        </receiver>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

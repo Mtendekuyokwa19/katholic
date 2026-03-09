@@ -6,7 +6,7 @@ class Strings {
 
   static const String search = "search";
 
-  static const String wayofthecross = "Njira ya mtanda";
+  static const String wayofthecross = "Way of the Cross";
 
   static const String more = "zambiri";
 
@@ -65,6 +65,9 @@ class Strings {
 
   static const String nextStation = "Next";
 
+  static const String next = "Next";
+  static const String skip = "Skip";
+
   static const String searchStations = "Search Stations";
 
   static const String searchResults = "Search Results";
@@ -84,7 +87,7 @@ class Strings {
 
   static const String noResults = "No results found";
 
-  static const String appName = "Njira ya Mtanda";
+  static const String appName = "Katholic App";
 
   static const String appSubtitle = "Catholic Daily Readings";
 
