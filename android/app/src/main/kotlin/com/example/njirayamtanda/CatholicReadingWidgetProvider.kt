@@ -2,29 +2,26 @@ package com.example.njirayamtanda
 
 import android.content.Context
 import android.widget.RemoteViews
-import es.antonborri.home_widget.HomeWidgetProvider
+import android.appwidget.AppWidgetProvider
+import android.appwidget.AppWidgetManager
 
-class CatholicReadingWidgetProvider : HomeWidgetProvider() {
+class CatholicReadingWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
-        appWidgetManager: android.widget.AppWidgetManager,
-        appWidgetIds: IntArray,
-        widgetData: android.content.SharedPreferences
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
     ) {
-        context?.let { ctx ->
-            // There may be multiple widgets active, so update all of them
-            for (appWidgetId in appWidgetIds) {
-                updateAppWidget(ctx, appWidgetManager, appWidgetId, widgetData)
-            }
+        // There may be multiple widgets active, so update all of them
+        for (appWidgetId in appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
         }
     }
 
     companion object {
         fun updateAppWidget(
             context: Context,
-            appWidgetManager: android.widget.AppWidgetManager,
-            appWidgetId: Int,
-            widgetData: android.content.SharedPreferences
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int
         ) {
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.catholic_reading_widget)

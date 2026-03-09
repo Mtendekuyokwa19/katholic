@@ -57,8 +57,8 @@ class HomeWidgetProvider extends ChangeNotifier {
       _encodeActivity(activityMap),
     );
     await HomeWidget.updateWidget(
-      name: 'CatholicReadingWidget',
-      androidName: 'CatholicReadingWidget',
+      name: 'CatholicReadingWidgetProvider',
+      androidName: 'CatholicReadingWidgetProvider',
     );
   }
 }
