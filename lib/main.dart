@@ -175,7 +175,7 @@ class _RootScreenState extends State<RootScreen> {
             label: Text(Strings.wayofthecross),
           ),
           FBottomNavigationBarItem(
-            icon: Icon(FIcons.personStanding),
+            icon: Icon(FIcons.ellipsis),
             label: Text(Strings.more),
           ),
         ],

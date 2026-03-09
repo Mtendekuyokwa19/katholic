@@ -8,7 +8,7 @@ class Strings {
 
   static const String wayofthecross = "Way of the Cross";
 
-  static const String more = "zambiri";
+  static const String more = "More";
 
   static const String wordOfTheDay = "Mawu pa tsiku la lero";
 
