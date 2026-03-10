@@ -1,4 +1,4 @@
-package com.example.njirayamtanda
+package com.katholic.app
 
 import android.content.Context
 import android.widget.RemoteViews

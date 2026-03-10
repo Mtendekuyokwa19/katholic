@@ -40,7 +40,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.example.njirayamtanda.CatholicReadingWidgetProvider"
+            android:name="com.katholic.app.CatholicReadingWidgetProvider"
             android:enabled="true"
             android:exported="true">
             <meta-data

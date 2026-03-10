@@ -1,4 +1,4 @@
-package com.example.njirayamtanda
+package com.katholic.app
 
 import io.flutter.embedding.android.FlutterActivity
 
