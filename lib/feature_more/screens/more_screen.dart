@@ -1,6 +1,9 @@
+import 'dart:ui_web';
+
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:katholic/constants/app_colors.dart';
+import 'package:katholic/feature_more/functions/url_launcher.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -47,39 +50,39 @@ class MoreScreen extends StatelessWidget {
   }
 
   Widget _buildDonationsSection(FColors colors) {
-    return GestureDetector(
-      onTap: () {
-        //launch url  // Handle donation tap
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            Strings.supportUs,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: colors.mutedForeground,
-              letterSpacing: 1,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          Strings.supportUs,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: colors.mutedForeground,
+            letterSpacing: 1,
           ),
-          const SizedBox(height: 12),
-          Container(
-            decoration: BoxDecoration(
-              color: colors.primary.withAlpha(15),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: colors.primary.withAlpha(15),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: colors.primary.withAlpha(50)),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: colors.primary.withAlpha(50)),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Container(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        URLlaunchers.launchURL();
+                      },
+                      child: Container(
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
@@ -92,43 +95,39 @@ class MoreScreen extends StatelessWidget {
                           size: 28,
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              Strings.makeDonation,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: colors.foreground,
-                              ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Strings.makeDonation,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: colors.foreground,
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              Strings.donationDescription,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: colors.mutedForeground,
-                              ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            Strings.donationDescription,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: colors.mutedForeground,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Icon(
-                        FIcons.chevronRight,
-                        color: colors.primary,
-                        size: 22,
-                      ),
-                    ],
-                  ),
+                    ),
+                    Icon(FIcons.chevronRight, color: colors.primary, size: 22),
+                  ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
