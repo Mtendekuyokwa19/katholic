@@ -19,7 +19,7 @@ class MoreScreen extends StatelessWidget {
     final contributors = [
       {'name': 'Vincent Chilemba', 'role': 'Liturgical Director'},
       {'name': 'Mtende Kuyokwa', 'role': 'Developer'},
-      {'name': 'Tamandani Nsiku', 'role': 'Lead Coordinator'},
+      {'name': 'Lindiwe Moyo', 'role': 'Lead Coordinator'},
     ];
 
     return Scaffold(
