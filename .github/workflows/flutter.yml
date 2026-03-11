@@ -13,16 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Flutter SDK
-        run: |
-          git clone https://github.com/flutter/flutter.git -b 3.29.0 --depth 1 /tmp/flutter
-          export PATH="/tmp/flutter/bin:$PATH"
-          flutter --version
-          dart --version
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: 'stable'
 
-      - run: /tmp/flutter/bin/flutter pub get
+      - run: flutter pub get
 
-      - run: /tmp/flutter/bin/flutter analyze
+      - run: flutter analyze
 
   build-android:
     name: Build Android APK
@@ -31,15 +29,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Flutter SDK
-        run: |
-          git clone https://github.com/flutter/flutter.git -b 3.29.0 --depth 1 /tmp/flutter
-          export PATH="/tmp/flutter/bin:$PATH"
-          flutter --version
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: 'stable'
 
-      - run: /tmp/flutter/bin/flutter pub get
+      - run: flutter pub get
 
-      - run: /tmp/flutter/bin/flutter build apk --debug
+      - run: flutter build apk --debug
 
       - uses: actions/upload-artifact@v4
         with:
