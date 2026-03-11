@@ -61,18 +61,17 @@ FLineCalendarStyle lineCalendarStyle({
     color: colors.primary,
     width: style.borderWidth,
   );
-  return .new(
+  return FLineCalendarStyle(
     decoration: FWidgetStateMap({
-      WidgetState.disabled &
-          WidgetState.selected &
-          WidgetState.focused: BoxDecoration(
+      WidgetState.disabled & WidgetState.selected & WidgetState.focused:
+          BoxDecoration(
         color: colors.disable(colors.primary),
         border: focusedBorder,
         borderRadius: style.borderRadius,
       ),
       WidgetState.disabled & WidgetState.selected: BoxDecoration(
         color: colors.disable(colors.primary),
-        border: .all(color: colors.border),
+        border: Border.all(color: colors.border),
         borderRadius: style.borderRadius,
       ),
       WidgetState.disabled & WidgetState.focused: BoxDecoration(
@@ -82,7 +81,7 @@ FLineCalendarStyle lineCalendarStyle({
       ),
       WidgetState.disabled: BoxDecoration(
         color: colors.background,
-        border: .all(color: colors.border),
+        border: Border.all(color: colors.border),
         borderRadius: style.borderRadius,
       ),
       WidgetState.selected &
@@ -92,8 +91,8 @@ FLineCalendarStyle lineCalendarStyle({
         border: focusedBorder,
         borderRadius: style.borderRadius,
       ),
-      WidgetState.selected &
-          (WidgetState.hovered | WidgetState.pressed): BoxDecoration(
+      WidgetState.selected & (WidgetState.hovered | WidgetState.pressed):
+          BoxDecoration(
         color: colors.hover(colors.primary),
         borderRadius: style.borderRadius,
       ),
@@ -106,8 +105,8 @@ FLineCalendarStyle lineCalendarStyle({
         color: colors.primary,
         borderRadius: style.borderRadius,
       ),
-      (WidgetState.hovered | WidgetState.pressed) &
-          WidgetState.focused: BoxDecoration(
+      (WidgetState.hovered | WidgetState.pressed) & WidgetState.focused:
+          BoxDecoration(
         color: colors.secondary,
         border: focusedBorder,
         borderRadius: style.borderRadius,
@@ -124,7 +123,7 @@ FLineCalendarStyle lineCalendarStyle({
       ),
       WidgetState.any: BoxDecoration(
         color: colors.background,
-        border: .all(color: colors.border),
+        border: Border.all(color: colors.border),
         borderRadius: style.borderRadius,
       ),
     }),
@@ -133,8 +132,8 @@ FLineCalendarStyle lineCalendarStyle({
         colors.primaryForeground,
       ),
       WidgetState.disabled: colors.disable(colors.mutedForeground),
-      WidgetState.selected & (WidgetState.hovered | WidgetState.pressed): colors
-          .hover(colors.primaryForeground),
+      WidgetState.selected & (WidgetState.hovered | WidgetState.pressed):
+          colors.hover(colors.primaryForeground),
       WidgetState.selected: colors.primaryForeground,
       (WidgetState.hovered | WidgetState.pressed): colors.hover(colors.primary),
       WidgetState.any: colors.primary,
@@ -142,44 +141,44 @@ FLineCalendarStyle lineCalendarStyle({
     dateTextStyle: FWidgetStateMap({
       WidgetState.disabled & WidgetState.selected: typography.xl.copyWith(
         color: colors.disable(colors.primaryForeground),
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.disabled: typography.xl.copyWith(
         color: colors.disable(colors.mutedForeground),
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.selected: typography.xl.copyWith(
         color: colors.primaryForeground,
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.any: typography.xl.copyWith(
         color: colors.primary,
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
     }),
     weekdayTextStyle: FWidgetStateMap({
       WidgetState.disabled & WidgetState.selected: typography.xs.copyWith(
         color: colors.disable(colors.primaryForeground),
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.disabled: typography.xs.copyWith(
         color: colors.disable(colors.mutedForeground),
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.selected: typography.xs.copyWith(
         color: colors.primaryForeground,
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
       WidgetState.any: typography.xs.copyWith(
         color: colors.mutedForeground,
-        fontWeight: .w500,
+        fontWeight: FontWeight.w500,
         height: 0,
       ),
     }),

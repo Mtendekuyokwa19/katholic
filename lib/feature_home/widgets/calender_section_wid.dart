@@ -28,7 +28,7 @@ class CalenderSection extends StatelessWidget {
       ),
       child: FCard(
         child: FLineCalendar(
-          control: .lifted(
+          control: FLineCalendarControl.lifted(
             date: dateProvider.selectedDate,
             selectable: (date) => true,
             onChange: (date) {
@@ -37,14 +37,9 @@ class CalenderSection extends StatelessWidget {
               }
             },
           ),
-          initialScroll: dateProvider.selectedDate,
-          initialScrollAlignment: .center,
-          cacheExtent: null,
-          keyboardDismissBehavior: .manual,
-          physics: null,
-          start: .utc(2025),
-          end: .utc(2027),
-          today: .now(),
+          start: DateTime.utc(2025),
+          end: DateTime.utc(2027),
+          today: DateTime.now(),
           builder: (context, data, child) => child!,
         ),
       ),

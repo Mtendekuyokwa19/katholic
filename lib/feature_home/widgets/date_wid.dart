@@ -7,19 +7,14 @@ class DateWid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FLineCalendar(
-      control: .lifted(
-        date: .now(),
+      control: FLineCalendarControl.lifted(
+        date: DateTime.now(),
         selectable: (date) => true,
         onChange: (date) {},
       ),
-      initialScroll: .now(),
-      initialScrollAlignment: .center,
-      cacheExtent: null,
-      keyboardDismissBehavior: .manual,
-      physics: null,
-      start: .utc(1900),
-      end: .utc(2100),
-      today: .now(),
+      start: DateTime.utc(1900),
+      end: DateTime.utc(2100),
+      today: DateTime.now(),
       builder: (context, data, child) => child!,
     );
   }

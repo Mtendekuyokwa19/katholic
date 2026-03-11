@@ -56,11 +56,13 @@ FBottomNavigationBarStyle bottomNavigationBarStyle({
   required FColors colors,
   required FTypography typography,
   required FStyle style,
-}) => FBottomNavigationBarStyle(
-  decoration: BoxDecoration(
-    border: Border(top: BorderSide(color: colors.border)),
-    color: colors.background,
-  ),
-  itemStyle: .inherit(colors: colors, typography: typography, style: style),
-  padding: const .all(5),
-);
+}) =>
+    FBottomNavigationBarStyle(
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: colors.border)),
+        color: colors.background,
+      ),
+      itemStyle: FBottomNavigationBarItemStyle.inherit(
+          colors: colors, typography: typography, style: style),
+      padding: const EdgeInsets.all(5),
+    );
