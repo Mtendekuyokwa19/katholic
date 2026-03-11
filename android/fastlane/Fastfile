@@ -10,6 +10,17 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
+# Project Description
+# A Flutter application providing Catholic daily readings and the Way of the Cross,
+# designed to help users engage with their faith through accessible digital tools.
+#
+# Features:
+# - Daily Catholic Readings: Access liturgical readings for each day
+# - Way of the Cross: Interactive stations with prayers and reflections
+# - Liturgical Calendar: View liturgical days and special feast days
+# - Offline Support: Local database storage for readings
+# - Multi-language: Supports English and Chichewa (Malawi)
+
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
