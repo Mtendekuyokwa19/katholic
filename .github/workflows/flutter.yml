@@ -15,7 +15,7 @@ jobs:
 
       - name: Download Flutter SDK
         run: |
-          git clone https://github.com/flutter/flutter.git -b 3.10.1 --depth 1 /tmp/flutter
+          git clone https://github.com/flutter/flutter.git -b 3.28.0 --depth 1 /tmp/flutter
           export PATH="/tmp/flutter/bin:$PATH"
           flutter --version
           dart --version
@@ -33,7 +33,7 @@ jobs:
 
       - name: Download Flutter SDK
         run: |
-          git clone https://github.com/flutter/flutter.git -b 3.10.1 --depth 1 /tmp/flutter
+          git clone https://github.com/flutter/flutter.git -b 3.28.0 --depth 1 /tmp/flutter
           export PATH="/tmp/flutter/bin:$PATH"
           flutter --version
 
