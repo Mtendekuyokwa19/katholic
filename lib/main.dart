@@ -9,7 +9,6 @@ import 'package:katholic/feature_home/screens/home_screen.dart';
 import 'package:katholic/feature_more/screens/more_screen.dart';
 import 'package:katholic/feature_prayers/screens/prayers_screen.dart';
 import 'package:katholic/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
-import 'package:katholic/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'common/database_helper.dart';
