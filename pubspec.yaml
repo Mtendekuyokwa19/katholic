@@ -75,9 +75,9 @@ flutter:
     - lib/common/models/catholic_readings_2026_full.json
     - lib/common/models/way_of_the_cross.json
     - lib/common/models/readings_2026.json
-    - assets/images/onboarding1.png
-    - assets/images/onboarding2.png
-    - assets/images/onboarding3.png
+    - assets/images/onboarding1.jpg
+    - assets/images/onboarding2.jpg
+    - assets/images/onboarding3.jpg
     - assets/images/church_of_easr.jpg
     - assets/images/cross_crusader.jpg
     - assets/images/jesus_on_cross.jpg

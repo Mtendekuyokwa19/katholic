@@ -21,21 +21,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       'title': 'Peace in Prayer',
       'description':
           'A minimalist space for your daily spiritual devotion and reflection.',
-      'image': 'assets/images/onboarding1.png',
+      'image': 'assets/images/onboarding1.jpg',
       'buttonText': 'Get Started',
     },
     {
       'title': 'Way of the Cross',
       'description':
           'Experience the stations with scripture and meditation, leading you closer to the Liturgy.',
-      'image': 'assets/images/onboarding2.png',
+      'image': 'assets/images/onboarding2.jpg',
       'buttonText': 'Next',
     },
     {
       'title': 'Sacred Seasons',
       'description':
           'Stay connected with the Liturgical Calendar, daily readings, and the rhythms of the Church.',
-      'image': 'assets/images/onboarding3.png',
+      'image': 'assets/images/onboarding3.jpg',
       'buttonText': 'Get Started',
     },
   ];

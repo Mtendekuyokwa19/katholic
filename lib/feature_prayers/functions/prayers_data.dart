@@ -16,6 +16,7 @@ class PrayersData {
       title: 'Hail Mary',
       categories: ['basic'],
       icon: Icons.favorite,
+      imageAsset: _imgKissingJesus,
       versions: [
         PrayerVersion(
           name: 'Traditional',
