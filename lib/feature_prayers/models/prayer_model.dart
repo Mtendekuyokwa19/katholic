@@ -7,6 +7,7 @@ class Prayer {
   final List<PrayerVersion> versions;
   final IconData icon;
   final Color accentColor;
+  final String? imageAsset;
 
   const Prayer({
     required this.id,
@@ -15,7 +16,10 @@ class Prayer {
     required this.versions,
     this.icon = Icons.auto_awesome,
     this.accentColor = const Color(0xFF8B1538),
+    this.imageAsset,
   });
+
+  bool get hasImage => imageAsset != null;
 
   static String getCategoryDisplayName(String category) {
     switch (category) {

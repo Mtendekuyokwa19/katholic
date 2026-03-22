@@ -8,6 +8,123 @@ class PrayersData {
   static const Color _amber = Color(0xFF5B442E);
   static const Color _purple = Color(0xFF4A1E5B);
 
+  static const String _imgJesusOnCross = 'assets/images/jesus_on_cross.jpg';
+  static const String _imgChurchOfEaster = 'assets/images/church_of_easr.jpg';
+  static const String _imgCrossCrusader = 'assets/images/cross_crusader.jpg';
+  static const String _imgKissingJesus = 'assets/images/kissing_jesus_feet.jpg';
+  static const String _imgOldPaintings =
+      'assets/images/old_paintings_of_jesus.jpg';
+  static const String _imgPeopleChurch = 'assets/images/people_in_church.jpg';
+
+  static final List<Prayer> featuredPrayers = [
+    Prayer(
+      id: 'hail_mary',
+      title: 'Hail Mary',
+      categories: ['basic'],
+      icon: Icons.favorite,
+      accentColor: _burgundy,
+      imageAsset: _imgKissingJesus,
+      versions: [
+        PrayerVersion(
+          name: 'Traditional',
+          content: '''Hail Mary, full of grace,
+the Lord is with thee.
+Blessed art thou amongst women,
+and blessed is the fruit of thy womb, Jesus.
+
+Holy Mary, Mother of God,
+pray for us sinners,
+now and at the hour of our death.
+
+Amen.''',
+        ),
+        PrayerVersion(
+          name: 'Modern',
+          content: '''Hail Mary, full of grace, the Lord is with you.
+Blessed are you among women,
+and blessed is the fruit of your womb, Jesus.
+
+Holy Mary, Mother of God, pray for us sinners,
+now and at the hour of our death.
+
+Amen.''',
+        ),
+      ],
+    ),
+    Prayer(
+      id: 'st_michael',
+      title: 'Prayer to St. Michael',
+      categories: ['basic', 'saints'],
+      icon: Icons.security,
+      accentColor: _burgundy,
+      imageAsset: _imgCrossCrusader,
+      versions: [
+        PrayerVersion(
+          name: '',
+          content: '''Holy Michael, the Archangel, defend us in battle.
+Be our safeguard against the wickedness and snares of the devil.
+
+May God rebuke him, we humbly pray; and do you,
+O Prince of the heavenly host,
+by the power of God cast into hell Satan and all the evil spirits
+who wander through the world seeking the ruin of souls.
+
+Amen.''',
+        ),
+      ],
+    ),
+    Prayer(
+      id: 'our_father',
+      title: 'Our Father',
+      categories: ['basic'],
+      icon: Icons.church,
+      accentColor: _burgundy,
+      imageAsset: _imgChurchOfEaster,
+      versions: [
+        PrayerVersion(
+          name: '',
+          content: '''Our Father, Who art in heaven,
+Hallowed be Thy Name.
+Thy Kingdom come.
+Thy Will be done,
+on earth as it is in Heaven.
+
+Give us this day our daily bread.
+And forgive us our trespasses,
+as we forgive those who trespass against us.
+And lead us not into temptation,
+but deliver us from evil.
+
+Amen.''',
+        ),
+      ],
+    ),
+    Prayer(
+      id: 'guardian_angel',
+      title: 'Guardian Angel',
+      categories: ['basic', 'saints'],
+      icon: Icons.nightlight_round,
+      accentColor: _burgundy,
+      imageAsset: _imgPeopleChurch,
+      versions: [
+        PrayerVersion(
+          name: '',
+          content: '''Angel of God,
+
+my guardian dear,
+to whom God's love
+commits me here,
+ever this day,
+be at my side,
+to light and guard,
+rule and guide.
+
+Amen.''',
+        ),
+      ],
+    ),
+  ];
+
   static final List<Prayer> allPrayers = [
     Prayer(
       id: 'hail_mary',
@@ -15,6 +132,7 @@ class PrayersData {
       categories: ['basic'],
       icon: Icons.favorite,
       accentColor: _burgundy,
+      imageAsset: _imgKissingJesus,
       versions: [
         PrayerVersion(
           name: 'Traditional',
@@ -48,6 +166,7 @@ Amen.''',
       categories: ['basic'],
       icon: Icons.church,
       accentColor: _burgundy,
+      imageAsset: _imgChurchOfEaster,
       versions: [
         PrayerVersion(
           name: '',
@@ -544,6 +663,7 @@ must think thus of the Trinity.''',
       categories: ['rosary'],
       icon: Icons.celebration,
       accentColor: _navy,
+      imageAsset: _imgKissingJesus,
       versions: [
         PrayerVersion(
           name: 'Monday & Saturday',
@@ -570,6 +690,7 @@ _Fruit of the Mystery: True Conversion (Piety, Joy of Finding Jesus)_''',
       categories: ['rosary'],
       icon: Icons.sentiment_dissatisfied,
       accentColor: _navy,
+      imageAsset: _imgJesusOnCross,
       versions: [
         PrayerVersion(
           name: 'Tuesday & Friday',
@@ -596,6 +717,7 @@ _Fruit of the Mystery: Perseverance in Faith, Grace for a Holy Death, Forgivenes
       categories: ['rosary'],
       icon: Icons.auto_awesome,
       accentColor: _navy,
+      imageAsset: _imgOldPaintings,
       versions: [
         PrayerVersion(
           name: 'Wednesday & Sunday',
@@ -622,6 +744,7 @@ _Fruit of the Mystery: Perseverance and an Increase in Virtue (Trust in Mary's I
       categories: ['rosary'],
       icon: Icons.lightbulb,
       accentColor: _navy,
+      imageAsset: _imgOldPaintings,
       versions: [
         PrayerVersion(
           name: 'Thursday',
@@ -648,6 +771,7 @@ _Fruit of the Mystery: Adoration_''',
       categories: ['litany'],
       icon: Icons.format_list_numbered,
       accentColor: _forest,
+      imageAsset: _imgPeopleChurch,
       versions: [
         PrayerVersion(
           name: 'To the Holy Virgin Mary',
@@ -1126,6 +1250,7 @@ Through Christ our Lord.
       categories: ['litany'],
       icon: Icons.favorite,
       accentColor: _forest,
+      imageAsset: _imgJesusOnCross,
       versions: [
         PrayerVersion(
           name: '',
@@ -1250,6 +1375,7 @@ world without end.
       categories: ['litany', 'saints'],
       icon: Icons.handyman,
       accentColor: _forest,
+      imageAsset: _imgOldPaintings,
       versions: [
         PrayerVersion(
           name: '',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/prayer_model.dart';
 
 class PrayerDetailScreen extends StatefulWidget {
@@ -55,12 +56,15 @@ Shared from Catholic App
       SnackBar(
         content: Row(
           children: [
-            Icon(Icons.check_circle_outline, color: Colors.white, size: 18),
+            Icon(FIcons.check, color: Colors.white, size: 18),
             const SizedBox(width: 10),
-            const Text('Prayer copied'),
+            Text(
+              'Prayer copied',
+              style: GoogleFonts.manrope(color: Colors.white, fontSize: 14),
+            ),
           ],
         ),
-        backgroundColor: colors.primary,
+        backgroundColor: FTheme.of(context).colors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.all(16),
@@ -116,16 +120,24 @@ Shared from Catholic App
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: colors.secondary.withAlpha(isDark ? 40 : 30),
-                borderRadius: BorderRadius.circular(10),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: colors.secondary.withAlpha(isDark ? 40 : 30),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  FIcons.arrowLeft,
+                  color: colors.foreground,
+                  size: 18,
+                ),
               ),
-              child: Icon(FIcons.arrowLeft, color: colors.foreground, size: 18),
             ),
           ),
           const Spacer(),
@@ -140,7 +152,7 @@ Shared from Catholic App
                   .map((c) => Prayer.getCategoryDisplayName(c))
                   .toSet()
                   .join(', '),
-              style: TextStyle(
+              style: GoogleFonts.manrope(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
@@ -179,7 +191,7 @@ Shared from Catholic App
                 children: [
                   Text(
                     widget.prayer.title,
-                    style: TextStyle(
+                    style: GoogleFonts.quicksand(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: colors.foreground,
@@ -189,7 +201,7 @@ Shared from Catholic App
                     const SizedBox(height: 2),
                     Text(
                       selectedVersion.name,
-                      style: TextStyle(
+                      style: GoogleFonts.manrope(
                         fontSize: 13,
                         color: colors.mutedForeground,
                       ),
@@ -212,42 +224,48 @@ Shared from Catholic App
           final isSelected = entry.key == _selectedVersionIndex;
           return Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: GestureDetector(
-              onTap: () {
-                _animationController.reset();
-                setState(() {
-                  _selectedVersionIndex = entry.key;
-                });
-                _animationController.forward();
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? widget.prayer.accentColor.withAlpha(isDark ? 35 : 25)
-                      : colors.secondary.withAlpha(isDark ? 40 : 30),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: isSelected
-                        ? widget.prayer.accentColor.withAlpha(isDark ? 80 : 60)
-                        : colors.border.withAlpha(60),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  _animationController.reset();
+                  setState(() {
+                    _selectedVersionIndex = entry.key;
+                  });
+                  _animationController.forward();
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
                   ),
-                ),
-                child: Text(
-                  entry.value.name.isEmpty
-                      ? 'Version ${entry.key + 1}'
-                      : entry.value.name,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                  decoration: BoxDecoration(
                     color: isSelected
-                        ? widget.prayer.accentColor.withAlpha(
-                            isDark ? 230 : 180,
-                          )
-                        : colors.foreground.withAlpha(180),
+                        ? widget.prayer.accentColor.withAlpha(isDark ? 35 : 25)
+                        : colors.secondary.withAlpha(isDark ? 40 : 30),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: isSelected
+                          ? widget.prayer.accentColor.withAlpha(
+                              isDark ? 80 : 60,
+                            )
+                          : colors.border.withAlpha(60),
+                    ),
+                  ),
+                  child: Text(
+                    entry.value.name.isEmpty
+                        ? 'Version ${entry.key + 1}'
+                        : entry.value.name,
+                    style: GoogleFonts.manrope(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: isSelected
+                          ? widget.prayer.accentColor.withAlpha(
+                              isDark ? 230 : 180,
+                            )
+                          : colors.foreground.withAlpha(180),
+                    ),
                   ),
                 ),
               ),
@@ -279,14 +297,14 @@ Shared from Catholic App
           Row(
             children: [
               Icon(
-                Icons.format_quote,
+                FIcons.sparkles,
                 color: colors.mutedForeground.withAlpha(100),
                 size: 16,
               ),
               const SizedBox(width: 8),
               Text(
                 'Prayer',
-                style: TextStyle(
+                style: GoogleFonts.quicksand(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: colors.mutedForeground,
@@ -334,7 +352,7 @@ Shared from Catholic App
       TextStyle style;
 
       if (isSection) {
-        style = TextStyle(
+        style = GoogleFonts.quicksand(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
@@ -342,7 +360,7 @@ Shared from Catholic App
           height: 1.5,
         );
       } else if (isResponse) {
-        style = TextStyle(
+        style = GoogleFonts.manrope(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           color: colors.foreground,
@@ -350,21 +368,21 @@ Shared from Catholic App
           height: 1.5,
         );
       } else if (isLeader) {
-        style = TextStyle(
+        style = GoogleFonts.quicksand(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
           height: 1.5,
         );
       } else if (isBold) {
-        style = TextStyle(
+        style = GoogleFonts.quicksand(
           fontSize: 15,
           fontWeight: FontWeight.w600,
           color: colors.foreground,
           height: 1.5,
         );
       } else {
-        style = TextStyle(
+        style = GoogleFonts.manrope(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           color: colors.foreground,
@@ -388,34 +406,40 @@ Shared from Catholic App
   }
 
   Widget _buildShareButton(FColors colors, bool isDark) {
-    return GestureDetector(
-      onTap: _sharePrayer,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: colors.primary.withAlpha(isDark ? 35 : 25),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.primary.withAlpha(isDark ? 60 : 40)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.copy_outlined,
-              color: colors.primary.withAlpha(isDark ? 220 : 180),
-              size: 18,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: _sharePrayer,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            color: colors.primary.withAlpha(isDark ? 35 : 25),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: colors.primary.withAlpha(isDark ? 60 : 40),
             ),
-            const SizedBox(width: 8),
-            Text(
-              'Copy Prayer',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                FIcons.copy,
                 color: colors.primary.withAlpha(isDark ? 220 : 180),
+                size: 18,
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Text(
+                'Copy Prayer',
+                style: GoogleFonts.quicksand(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: colors.primary.withAlpha(isDark ? 220 : 180),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../functions/prayers_data.dart';
 import '../models/prayer_model.dart';
 import '../widgets/prayer_card.dart';
@@ -12,29 +13,21 @@ class PrayersScreen extends StatefulWidget {
   State<PrayersScreen> createState() => _PrayersScreenState();
 }
 
-class _PrayersScreenState extends State<PrayersScreen>
-    with SingleTickerProviderStateMixin {
+class _PrayersScreenState extends State<PrayersScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
   bool _isSearching = false;
   List<Prayer> _searchResults = [];
 
   @override
   void dispose() {
     _searchController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
   void _onSearch(String query) {
     setState(() {
-      if (query.isEmpty) {
-        _isSearching = false;
-        _searchResults = [];
-      } else {
-        _isSearching = true;
-        _searchResults = PrayersData.searchPrayers(query);
-      }
+      _isSearching = query.isNotEmpty;
+      _searchResults = query.isEmpty ? [] : PrayersData.searchPrayers(query);
     });
   }
 
@@ -84,7 +77,7 @@ class _PrayersScreenState extends State<PrayersScreen>
                   children: [
                     Text(
                       'Prayers',
-                      style: TextStyle(
+                      style: GoogleFonts.quicksand(
                         fontSize: 26,
                         fontWeight: FontWeight.w600,
                         color: colors.foreground,
@@ -93,7 +86,7 @@ class _PrayersScreenState extends State<PrayersScreen>
                     const SizedBox(height: 2),
                     Text(
                       'Sacred prayers and devotions',
-                      style: TextStyle(
+                      style: GoogleFonts.manrope(
                         fontSize: 13,
                         color: colors.mutedForeground,
                       ),
@@ -109,7 +102,7 @@ class _PrayersScreenState extends State<PrayersScreen>
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
-                  Icons.auto_awesome,
+                  FIcons.sparkles,
                   color: colors.primary.withAlpha(isDark ? 180 : 140),
                   size: 20,
                 ),
@@ -126,20 +119,18 @@ class _PrayersScreenState extends State<PrayersScreen>
   Widget _buildSearchBar(FColors colors, bool isDark) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark
-            ? colors.secondary.withAlpha(40)
-            : colors.secondary.withAlpha(40),
+        color: colors.secondary.withAlpha(isDark ? 40 : 40),
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextField(
         controller: _searchController,
         onChanged: _onSearch,
-        style: TextStyle(fontSize: 15, color: colors.foreground),
+        style: GoogleFonts.manrope(fontSize: 15, color: colors.foreground),
         decoration: InputDecoration(
           hintText: 'Search prayers...',
-          hintStyle: TextStyle(color: colors.mutedForeground),
+          hintStyle: GoogleFonts.manrope(color: colors.mutedForeground),
           prefixIcon: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(12),
             child: Icon(FIcons.search, color: colors.mutedForeground, size: 18),
           ),
           suffixIcon: _searchController.text.isNotEmpty
@@ -176,7 +167,7 @@ class _PrayersScreenState extends State<PrayersScreen>
             const SizedBox(height: 12),
             Text(
               'No prayers found',
-              style: TextStyle(
+              style: GoogleFonts.manrope(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: colors.mutedForeground,
@@ -203,19 +194,29 @@ class _PrayersScreenState extends State<PrayersScreen>
 
   Widget _buildContent(BuildContext context, FColors colors, bool isDark) {
     final categories = PrayersData.getPrayersByCategory();
+    final featuredPrayers = PrayersData.featuredPrayers;
 
     return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-      itemCount: categories.length,
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+      itemCount: categories.length + 1,
       itemBuilder: (context, categoryIndex) {
-        final category = categories[categoryIndex];
+        if (categoryIndex == 0) {
+          return _buildFeaturedSection(
+            context,
+            colors,
+            isDark,
+            featuredPrayers,
+          );
+        }
+
+        final adjustedIndex = categoryIndex - 1;
+        final category = categories[adjustedIndex];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CategoryHeader(
               category: category,
-              index: categoryIndex,
+              index: adjustedIndex,
               onSeeAll: () => _openCategoryDetail(context, category),
             ),
             ...category.prayers.take(3).toList().asMap().entries.map((entry) {
@@ -228,6 +229,89 @@ class _PrayersScreenState extends State<PrayersScreen>
           ],
         );
       },
+    );
+  }
+
+  Widget _buildFeaturedSection(
+    BuildContext context,
+    FColors colors,
+    bool isDark,
+    List<Prayer> featuredPrayers,
+  ) {
+    if (featuredPrayers.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 12, top: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: colors.primary.withAlpha(isDark ? 30 : 20),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  FIcons.star,
+                  color: colors.primary.withAlpha(isDark ? 180 : 140),
+                  size: 18,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Featured Prayers',
+                      style: GoogleFonts.quicksand(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: colors.foreground,
+                      ),
+                    ),
+                    Text(
+                      'Timeless prayers for daily devotion',
+                      style: GoogleFonts.manrope(
+                        fontSize: 12,
+                        color: colors.mutedForeground,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 160,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: featuredPrayers.length,
+            itemBuilder: (context, index) {
+              final prayer = featuredPrayers[index];
+              return SizedBox(
+                width: 280,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: index < featuredPrayers.length - 1 ? 12 : 0,
+                  ),
+                  child: FeaturedPrayerCard(
+                    prayer: prayer,
+                    index: index,
+                    onTap: () => _openPrayerDetail(context, prayer),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 
@@ -270,6 +354,8 @@ class CategoryPrayersScreen extends StatelessWidget {
     final fTheme = FTheme.of(context);
     final colors = fTheme.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final count = category.prayers.length;
+    final label = '$count ${count == 1 ? 'prayer' : 'prayers'}';
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -280,19 +366,23 @@ class CategoryPrayersScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: colors.secondary.withAlpha(isDark ? 40 : 30),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        FIcons.arrowLeft,
-                        color: colors.foreground,
-                        size: 18,
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: colors.secondary.withAlpha(isDark ? 40 : 30),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          FIcons.arrowLeft,
+                          color: colors.foreground,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -317,15 +407,15 @@ class CategoryPrayersScreen extends StatelessWidget {
                       children: [
                         Text(
                           category.name,
-                          style: TextStyle(
+                          style: GoogleFonts.quicksand(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                             color: colors.foreground,
                           ),
                         ),
                         Text(
-                          '${category.prayers.length} prayers',
-                          style: TextStyle(
+                          label,
+                          style: GoogleFonts.manrope(
                             fontSize: 13,
                             color: colors.mutedForeground,
                           ),

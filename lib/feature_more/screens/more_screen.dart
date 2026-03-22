@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:katholic/constants/app_colors.dart';
 import 'package:katholic/feature_more/functions/url_launcher.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
