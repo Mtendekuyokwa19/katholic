@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/prayer_model.dart';
 
 class PrayersData {
-  static const Color _burgundy = Color(0xFF8B1538);
-  static const Color _navy = Color(0xFF1E3A5F);
-  static const Color _forest = Color(0xFF2E5B3A);
-  static const Color _amber = Color(0xFF5B442E);
-  static const Color _purple = Color(0xFF4A1E5B);
-
   static const String _imgJesusOnCross = 'assets/images/jesus_on_cross.jpg';
   static const String _imgChurchOfEaster = 'assets/images/church_of_easr.jpg';
   static const String _imgCrossCrusader = 'assets/images/cross_crusader.jpg';
@@ -22,7 +16,6 @@ class PrayersData {
       title: 'Hail Mary',
       categories: ['basic'],
       icon: Icons.favorite,
-      accentColor: _burgundy,
       imageAsset: _imgKissingJesus,
       versions: [
         PrayerVersion(
@@ -56,7 +49,6 @@ Amen.''',
       title: 'Prayer to St. Michael',
       categories: ['basic', 'saints'],
       icon: Icons.security,
-      accentColor: _burgundy,
       imageAsset: _imgCrossCrusader,
       versions: [
         PrayerVersion(
@@ -131,7 +123,6 @@ Amen.''',
       title: 'Hail Mary',
       categories: ['basic'],
       icon: Icons.favorite,
-      accentColor: _burgundy,
       imageAsset: _imgKissingJesus,
       versions: [
         PrayerVersion(

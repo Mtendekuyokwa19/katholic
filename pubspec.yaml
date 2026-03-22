@@ -81,7 +81,9 @@ flutter:
     - assets/images/church_of_easr.jpg
     - assets/images/cross_crusader.jpg
     - assets/images/jesus_on_cross.jpg
-    - assets/images/animation_people_in_church.jpg
+    - assets/images/kissing_jesus_feet.jpg
+    - assets/images/people_in_church.jpg
+    - assets/images/old_paintings_of_jesus.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

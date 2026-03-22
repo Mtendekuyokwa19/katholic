@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../functions/prayers_data.dart';
 import '../models/prayer_model.dart';
 import '../widgets/prayer_card.dart';
+import '../widgets/prayer_colors.dart';
 import 'prayer_detail_screen.dart';
 
 class PrayersScreen extends StatefulWidget {
@@ -356,6 +357,7 @@ class CategoryPrayersScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final count = category.prayers.length;
     final label = '$count ${count == 1 ? 'prayer' : 'prayers'}';
+    final categoryColor = PrayerColors.getCategoryColor(context, category.id);
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -391,12 +393,12 @@ class CategoryPrayersScreen extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: category.color.withAlpha(isDark ? 30 : 20),
+                      color: categoryColor.withAlpha(isDark ? 30 : 20),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(
                       category.icon,
-                      color: category.color.withAlpha(isDark ? 180 : 140),
+                      color: categoryColor.withAlpha(isDark ? 180 : 140),
                       size: 20,
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/prayer_model.dart';
+import 'prayer_colors.dart';
 
 class PrayerCard extends StatelessWidget {
   final Prayer prayer;
@@ -20,6 +21,7 @@ class PrayerCard extends StatelessWidget {
     final fTheme = FTheme.of(context);
     final colors = fTheme.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accentColor = PrayerColors.getAccentColor(context, prayer.categories);
 
     return FadeIn(
       delay: Duration(milliseconds: 50 * index),
@@ -46,12 +48,12 @@ class PrayerCard extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: prayer.accentColor.withAlpha(isDark ? 25 : 18),
+                    color: accentColor.withAlpha(isDark ? 25 : 18),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(
                     prayer.icon,
-                    color: prayer.accentColor.withAlpha(isDark ? 180 : 150),
+                    color: accentColor.withAlpha(isDark ? 180 : 150),
                     size: 22,
                   ),
                 ),
@@ -166,6 +168,7 @@ class FeaturedPrayerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final fTheme = FTheme.of(context);
     final colors = fTheme.colors;
+    final accentColor = PrayerColors.getAccentColor(context, prayer.categories);
 
     return FadeIn(
       delay: Duration(milliseconds: 50 * index),
@@ -211,7 +214,7 @@ class FeaturedPrayerCard extends StatelessWidget {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: prayer.accentColor.withAlpha(180),
+                        color: accentColor.withAlpha(180),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -280,6 +283,7 @@ class CategoryHeader extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final count = category.prayers.length;
     final label = '$count ${count == 1 ? 'prayer' : 'prayers'}';
+    final categoryColor = PrayerColors.getCategoryColor(context, category.id);
 
     return FadeIn(
       delay: Duration(milliseconds: 80 * index),
@@ -292,12 +296,12 @@ class CategoryHeader extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: category.color.withAlpha(isDark ? 30 : 20),
+                color: categoryColor.withAlpha(isDark ? 30 : 20),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 category.icon,
-                color: category.color.withAlpha(isDark ? 180 : 140),
+                color: categoryColor.withAlpha(isDark ? 180 : 140),
                 size: 18,
               ),
             ),
@@ -340,7 +344,7 @@ class CategoryHeader extends StatelessWidget {
                       style: GoogleFonts.manrope(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
-                        color: category.color.withAlpha(isDark ? 200 : 180),
+                        color: categoryColor.withAlpha(isDark ? 200 : 180),
                       ),
                     ),
                   ),

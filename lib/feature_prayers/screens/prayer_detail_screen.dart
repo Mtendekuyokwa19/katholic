@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:katholic/constants/app_sizes.dart';
 import '../models/prayer_model.dart';
+import '../widgets/prayer_colors.dart';
 
 class PrayerDetailScreen extends StatefulWidget {
   final Prayer prayer;
@@ -79,13 +81,17 @@ Shared from Catholic App
     final colors = this.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final version = widget.prayer.versions[_selectedVersionIndex];
+    final accentColor = PrayerColors.getAccentColor(
+      context,
+      widget.prayer.categories,
+    );
 
     return Scaffold(
       backgroundColor: colors.background,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(colors, isDark),
+            _buildHeader(colors, isDark, accentColor),
             Expanded(
               child: FadeTransition(
                 opacity: _fadeAnimation,
@@ -94,13 +100,13 @@ Shared from Catholic App
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTitleSection(colors, isDark),
+                      _buildTitleSection(colors, isDark, accentColor),
                       const SizedBox(height: 24),
                       if (widget.prayer.versions.length > 1) ...[
-                        _buildVersionSelector(colors, isDark),
+                        _buildVersionSelector(colors, isDark, accentColor),
                         const SizedBox(height: 24),
                       ],
-                      _buildPrayerContent(colors, isDark, version),
+                      _buildPrayerContent(colors, isDark, version, accentColor),
                       const SizedBox(height: 32),
                       _buildShareButton(colors, isDark),
                       const SizedBox(height: 16),
@@ -115,7 +121,7 @@ Shared from Catholic App
     );
   }
 
-  Widget _buildHeader(FColors colors, bool isDark) {
+  Widget _buildHeader(FColors colors, bool isDark, Color accentColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -144,7 +150,7 @@ Shared from Catholic App
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: widget.prayer.accentColor.withAlpha(isDark ? 25 : 18),
+              color: accentColor.withAlpha(isDark ? 25 : 18),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
@@ -155,7 +161,7 @@ Shared from Catholic App
               style: GoogleFonts.manrope(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
+                color: accentColor.withAlpha(isDark ? 200 : 160),
               ),
             ),
           ),
@@ -164,7 +170,7 @@ Shared from Catholic App
     );
   }
 
-  Widget _buildTitleSection(FColors colors, bool isDark) {
+  Widget _buildTitleSection(FColors colors, bool isDark, Color accentColor) {
     final selectedVersion = widget.prayer.versions[_selectedVersionIndex];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,12 +181,12 @@ Shared from Catholic App
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: widget.prayer.accentColor.withAlpha(isDark ? 30 : 20),
+                color: accentColor.withAlpha(isDark ? 30 : 20),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 widget.prayer.icon,
-                color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
+                color: accentColor.withAlpha(isDark ? 200 : 160),
                 size: 26,
               ),
             ),
@@ -216,7 +222,7 @@ Shared from Catholic App
     );
   }
 
-  Widget _buildVersionSelector(FColors colors, bool isDark) {
+  Widget _buildVersionSelector(FColors colors, bool isDark, Color accentColor) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -242,14 +248,12 @@ Shared from Catholic App
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? widget.prayer.accentColor.withAlpha(isDark ? 35 : 25)
+                        ? accentColor.withAlpha(isDark ? 35 : 25)
                         : colors.secondary.withAlpha(isDark ? 40 : 30),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       color: isSelected
-                          ? widget.prayer.accentColor.withAlpha(
-                              isDark ? 80 : 60,
-                            )
+                          ? accentColor.withAlpha(isDark ? 80 : 60)
                           : colors.border.withAlpha(60),
                     ),
                   ),
@@ -261,9 +265,7 @@ Shared from Catholic App
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       color: isSelected
-                          ? widget.prayer.accentColor.withAlpha(
-                              isDark ? 230 : 180,
-                            )
+                          ? accentColor.withAlpha(isDark ? 230 : 180)
                           : colors.foreground.withAlpha(180),
                     ),
                   ),
@@ -280,6 +282,7 @@ Shared from Catholic App
     FColors colors,
     bool isDark,
     PrayerVersion version,
+    Color accentColor,
   ) {
     return Container(
       width: double.infinity,
@@ -314,22 +317,29 @@ Shared from Catholic App
             ],
           ),
           const SizedBox(height: 16),
-          _buildFormattedText(version.content, colors, isDark),
+          _buildFormattedText(version.content, colors, isDark, accentColor),
         ],
       ),
     );
   }
 
-  Widget _buildFormattedText(String content, FColors colors, bool isDark) {
+  Widget _buildFormattedText(
+    String content,
+    FColors colors,
+    bool isDark,
+    Color accentColor,
+  ) {
     final lines = content.split('\n');
     final List<Widget> widgets = [];
+    final textSize = AppSizes.bodyText + 5;
+    const lineHeight = 2.0;
 
     for (int i = 0; i < lines.length; i++) {
       final line = lines[i];
       final trimmedLine = line.trim();
 
       if (trimmedLine.isEmpty) {
-        widgets.add(const SizedBox(height: 8));
+        widgets.add(const SizedBox(height: 12));
         continue;
       }
 
@@ -353,50 +363,45 @@ Shared from Catholic App
 
       if (isSection) {
         style = GoogleFonts.quicksand(
-          fontSize: 14,
+          fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
+          color: accentColor.withAlpha(isDark ? 200 : 160),
           fontStyle: FontStyle.italic,
-          height: 1.5,
+          height: lineHeight,
         );
       } else if (isResponse) {
         style = GoogleFonts.manrope(
-          fontSize: 14,
+          fontSize: textSize,
           fontWeight: FontWeight.w400,
           color: colors.foreground,
           fontStyle: FontStyle.italic,
-          height: 1.5,
+          height: lineHeight,
         );
       } else if (isLeader) {
         style = GoogleFonts.quicksand(
-          fontSize: 14,
+          fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
-          height: 1.5,
+          color: accentColor.withAlpha(isDark ? 200 : 160),
+          height: lineHeight,
         );
       } else if (isBold) {
         style = GoogleFonts.quicksand(
-          fontSize: 15,
+          fontSize: 16,
           fontWeight: FontWeight.w600,
           color: colors.foreground,
-          height: 1.5,
+          height: lineHeight,
         );
       } else {
         style = GoogleFonts.manrope(
-          fontSize: 14,
+          fontSize: textSize,
           fontWeight: FontWeight.w400,
           color: colors.foreground,
-          height: 1.6,
+          height: lineHeight,
           fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
         );
       }
 
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 1),
-          child: Text(cleanLine, style: style),
-        ),
-      );
+      widgets.add(Text(cleanLine, style: style, textAlign: TextAlign.justify));
     }
 
     return Column(
