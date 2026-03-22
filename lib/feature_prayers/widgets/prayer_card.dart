@@ -20,147 +20,125 @@ class PrayerCard extends StatelessWidget {
     final colors = fTheme.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: Duration(milliseconds: 400 + (index * 50)),
-      curve: Curves.easeOutCubic,
-      builder: (context, value, child) {
-        return Transform.translate(
-          offset: Offset(0, 20 * (1 - value)),
-          child: Opacity(opacity: value, child: child),
-        );
-      },
+    return FadeIn(
+      delay: Duration(milliseconds: 50 * index),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          margin: const EdgeInsets.only(bottom: 12),
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                  ? [
-                      colors.secondary.withAlpha(80),
-                      colors.secondary.withAlpha(40),
-                    ]
-                  : [colors.background, colors.secondary.withAlpha(30)],
-            ),
+            color: isDark ? colors.secondary.withAlpha(30) : colors.background,
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: colors.border.withAlpha(isDark ? 60 : 100),
+              color: colors.border.withAlpha(isDark ? 40 : 60),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: prayer.accentColor.withAlpha(isDark ? 30 : 20),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: prayer.accentColor.withAlpha(isDark ? 25 : 18),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  prayer.icon,
+                  color: prayer.accentColor.withAlpha(isDark ? 180 : 150),
+                  size: 22,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      prayer.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: colors.foreground,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      prayer.categories
+                          .map((c) => Prayer.getCategoryDisplayName(c))
+                          .toSet()
+                          .join(", "),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: colors.mutedForeground,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                FIcons.chevronRight,
+                color: colors.mutedForeground.withAlpha(150),
+                size: 18,
               ),
             ],
           ),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  prayer.accentColor.withAlpha(isDark ? 15 : 20),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: prayer.accentColor.withAlpha(isDark ? 40 : 30),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: prayer.accentColor.withAlpha(isDark ? 60 : 80),
-                      width: 1.5,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      prayer.icon,
-                      style: const TextStyle(fontSize: 26),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        prayer.title,
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: colors.foreground,
-                          letterSpacing: -0.3,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          if (prayer.versions.length > 1) ...[
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: prayer.accentColor.withAlpha(30),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                '${prayer.versions.length} versions',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: prayer.accentColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                          Text(
-                            prayer.categories
-                                .map((c) => Prayer.getCategoryDisplayName(c))
-                                .toSet()
-                                .join(", "),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: colors.mutedForeground,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: colors.primary.withAlpha(isDark ? 40 : 25),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    FIcons.chevronRight,
-                    color: colors.primary,
-                    size: 20,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
+    );
+  }
+}
+
+class FadeIn extends StatefulWidget {
+  final Widget child;
+  final Duration delay;
+  final Duration duration;
+
+  const FadeIn({
+    super.key,
+    required this.child,
+    this.delay = Duration.zero,
+    this.duration = const Duration(milliseconds: 300),
+  });
+
+  @override
+  State<FadeIn> createState() => _FadeInState();
+}
+
+class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacity;
+  late Animation<Offset> _slide;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(duration: widget.duration, vsync: this);
+    _opacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.08),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    Future.delayed(widget.delay, () {
+      if (mounted) _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _opacity,
+      child: SlideTransition(position: _slide, child: widget.child),
     );
   }
 }
@@ -183,35 +161,27 @@ class CategoryHeader extends StatelessWidget {
     final colors = fTheme.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: Duration(milliseconds: 300 + (index * 80)),
-      curve: Curves.easeOutCubic,
-      builder: (context, value, child) {
-        return Transform.translate(
-          offset: Offset(-20 * (1 - value), 0),
-          child: Opacity(opacity: value, child: child),
-        );
-      },
+    return FadeIn(
+      delay: Duration(milliseconds: 80 * index),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16, top: 24),
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        margin: const EdgeInsets.only(bottom: 12, top: 20),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 36,
+              height: 36,
               decoration: BoxDecoration(
-                color: category.color.withAlpha(isDark ? 50 : 40),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: category.color.withAlpha(isDark ? 80 : 100),
-                  width: 1.5,
-                ),
+                color: category.color.withAlpha(isDark ? 30 : 20),
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(category.icon, color: category.color, size: 24),
+              child: Icon(
+                category.icon,
+                color: category.color.withAlpha(isDark ? 180 : 140),
+                size: 18,
+              ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,17 +189,15 @@ class CategoryHeader extends StatelessWidget {
                   Text(
                     category.name,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: colors.foreground,
-                      letterSpacing: -0.5,
                     ),
                   ),
-                  const SizedBox(height: 2),
                   Text(
                     '${category.prayers.length} prayers',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       color: colors.mutedForeground,
                     ),
                   ),
@@ -237,27 +205,22 @@ class CategoryHeader extends StatelessWidget {
               ),
             ),
             if (category.prayers.length > 3)
-              GestureDetector(
-                onTap: onSeeAll,
-                child: Container(
+              TextButton(
+                onPressed: onSeeAll,
+                style: TextButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
+                    horizontal: 12,
+                    vertical: 6,
                   ),
-                  decoration: BoxDecoration(
-                    color: category.color.withAlpha(isDark ? 30 : 25),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: category.color.withAlpha(isDark ? 60 : 80),
-                    ),
-                  ),
-                  child: Text(
-                    'See All',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: category.color,
-                    ),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  'See all',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: category.color.withAlpha(isDark ? 200 : 180),
                   ),
                 ),
               ),

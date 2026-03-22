@@ -9,12 +9,11 @@ class PrayersData {
   static const Color _purple = Color(0xFF4A1E5B);
 
   static final List<Prayer> allPrayers = [
-    // Basic Prayers
     Prayer(
       id: 'hail_mary',
       title: 'Hail Mary',
       categories: ['basic'],
-      icon: '🌸',
+      icon: Icons.favorite,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -47,7 +46,7 @@ Amen.''',
       id: 'our_father',
       title: 'Our Father',
       categories: ['basic'],
-      icon: '🙏',
+      icon: Icons.church,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -72,7 +71,7 @@ Amen.''',
       id: 'glory_be',
       title: 'Glory Be',
       categories: ['basic'],
-      icon: '✨',
+      icon: Icons.auto_awesome,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -92,7 +91,7 @@ Amen.''',
       id: 'anima_christi',
       title: 'Anima Christi',
       categories: ['basic'],
-      icon: '🔥',
+      icon: Icons.local_fire_department,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -117,7 +116,7 @@ for ever and ever. Amen.''',
       id: 'st_michael',
       title: 'Prayer to St. Michael',
       categories: ['basic', 'saints'],
-      icon: '⚔️',
+      icon: Icons.security,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -138,7 +137,7 @@ Amen.''',
       id: 'guardian_angel',
       title: 'Guardian Angel',
       categories: ['basic', 'saints'],
-      icon: '👼',
+      icon: Icons.nightlight_round,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -161,7 +160,7 @@ Amen.''',
       id: 'memorare',
       title: 'Memorare',
       categories: ['basic'],
-      icon: '💝',
+      icon: Icons.favorite_border,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -188,7 +187,7 @@ but in thy mercy hear and answer me. Amen.''',
       id: 'angelus',
       title: 'Angelus',
       categories: ['basic'],
-      icon: '🔔',
+      icon: Icons.notifications_active,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -225,7 +224,7 @@ _Hail Mary..._
       id: 'regina_caeli',
       title: 'Regina Caeli',
       categories: ['basic'],
-      icon: '👑',
+      icon: Icons.star,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -258,7 +257,7 @@ Amen.''',
       id: 'prayer_before_meals',
       title: 'Prayer Before Meals',
       categories: ['basic', 'other'],
-      icon: '🍞',
+      icon: Icons.restaurant,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -277,7 +276,7 @@ Amen.''',
       id: 'fatima_prayer',
       title: 'Fatima Prayer',
       categories: ['basic'],
-      icon: '☀️',
+      icon: Icons.wb_sunny,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -296,7 +295,7 @@ Amen.''',
       id: 'eternal_rest',
       title: 'Eternal Rest',
       categories: ['basic'],
-      icon: '🕊️',
+      icon: Icons.air,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -314,7 +313,7 @@ Amen.''',
       id: 'salve_regina',
       title: 'Salve Regina',
       categories: ['basic'],
-      icon: '🌊',
+      icon: Icons.waves,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -342,7 +341,7 @@ that we may be made worthy of the promises of Christ.''',
       id: 'we_fly_to_thy_protection',
       title: 'Sub Tuum Praesidium',
       categories: ['basic'],
-      icon: '🛡️',
+      icon: Icons.shield,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(
@@ -357,13 +356,11 @@ Amen.''',
         ),
       ],
     ),
-
-    // Creeds
     Prayer(
       id: 'apostles_creed',
       title: "Apostles' Creed",
       categories: ['creeds'],
-      icon: '📜',
+      icon: Icons.article,
       accentColor: _purple,
       versions: [
         PrayerVersion(
@@ -399,7 +396,7 @@ Amen.''',
       id: 'nicene_creed',
       title: 'Nicene Creed',
       categories: ['creeds'],
-      icon: '📜',
+      icon: Icons.menu_book,
       accentColor: _purple,
       versions: [
         PrayerVersion(
@@ -451,7 +448,7 @@ and the life of the world to come. Amen.''',
       id: 'athanasius_creed',
       title: 'Athanasian Creed',
       categories: ['creeds'],
-      icon: '📜',
+      icon: Icons.history_edu,
       accentColor: _purple,
       versions: [
         PrayerVersion(
@@ -541,13 +538,11 @@ must think thus of the Trinity.''',
         ),
       ],
     ),
-
-    // Rosary Mysteries
     Prayer(
       id: 'joyful_mysteries',
       title: 'Joyful Mysteries',
       categories: ['rosary'],
-      icon: '🌟',
+      icon: Icons.celebration,
       accentColor: _navy,
       versions: [
         PrayerVersion(
@@ -573,7 +568,7 @@ _Fruit of the Mystery: True Conversion (Piety, Joy of Finding Jesus)_''',
       id: 'sorrowful_mysteries',
       title: 'Sorrowful Mysteries',
       categories: ['rosary'],
-      icon: '💔',
+      icon: Icons.sentiment_dissatisfied,
       accentColor: _navy,
       versions: [
         PrayerVersion(
@@ -599,7 +594,7 @@ _Fruit of the Mystery: Perseverance in Faith, Grace for a Holy Death, Forgivenes
       id: 'glorious_mysteries',
       title: 'Glorious Mysteries',
       categories: ['rosary'],
-      icon: '🌈',
+      icon: Icons.auto_awesome,
       accentColor: _navy,
       versions: [
         PrayerVersion(
@@ -625,7 +620,7 @@ _Fruit of the Mystery: Perseverance and an Increase in Virtue (Trust in Mary's I
       id: 'luminous_mysteries',
       title: 'Luminous Mysteries',
       categories: ['rosary'],
-      icon: '💡',
+      icon: Icons.lightbulb,
       accentColor: _navy,
       versions: [
         PrayerVersion(
@@ -647,13 +642,11 @@ _Fruit of the Mystery: Adoration_''',
         ),
       ],
     ),
-
-    // Litanies
     Prayer(
       id: 'litany_loreto',
       title: 'Litany of Loreto',
       categories: ['litany'],
-      icon: '🌹',
+      icon: Icons.format_list_numbered,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -870,7 +863,7 @@ Through Christ Our Lord.
       id: 'litany_divine_mercy',
       title: 'Litany to the Divine Mercy',
       categories: ['litany'],
-      icon: '💜',
+      icon: Icons.volunteer_activism,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -1026,7 +1019,7 @@ shows us mercy now and forever.
       id: 'litany_holy_spirit',
       title: 'Litany of the Holy Spirit',
       categories: ['litany'],
-      icon: '🔥',
+      icon: Icons.whatshot,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -1131,7 +1124,7 @@ Through Christ our Lord.
       id: 'litany_sacred_heart',
       title: 'Litany of the Sacred Heart',
       categories: ['litany'],
-      icon: '❤️',
+      icon: Icons.favorite,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -1255,7 +1248,7 @@ world without end.
       id: 'litany_st_joseph',
       title: 'Litany of St. Joseph',
       categories: ['litany', 'saints'],
-      icon: '🪵',
+      icon: Icons.handyman,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -1392,7 +1385,7 @@ Through the same Christ Our Lord.
       id: 'litany_immaculate_heart',
       title: 'Litany of the Immaculate Heart',
       categories: ['litany'],
-      icon: '💗',
+      icon: Icons.favorite_border,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -1505,13 +1498,11 @@ forever and ever.
         ),
       ],
     ),
-
-    // Saints Prayers
     Prayer(
       id: 'st_thomas_aquinas_after_communion',
       title: 'St. Thomas Aquinas: After Communion',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1538,7 +1529,7 @@ Amen.''',
       id: 'st_thomas_aquinas_grant_me_grace',
       title: 'St. Thomas Aquinas: Grant Me Grace',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1561,7 +1552,7 @@ Amen.''',
       id: 'st_thomas_aquinas_grant_to_me',
       title: 'St. Thomas Aquinas: Grant to Me',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1599,7 +1590,7 @@ Amen.''',
       id: 'st_thomas_aquinas_merciful_god',
       title: 'St. Thomas Aquinas: Merciful God',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1621,7 +1612,7 @@ Amen.''',
       id: 'st_thomas_aquinas_prayer_good_life',
       title: 'St. Thomas Aquinas: For a Good Life',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1656,7 +1647,7 @@ Amen.''',
       id: 'st_thomas_aquinas_students_prayer',
       title: "St. Thomas Aquinas: Student's Prayer",
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1696,7 +1687,7 @@ Amen.''',
       id: 'st_thomas_aquinas_students_prayer2',
       title: "St. Thomas Aquinas: Student's Prayer II",
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1729,7 +1720,7 @@ Amen.''',
       id: 'st_thomas_aquinas_sweet_jesus',
       title: 'St. Thomas Aquinas: Sweet Jesus',
       categories: ['saints'],
-      icon: '📚',
+      icon: Icons.school,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1760,7 +1751,7 @@ Amen.''',
       id: 'st_pius_x_prayer_st_joseph_worker',
       title: 'St. Pius X: Prayer to St. Joseph Worker',
       categories: ['saints'],
-      icon: '🛠️',
+      icon: Icons.construction,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1795,7 +1786,7 @@ Amen.''',
       id: 'memorare_st_joseph',
       title: 'Memorare to St. Joseph',
       categories: ['saints'],
-      icon: '🪵',
+      icon: Icons.family_restroom,
       accentColor: _amber,
       versions: [
         PrayerVersion(
@@ -1826,7 +1817,7 @@ Amen.''',
       id: 'litany_saints',
       title: 'Litany of the Saints',
       categories: ['litany'],
-      icon: '✨',
+      icon: Icons.groups,
       accentColor: _forest,
       versions: [
         PrayerVersion(
@@ -2083,7 +2074,7 @@ Lord, have mercy.''',
       id: 'ten_commandments',
       title: 'Ten Commandments',
       categories: ['other'],
-      icon: '📋',
+      icon: Icons.gavel,
       accentColor: _burgundy,
       versions: [
         PrayerVersion(

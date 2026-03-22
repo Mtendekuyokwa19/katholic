@@ -5,7 +5,7 @@ class Prayer {
   final String title;
   final List<String> categories;
   final List<PrayerVersion> versions;
-  final String icon;
+  final IconData icon;
   final Color accentColor;
 
   const Prayer({
@@ -13,7 +13,7 @@ class Prayer {
     required this.title,
     required this.categories,
     required this.versions,
-    this.icon = '✨',
+    this.icon = Icons.auto_awesome,
     this.accentColor = const Color(0xFF8B1538),
   });
 

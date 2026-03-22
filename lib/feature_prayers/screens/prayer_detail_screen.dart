@@ -17,25 +17,17 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen>
   int _selectedVersionIndex = 0;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
     );
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0.0, 0.05), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.easeOutCubic,
-          ),
-        );
     _animationController.forward();
   }
 
@@ -63,23 +55,24 @@ Shared from Catholic App
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle, color: Colors.white, size: 20),
-            const SizedBox(width: 12),
-            const Text('Prayer copied to clipboard'),
+            Icon(Icons.check_circle_outline, color: Colors.white, size: 18),
+            const SizedBox(width: 10),
+            const Text('Prayer copied'),
           ],
         ),
-        backgroundColor: widget.prayer.accentColor,
+        backgroundColor: colors.primary,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.all(16),
       ),
     );
   }
 
+  FColors get colors => FTheme.of(context).colors;
+
   @override
   Widget build(BuildContext context) {
-    final fTheme = FTheme.of(context);
-    final colors = fTheme.colors;
+    final colors = this.colors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final version = widget.prayer.versions[_selectedVersionIndex];
 
@@ -92,24 +85,22 @@ Shared from Catholic App
             Expanded(
               child: FadeTransition(
                 opacity: _fadeAnimation,
-                child: SlideTransition(
-                  position: _slideAnimation,
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTitleSection(colors, isDark),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitleSection(colors, isDark),
+                      const SizedBox(height: 24),
+                      if (widget.prayer.versions.length > 1) ...[
+                        _buildVersionSelector(colors, isDark),
                         const SizedBox(height: 24),
-                        if (widget.prayer.versions.length > 1)
-                          _buildVersionSelector(colors, isDark),
-                        const SizedBox(height: 24),
-                        _buildPrayerContent(colors, isDark, version),
-                        const SizedBox(height: 40),
-                        _buildShareButton(colors, isDark),
-                        const SizedBox(height: 20),
                       ],
-                    ),
+                      _buildPrayerContent(colors, isDark, version),
+                      const SizedBox(height: 32),
+                      _buildShareButton(colors, isDark),
+                      const SizedBox(height: 16),
+                    ],
                   ),
                 ),
               ),
@@ -128,24 +119,21 @@ Shared from Catholic App
           GestureDetector(
             onTap: () => Navigator.of(context).pop(),
             child: Container(
-              width: 44,
-              height: 44,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
-                color: colors.secondary.withAlpha(isDark ? 80 : 60),
-                borderRadius: BorderRadius.circular(14),
+                color: colors.secondary.withAlpha(isDark ? 40 : 30),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(FIcons.arrowLeft, color: colors.foreground, size: 20),
+              child: Icon(FIcons.arrowLeft, color: colors.foreground, size: 18),
             ),
           ),
           const Spacer(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: widget.prayer.accentColor.withAlpha(isDark ? 40 : 30),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: widget.prayer.accentColor.withAlpha(isDark ? 60 : 80),
-              ),
+              color: widget.prayer.accentColor.withAlpha(isDark ? 25 : 18),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               widget.prayer.categories
@@ -154,8 +142,8 @@ Shared from Catholic App
                   .join(', '),
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: widget.prayer.accentColor,
+                fontWeight: FontWeight.w500,
+                color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
               ),
             ),
           ),
@@ -169,138 +157,104 @@ Shared from Catholic App
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 72,
-          height: 72,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                widget.prayer.accentColor,
-                widget.prayer.accentColor.withAlpha(180),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: widget.prayer.accentColor.withAlpha(60),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
+        Row(
+          children: [
+            Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                color: widget.prayer.accentColor.withAlpha(isDark ? 30 : 20),
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
-          ),
-          child: Center(
-            child: Text(
-              widget.prayer.icon,
-              style: const TextStyle(fontSize: 34),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          widget.prayer.title,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.w900,
-            color: colors.foreground,
-            letterSpacing: -1,
-            height: 1.1,
-          ),
-        ),
-        if (selectedVersion.name.isNotEmpty) ...[
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: colors.secondary.withAlpha(isDark ? 80 : 60),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              selectedVersion.name,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: colors.mutedForeground,
+              child: Icon(
+                widget.prayer.icon,
+                color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
+                size: 26,
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.prayer.title,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: colors.foreground,
+                    ),
+                  ),
+                  if (selectedVersion.name.isNotEmpty) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      selectedVersion.name,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: colors.mutedForeground,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
 
   Widget _buildVersionSelector(FColors colors, bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Versions',
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
-            color: colors.mutedForeground,
-            letterSpacing: 0.5,
-          ),
-        ),
-        const SizedBox(height: 12),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: widget.prayer.versions.asMap().entries.map((entry) {
-              final isSelected = entry.key == _selectedVersionIndex;
-              return GestureDetector(
-                onTap: () {
-                  _animationController.reset();
-                  setState(() {
-                    _selectedVersionIndex = entry.key;
-                  });
-                  _animationController.forward();
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  margin: const EdgeInsets.only(right: 10),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: widget.prayer.versions.asMap().entries.map((entry) {
+          final isSelected = entry.key == _selectedVersionIndex;
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: GestureDetector(
+              onTap: () {
+                _animationController.reset();
+                setState(() {
+                  _selectedVersionIndex = entry.key;
+                });
+                _animationController.forward();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? widget.prayer.accentColor.withAlpha(isDark ? 35 : 25)
+                      : colors.secondary.withAlpha(isDark ? 40 : 30),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
                     color: isSelected
-                        ? widget.prayer.accentColor
-                        : colors.secondary.withAlpha(isDark ? 80 : 60),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: isSelected
-                          ? widget.prayer.accentColor
-                          : colors.border,
-                      width: isSelected ? 2 : 1,
-                    ),
-                    boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: widget.prayer.accentColor.withAlpha(40),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ]
-                        : null,
-                  ),
-                  child: Text(
-                    entry.value.name.isEmpty
-                        ? 'Version ${entry.key + 1}'
-                        : entry.value.name,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected ? Colors.white : colors.foreground,
-                    ),
+                        ? widget.prayer.accentColor.withAlpha(isDark ? 80 : 60)
+                        : colors.border.withAlpha(60),
                   ),
                 ),
-              );
-            }).toList(),
-          ),
-        ),
-      ],
+                child: Text(
+                  entry.value.name.isEmpty
+                      ? 'Version ${entry.key + 1}'
+                      : entry.value.name,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected
+                        ? widget.prayer.accentColor.withAlpha(
+                            isDark ? 230 : 180,
+                          )
+                        : colors.foreground.withAlpha(180),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -311,51 +265,37 @@ Shared from Catholic App
   ) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: isDark
-            ? colors.secondary.withAlpha(60)
-            : colors.secondary.withAlpha(40),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colors.border.withAlpha(isDark ? 80 : 120)),
-        boxShadow: [
-          BoxShadow(
-            color: widget.prayer.accentColor.withAlpha(isDark ? 20 : 15),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
+            ? colors.secondary.withAlpha(25)
+            : colors.secondary.withAlpha(25),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colors.border.withAlpha(isDark ? 30 : 50)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: widget.prayer.accentColor.withAlpha(30),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  FIcons.sparkles,
-                  color: widget.prayer.accentColor,
-                  size: 18,
-                ),
+              Icon(
+                Icons.format_quote,
+                color: colors.mutedForeground.withAlpha(100),
+                size: 16,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Text(
                 'Prayer',
                 style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: widget.prayer.accentColor,
-                  letterSpacing: 0.5,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: colors.mutedForeground,
+                  letterSpacing: 0.3,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           _buildFormattedText(version.content, colors, isDark),
         ],
       ),
@@ -371,7 +311,7 @@ Shared from Catholic App
       final trimmedLine = line.trim();
 
       if (trimmedLine.isEmpty) {
-        widgets.add(const SizedBox(height: 12));
+        widgets.add(const SizedBox(height: 8));
         continue;
       }
 
@@ -383,8 +323,7 @@ Shared from Catholic App
           trimmedLine.startsWith('℣.') || trimmedLine.startsWith('V/.');
       final isSection =
           trimmedLine.startsWith('Let us pray') ||
-          trimmedLine.startsWith('**Let us pray') ||
-          trimmedLine.startsWith('Let us pray');
+          trimmedLine.startsWith('**Let us pray');
 
       final cleanLine = isItalic
           ? trimmedLine.substring(1, trimmedLine.length - 1)
@@ -397,46 +336,46 @@ Shared from Catholic App
       if (isSection) {
         style = TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w700,
-          color: widget.prayer.accentColor,
+          fontWeight: FontWeight.w600,
+          color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
           fontStyle: FontStyle.italic,
-          height: 1.6,
+          height: 1.5,
         );
       } else if (isResponse) {
         style = TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
           color: colors.foreground,
           fontStyle: FontStyle.italic,
-          height: 1.6,
+          height: 1.5,
         );
       } else if (isLeader) {
         style = TextStyle(
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: widget.prayer.accentColor,
-          height: 1.6,
+          color: widget.prayer.accentColor.withAlpha(isDark ? 200 : 160),
+          height: 1.5,
         );
       } else if (isBold) {
         style = TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
           color: colors.foreground,
-          height: 1.6,
+          height: 1.5,
         );
       } else {
         style = TextStyle(
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
           color: colors.foreground,
-          height: 1.7,
+          height: 1.6,
           fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
         );
       }
 
       widgets.add(
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 1),
           child: Text(cleanLine, style: style),
         ),
       );
@@ -453,37 +392,27 @@ Shared from Catholic App
       onTap: _sharePrayer,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              widget.prayer.accentColor,
-              widget.prayer.accentColor.withAlpha(200),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: widget.prayer.accentColor.withAlpha(50),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          color: colors.primary.withAlpha(isDark ? 35 : 25),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colors.primary.withAlpha(isDark ? 60 : 40)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.copy_rounded, color: Colors.white, size: 20),
-            const SizedBox(width: 10),
-            const Text(
+            Icon(
+              Icons.copy_outlined,
+              color: colors.primary.withAlpha(isDark ? 220 : 180),
+              size: 18,
+            ),
+            const SizedBox(width: 8),
+            Text(
               'Copy Prayer',
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                letterSpacing: 0.3,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: colors.primary.withAlpha(isDark ? 220 : 180),
               ),
             ),
           ],

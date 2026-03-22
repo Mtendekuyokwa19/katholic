@@ -18,27 +18,11 @@ class _PrayersScreenState extends State<PrayersScreen>
   final ScrollController _scrollController = ScrollController();
   bool _isSearching = false;
   List<Prayer> _searchResults = [];
-  late AnimationController _fabController;
-  late Animation<double> _fabAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _fabController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _fabAnimation = CurvedAnimation(
-      parent: _fabController,
-      curve: Curves.easeOutBack,
-    );
-  }
 
   @override
   void dispose() {
     _searchController.dispose();
     _scrollController.dispose();
-    _fabController.dispose();
     super.dispose();
   }
 
@@ -62,14 +46,6 @@ class _PrayersScreenState extends State<PrayersScreen>
     });
   }
 
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOutCubic,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final fTheme = FTheme.of(context);
@@ -80,6 +56,7 @@ class _PrayersScreenState extends State<PrayersScreen>
       backgroundColor: colors.background,
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(context, colors, isDark),
             Expanded(
@@ -90,22 +67,12 @@ class _PrayersScreenState extends State<PrayersScreen>
           ],
         ),
       ),
-      floatingActionButton: !_isSearching
-          ? ScaleTransition(
-              scale: _fabAnimation,
-              child: FloatingActionButton(
-                onPressed: _scrollToTop,
-                backgroundColor: colors.primary,
-                child: Icon(FIcons.arrowUp, color: colors.primaryForeground),
-              ),
-            )
-          : null,
     );
   }
 
   Widget _buildHeader(BuildContext context, FColors colors, bool isDark) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -118,17 +85,16 @@ class _PrayersScreenState extends State<PrayersScreen>
                     Text(
                       'Prayers',
                       style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
                         color: colors.foreground,
-                        letterSpacing: -1,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
-                      'A collection of sacred prayers',
+                      'Sacred prayers and devotions',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 13,
                         color: colors.mutedForeground,
                       ),
                     ),
@@ -136,30 +102,21 @@ class _PrayersScreenState extends State<PrayersScreen>
                 ),
               ),
               Container(
-                width: 52,
-                height: 52,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [const Color(0xFF8B1538), const Color(0xFF5B1E3A)],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF8B1538).withAlpha(60),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  color: colors.secondary.withAlpha(isDark ? 40 : 30),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Center(
-                  child: Text('🙏', style: TextStyle(fontSize: 26)),
+                child: Icon(
+                  Icons.auto_awesome,
+                  color: colors.primary.withAlpha(isDark ? 180 : 140),
+                  size: 20,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           _buildSearchBar(colors, isDark),
         ],
       ),
@@ -170,47 +127,31 @@ class _PrayersScreenState extends State<PrayersScreen>
     return Container(
       decoration: BoxDecoration(
         color: isDark
-            ? colors.secondary.withAlpha(80)
-            : colors.secondary.withAlpha(60),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.border),
+            ? colors.secondary.withAlpha(40)
+            : colors.secondary.withAlpha(40),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: TextField(
         controller: _searchController,
         onChanged: _onSearch,
-        style: TextStyle(fontSize: 16, color: colors.foreground),
+        style: TextStyle(fontSize: 15, color: colors.foreground),
         decoration: InputDecoration(
           hintText: 'Search prayers...',
           hintStyle: TextStyle(color: colors.mutedForeground),
-          prefixIcon: Icon(
-            FIcons.search,
-            color: colors.mutedForeground,
-            size: 20,
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Icon(FIcons.search, color: colors.mutedForeground, size: 18),
           ),
           suffixIcon: _searchController.text.isNotEmpty
-              ? GestureDetector(
-                  onTap: _clearSearch,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: colors.mutedForeground.withAlpha(50),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        FIcons.x,
-                        color: colors.mutedForeground,
-                        size: 14,
-                      ),
-                    ),
-                  ),
+              ? IconButton(
+                  onPressed: _clearSearch,
+                  icon: Icon(FIcons.x, color: colors.mutedForeground, size: 16),
                 )
               : null,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
-            vertical: 14,
+            vertical: 12,
           ),
         ),
       ),
@@ -229,24 +170,16 @@ class _PrayersScreenState extends State<PrayersScreen>
           children: [
             Icon(
               FIcons.search,
-              size: 64,
-              color: colors.mutedForeground.withAlpha(100),
+              size: 48,
+              color: colors.mutedForeground.withAlpha(80),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Text(
               'No prayers found',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
                 color: colors.mutedForeground,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Try a different search term',
-              style: TextStyle(
-                fontSize: 14,
-                color: colors.mutedForeground.withAlpha(150),
               ),
             ),
           ],
@@ -255,7 +188,7 @@ class _PrayersScreenState extends State<PrayersScreen>
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
       itemCount: _searchResults.length,
       itemBuilder: (context, index) {
         final prayer = _searchResults[index];
@@ -271,40 +204,30 @@ class _PrayersScreenState extends State<PrayersScreen>
   Widget _buildContent(BuildContext context, FColors colors, bool isDark) {
     final categories = PrayersData.getPrayersByCategory();
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        if (notification.metrics.pixels > 200) {
-          _fabController.forward();
-        } else {
-          _fabController.reverse();
-        }
-        return false;
+    return ListView.builder(
+      controller: _scrollController,
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+      itemCount: categories.length,
+      itemBuilder: (context, categoryIndex) {
+        final category = categories[categoryIndex];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CategoryHeader(
+              category: category,
+              index: categoryIndex,
+              onSeeAll: () => _openCategoryDetail(context, category),
+            ),
+            ...category.prayers.take(3).toList().asMap().entries.map((entry) {
+              return PrayerCard(
+                prayer: entry.value,
+                index: entry.key,
+                onTap: () => _openPrayerDetail(context, entry.value),
+              );
+            }),
+          ],
+        );
       },
-      child: ListView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-        itemCount: categories.length,
-        itemBuilder: (context, categoryIndex) {
-          final category = categories[categoryIndex];
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CategoryHeader(
-                category: category,
-                index: categoryIndex,
-                onSeeAll: () => _openCategoryDetail(context, category),
-              ),
-              ...category.prayers.take(3).toList().asMap().entries.map((entry) {
-                return PrayerCard(
-                  prayer: entry.value,
-                  index: entry.key + (categoryIndex * 10),
-                  onTap: () => _openPrayerDetail(context, entry.value),
-                );
-              }),
-            ],
-          );
-        },
-      ),
     );
   }
 
@@ -315,24 +238,9 @@ class _PrayersScreenState extends State<PrayersScreen>
           return PrayerDetailScreen(prayer: prayer);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(
-              position:
-                  Tween<Offset>(
-                    begin: const Offset(0, 0.1),
-                    end: Offset.zero,
-                  ).animate(
-                    CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.easeOutCubic,
-                    ),
-                  ),
-              child: child,
-            ),
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
-        transitionDuration: const Duration(milliseconds: 350),
+        transitionDuration: const Duration(milliseconds: 250),
       ),
     );
   }
@@ -346,7 +254,7 @@ class _PrayersScreenState extends State<PrayersScreen>
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
         },
-        transitionDuration: const Duration(milliseconds: 300),
+        transitionDuration: const Duration(milliseconds: 200),
       ),
     );
   }
@@ -375,34 +283,34 @@ class CategoryPrayersScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Navigator.of(context).pop(),
                     child: Container(
-                      width: 44,
-                      height: 44,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
-                        color: colors.secondary.withAlpha(isDark ? 80 : 60),
-                        borderRadius: BorderRadius.circular(14),
+                        color: colors.secondary.withAlpha(isDark ? 40 : 30),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
                         FIcons.arrowLeft,
                         color: colors.foreground,
-                        size: 20,
+                        size: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 14),
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
-                      color: category.color.withAlpha(isDark ? 50 : 40),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: category.color.withAlpha(isDark ? 80 : 100),
-                        width: 1.5,
-                      ),
+                      color: category.color.withAlpha(isDark ? 30 : 20),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Icon(category.icon, color: category.color, size: 24),
+                    child: Icon(
+                      category.icon,
+                      color: category.color.withAlpha(isDark ? 180 : 140),
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -410,10 +318,9 @@ class CategoryPrayersScreen extends StatelessWidget {
                         Text(
                           category.name,
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                             color: colors.foreground,
-                            letterSpacing: -0.5,
                           ),
                         ),
                         Text(
@@ -449,22 +356,10 @@ class CategoryPrayersScreen extends StatelessWidget {
                               (context, animation, secondaryAnimation, child) {
                                 return FadeTransition(
                                   opacity: animation,
-                                  child: SlideTransition(
-                                    position:
-                                        Tween<Offset>(
-                                          begin: const Offset(0, 0.1),
-                                          end: Offset.zero,
-                                        ).animate(
-                                          CurvedAnimation(
-                                            parent: animation,
-                                            curve: Curves.easeOutCubic,
-                                          ),
-                                        ),
-                                    child: child,
-                                  ),
+                                  child: child,
                                 );
                               },
-                          transitionDuration: const Duration(milliseconds: 350),
+                          transitionDuration: const Duration(milliseconds: 250),
                         ),
                       );
                     },
