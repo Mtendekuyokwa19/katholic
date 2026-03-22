@@ -17,6 +17,7 @@ import 'feature_home/providers/date_on_calender_provider.dart';
 import 'feature_way_of_the_cross/providers/way_of_the_cross_provider.dart';
 import 'common/providers/settings_provider.dart';
 import 'common/providers/home_widget_provider.dart';
+import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
