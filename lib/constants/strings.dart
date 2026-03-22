@@ -4,6 +4,8 @@ class Strings {
 
   static const String home = "Home";
 
+  static const String prayers = "Prayers";
+
   static const String search = "search";
   static const couldNotLaunch = "could not launch";
   static const String wayofthecross = "Way of the Cross";

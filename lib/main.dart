@@ -7,7 +7,7 @@ import 'package:katholic/common/notification_service.dart';
 import 'package:katholic/constants/app_sizes.dart';
 import 'package:katholic/feature_home/screens/home_screen.dart';
 import 'package:katholic/feature_more/screens/more_screen.dart';
-import 'package:katholic/feature_onboarding/screens/onboarding_screen.dart';
+import 'package:katholic/feature_prayers/screens/prayers_screen.dart';
 import 'package:katholic/feature_way_of_the_cross/screens/way_of_the_cross_screen.dart';
 import 'package:katholic/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -155,6 +155,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   static final List<Widget> _content = <Widget>[
     HomeScreen(),
+    PrayersScreen(),
     WayOfTheCrossScreen(),
     MoreScreen(),
   ];
@@ -170,6 +171,10 @@ class _RootScreenState extends State<RootScreen> {
           FBottomNavigationBarItem(
             icon: Icon(FIcons.house),
             label: Text(Strings.home),
+          ),
+          FBottomNavigationBarItem(
+            icon: Icon(FIcons.heart),
+            label: Text(Strings.prayers),
           ),
           FBottomNavigationBarItem(
             icon: Icon(FIcons.cross),
